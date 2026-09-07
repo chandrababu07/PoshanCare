@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-tint": "#376757",
+          "secondary-fixed-dim": "#fabc4d",
+          "on-background": "#111c2d",
+          "on-secondary-fixed": "#281900",
+          "inverse-surface": "#263143",
+          "inverse-primary": "#9ed1bd",
+          "on-primary-container": "#8abda9",
+          "inverse-on-surface": "#ecf1ff",
+          "surface-bright": "#f9f9ff",
+          "on-surface-variant": "#404945",
+          "on-tertiary-fixed": "#002115",
+          "surface-container-high": "#dee8ff",
+          "on-primary": "#ffffff",
+          "on-secondary": "#ffffff",
+          "error": "#ba1a1a",
+          "secondary": "#7e5700",
+          "secondary-fixed": "#ffdead",
+          "on-primary-fixed": "#002117",
+          "primary": "#003629",
+          "surface-container": "#e7eeff",
+          "primary-fixed-dim": "#9ed1bd",
+          "secondary-container": "#fdbe50",
+          "on-error": "#ffffff",
+          "surface-variant": "#d8e3fb",
+          "tertiary": "#003625",
+          "on-error-container": "#93000a",
+          "on-primary-fixed-variant": "#1d4f40",
+          "error-container": "#ffdad6",
+          "surface-container-highest": "#d8e3fb",
+          "on-secondary-container": "#714d00",
+          "on-surface": "#111c2d",
+          "outline-variant": "#c0c9c3",
+          "surface": "#f9f9ff",
+          "on-secondary-fixed-variant": "#604100",
+          "outline": "#707974",
+          "tertiary-fixed": "#abf1d0",
+          "surface-container-lowest": "#ffffff",
+          "surface-dim": "#cfdaf2",
+          "primary-fixed": "#baeed9",
+          "on-tertiary": "#ffffff",
+          "background": "#f9f9ff",
+          "tertiary-container": "#004f38",
+          "on-tertiary-container": "#7cc0a1",
+          "tertiary-fixed-dim": "#90d5b5",
+          "on-tertiary-fixed-variant": "#00513a",
+          "primary-container": "#1b4d3e",
+          "surface-container-low": "#f0f3ff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-lg": "1.5rem",
+          "gutter-mobile": "1rem",
+          "space-sm": "0.75rem",
+          "space-md": "1rem",
+          "margin-desktop": "3rem",
+          "space-2xl": "3rem",
+          "space-2xs": "0.25rem",
+          "margin-tablet": "2rem",
+          "gutter-desktop": "1.5rem",
+          "space-3xl": "4rem",
+          "space-xs": "0.5rem",
+          "margin-mobile": "1rem",
+          "container-max-width": "1280px",
+          "space-xl": "2rem"
+        },
+        "fontFamily": {
+          "body-lg": [
+            "Inter"
+          ],
+          "title-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "headline-md": [
+            "Plus Jakarta Sans"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "display-lg-mobile": [
+            "Plus Jakarta Sans"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "headline-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "title-md": [
+            "Plus Jakarta Sans"
+          ],
+          "headline-sm": [
+            "Plus Jakarta Sans"
+          ],
+          "display-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "headline-lg-mobile": [
+            "Plus Jakarta Sans"
+          ]
+        },
+        "fontSize": {
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "fontWeight": "400"
+            }
+          ],
+          "title-lg": [
+            "18px",
+            {
+              "lineHeight": "26px",
+              "fontWeight": "600"
+            }
+          ],
+          "label-md": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "fontWeight": "400"
+            }
+          ],
+          "label-lg": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.005em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg-mobile": [
+            "36px",
+            {
+              "lineHeight": "44px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "label-sm": [
+            "11px",
+            {
+              "lineHeight": "14px",
+              "letterSpacing": "0.04em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-lg": [
+            "32px",
+            {
+              "lineHeight": "40px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "title-md": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg": [
+            "48px",
+            {
+              "lineHeight": "56px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "700"
+            }
+          ],
+          "headline-lg-mobile": [
+            "26px",
+            {
+              "lineHeight": "34px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-space-md px-space-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-space-md"><div class="flex items-center gap-space-xs px-space-xs"><img alt="Minimalist modern botanical leaf and clinical nutrition emblem for PoshanCare, featuring clean geometric overlapping leaf curves in deep emerald green and soft sage with clinical cross harmony. Brand logo. - Primary color: #1b4d3e
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WCNdNdam7r35XPgY13QfmlUnJWF3PVLdzz5eqqvKpIEG0II8ulaw_df47VHm958zATi59ACPeYQa8fmCUnpmlcLPMX7VLS-nanoHVP8n-sMtcVCTtNmvUCfdQbyi1XFeeymfjqhoXs2De25vy6WIzO1mZQH0i1Ab5DMNyviAW-XzQN2H0c1RXG7DWBtrsK50I8GUfZr-Mvdh7kUjPcY3F3mw8QznSqXqYUJuhsRoxaoSyFDxRz5DqxVUI"/><div class="flex flex-col"><span class="font-title-md text-title-md text-primary tracking-tight">PoshanCare</span><span class="font-label-sm text-label-sm text-on-surface-variant">Clinical Intelligence</span></div></div><div class="flex flex-col gap-space-xs"><span class="px-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Clinical Operations</span><nav class="flex flex-col gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard-overview" href="#">Dashboard / Overview</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="food-diary-macro-log" href="#">Food Diary &amp; Macro Log</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="regional-food-database" href="#">Regional Food (ICMR-NIN)</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="biomarkers-anthropometry" href="#">Biomarkers &amp; Anthropometry</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="nutrition-goals-protocols" href="#">Goals &amp; Protocols</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reports-longitudinal-analytics" href="#">Reports &amp; Analytics</a></nav></div><div class="h-[1px] bg-surface-variant mx-space-2xs"></div><div class="flex flex-col gap-space-xs"><span class="px-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Care Management</span><nav class="flex flex-col gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#">Settings</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-profile" href="#">My Profile</a><a aria-current="page" class="px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]" data-path="notifications" href="#">Notifications</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="help-clinical-support" href="#">Help &amp; Clinical Support</a></nav></div></div><div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-[0_1px_3px_0_rgba(30,41,59,0.04)] flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-surface-tint text-[18px]">verified_user</span><span class="font-label-sm text-label-sm text-primary font-title-md">Clinical Compliance</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">HIPAA, DISHA &amp; ICMR-NIN 2024 validated encrypted medical telemetry.</p><div class="flex items-center gap-space-2xs"><span class="w-2 h-2 rounded-full bg-surface-tint"></span><span class="font-label-sm text-label-sm text-on-surface">Audit Ready (v2.4)</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="Minimalist modern botanical leaf and clinical nutrition emblem for PoshanCare, featuring clean geometric overlapping leaf curves in deep emerald green and soft sage with clinical cross harmony. Brand logo. - Primary color: #1b4d3e
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WCNdNdam7r35XPgY13QfmlUnJWF3PVLdzz5eqqvKpIEG0II8ulaw_df47VHm958zATi59ACPeYQa8fmCUnpmlcLPMX7VLS-nanoHVP8n-sMtcVCTtNmvUCfdQbyi1XFeeymfjqhoXs2De25vy6WIzO1mZQH0i1Ab5DMNyviAW-XzQN2H0c1RXG7DWBtrsK50I8GUfZr-Mvdh7kUjPcY3F3mw8QznSqXqYUJuhsRoxaoSyFDxRz5DqxVUI"/><div class="flex items-center gap-space-xs"><span class="font-title-lg text-title-lg text-primary">PoshanCare</span><span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-space-xs py-space-2xs rounded-full">Clinical Nutrition Intelligence</span></div></div><div class="hidden md:flex items-center bg-surface-container-lowest rounded-xl px-space-sm py-space-xs gap-space-xs w-96 shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><span class="material-symbols-outlined text-on-surface-variant text-[18px]">search</span><span class="font-body-sm text-body-sm text-on-surface-variant flex-1">Search foods, biomarkers, logs...</span><kbd class="bg-surface-container-low px-space-2xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface-variant">⌘K</kbd></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-2xs bg-surface-container-low px-space-sm py-space-2xs rounded-full"><span class="material-symbols-outlined text-surface-tint text-[16px]">shield</span><span class="font-label-sm text-label-sm text-primary">Clinical Privacy Verified</span></div><nav class="flex items-center" data-active-classes="bg-surface-container-high rounded-full ring-2 ring-primary"><a aria-current="page" class="relative flex items-center justify-center w-9 h-9 text-on-surface-variant transition-colors bg-surface-container-high rounded-full ring-2 ring-primary" data-path="notifications" href="#" title="Notifications"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary-container ring-2 ring-surface"></span></a></nav><div class="flex items-center gap-space-xs cursor-pointer pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden sm:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface">Adi Sharma</span><span class="font-label-sm text-label-sm text-on-surface-variant">Lead Dietitian</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div></div></header><main class="w-full pt-16 bg-surface px-space-lg"><div class="flex flex-col w-full pb-space-3xl">
+<!-- Top Header & Metadata Banner -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pt-space-lg pb-space-xl">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm uppercase tracking-wider font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse"></span>
+          ICMR Telemetry Feed · v2.4 Active Sync
+        </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px] text-surface-tint">verified</span>
+          Encrypted Audit Stream
+        </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight mt-1">Notifications</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+        Stay up to date with your clinical nutrition targets, biometric progress trends, and PoshanCare operational telemetry.
+      </p>
+</div>
+<!-- Quick Action Controls -->
+<div class="flex items-center gap-space-xs shrink-0">
+<button class="inline-flex items-center gap-space-2xs px-space-sm py-2.5 rounded-xl bg-surface-container-lowest text-primary font-label-lg text-label-lg shadow-sm hover:bg-surface-container-low transition-all active:scale-98" id="mark-all-read-btn" type="button">
+<span class="material-symbols-outlined text-[18px] text-primary-container">done_all</span>
+<span>Mark all as read</span>
+</button>
+<a class="inline-flex items-center gap-space-2xs px-space-sm py-2.5 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg shadow-sm hover:bg-primary-container transition-all" data-path="settings" href="#">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+<span>Notification settings</span>
+</a>
+</div>
+</div>
+<!-- Notification Summary Metric Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-md mb-space-xl">
+<!-- Card 1: Unread -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm relative overflow-hidden flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Unread Alerts</span>
+<span class="flex h-2.5 w-2.5 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-surface-tint opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary-container"></span>
+</span>
+</div>
+<div class="mt-space-xs flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-primary leading-none" id="metric-unread-count">5</span>
+<span class="font-label-md text-label-md text-on-surface-variant">pending review</span>
+</div>
+<div class="mt-space-sm flex items-center gap-1.5 text-surface-tint font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">priority_high</span>
+<span>Action required or recent telemetry</span>
+</div>
+<div class="absolute -right-6 -bottom-6 w-24 h-24 rounded-full bg-surface-container-low pointer-events-none opacity-60"></div>
+</div>
+<!-- Card 2: Today -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Received Today</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">today</span>
+</div>
+<div class="mt-space-xs flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-on-surface leading-none">8</span>
+<span class="font-label-md text-label-md text-on-surface-variant">events</span>
+</div>
+<div class="mt-space-sm flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[15px] text-surface-tint">bolt</span>
+<span>Generated within last 24 hours</span>
+</div>
+</div>
+<!-- Card 3: Earlier -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Historical Archive</span>
+<span class="material-symbols-outlined text-on-surface-variant text-[20px]">history</span>
+</div>
+<div class="mt-space-xs flex items-baseline gap-space-xs">
+<span class="font-display-lg text-display-lg text-on-surface leading-none">4</span>
+<span class="font-label-md text-label-md text-on-surface-variant">archived items</span>
+</div>
+<div class="mt-space-sm flex items-center gap-1.5 text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[15px]">inventory_2</span>
+<span>Indexed in longitudinal log</span>
+</div>
+</div>
+</div>
+<!-- Filter Pills Bar & Counter Badge -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm mb-space-lg bg-surface-container-low p-space-xs rounded-2xl">
+<div class="flex items-center gap-1 overflow-x-auto py-0.5">
+<button class="filter-tab active-pill px-3.5 py-1.5 rounded-xl font-label-md text-label-md transition-all flex items-center gap-2 bg-primary text-on-primary shadow-sm" data-filter="all" type="button">
+<span>All</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-lowest/20 text-on-primary text-[10px] font-bold" id="badge-all-count">12</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-xl font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all flex items-center gap-2" data-filter="unread" type="button">
+<span>Unread</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-tint text-on-primary text-[10px] font-bold" id="badge-unread-count">5</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-xl font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all flex items-center gap-2" data-filter="nutrition" type="button">
+<span>Nutrition</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-semibold">4</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-xl font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all flex items-center gap-2" data-filter="progress" type="button">
+<span>Progress</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-semibold">3</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-xl font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all flex items-center gap-2" data-filter="system" type="button">
+<span>System</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-semibold">3</span>
+</button>
+<button class="filter-tab px-3.5 py-1.5 rounded-xl font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-all flex items-center gap-2" data-filter="account" type="button">
+<span>Account</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-variant text-on-surface-variant text-[10px] font-semibold">2</span>
+</button>
+</div>
+<!-- Active stream status counter -->
+<div class="hidden sm:flex items-center gap-space-2xs px-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-2 h-2 rounded-full bg-surface-tint"></span>
+<span id="active-showing-label">Showing all 12 notifications</span>
+</div>
+</div>
+<!-- MAIN TWO-COLUMN DESKTOP GRID -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT / CENTER STREAM (70% ~ 8 cols) -->
+<div class="lg:col-span-8 flex flex-col gap-space-xl">
+<!-- SECTION 1: TODAY -->
+<div class="notification-group flex flex-col gap-space-sm" data-group="today">
+<div class="flex items-center justify-between px-space-xs pb-1">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-title-md text-title-md text-primary font-bold">Today</h2>
+<span class="unread-group-badge px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold">
+              3 unread
+            </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Live feeds active</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- Card 1 (Unread, Nutrition) -->
+<article class="notification-card group bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer" data-category="nutrition" data-id="1" data-unread="true">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-secondary-fixed flex items-center justify-center shrink-0 mt-0.5 text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[22px]">local_fire_department</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-primary-container shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Daily calorie target reached
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed/50 text-on-secondary-fixed font-label-sm text-label-sm">
+                      Nutrition
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">10 minutes ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  You've logged 2,700 kcal today against your 2,606 kcal clinical target. Postprandial energy distribution balanced within target limits.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="food-diary-macro-log" href="#">
+<span>View Food Diary</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark read
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 2 (Unread, Nutrition) -->
+<article class="notification-card group bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer" data-category="nutrition" data-id="2" data-unread="true">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-tertiary-fixed flex items-center justify-center shrink-0 mt-0.5 text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[22px]">fitness_center</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-primary-container shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Protein target achieved
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-tertiary-fixed/60 text-on-tertiary-fixed font-label-sm text-label-sm">
+                      Nutrition
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">35 minutes ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  You reached your daily protein target of 100 g with dinner (Sattu Paratha &amp; Moong Dal). High biological value protein index: 88%.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="food-diary-macro-log" href="#">
+<span>View Macros</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark read
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 3 (Unread, Progress) -->
+<article class="notification-card group bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer" data-category="progress" data-id="3" data-unread="true">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 mt-0.5 text-primary">
+<span class="material-symbols-outlined text-[22px]">monitoring</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-primary-container shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Weight progress updated
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container-high text-primary font-label-sm text-label-sm">
+                      Progress
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">1 hour ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Your latest weight entry is 56.4 kg. Your 7-day trend is being recalculated against your clinical goal baseline.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="biomarkers-anthropometry" href="#">
+<span>View Biomarkers</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark read
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 4 (Read, Progress) -->
+<article class="notification-card group bg-surface-container-lowest/80 hover:bg-surface-container-lowest transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer opacity-90" data-category="progress" data-id="4" data-unread="false">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">lab_profile</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-transparent shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Weekly nutrition report is ready
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                      Progress
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">3 hours ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Your longitudinal nutrition and body-composition summary for this week is available for consultation review.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-surface-tint font-semibold hover:underline" data-path="reports-longitudinal-analytics" href="#">
+<span>Download Report</span>
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark unread
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 5 (Read, System) -->
+<article class="notification-card group bg-surface-container-lowest/80 hover:bg-surface-container-lowest transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer opacity-90" data-category="system" data-id="5" data-unread="false">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">database</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-transparent shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      New food database update
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold">
+                      ICMR-NIN IFCT
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">5 hours ago</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Verified Indian food composition data has been updated in the PoshanCare database with 340 new regional cultivars and micro-mineral estimates.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="regional-food-database" href="#">
+<span>Explore ICMR Database</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark unread
+                  </button>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- SECTION 2: YESTERDAY -->
+<div class="notification-group flex flex-col gap-space-sm" data-group="yesterday">
+<div class="flex items-center justify-between px-space-xs pb-1">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-title-md text-title-md text-primary font-bold">Yesterday</h2>
+<span class="unread-group-badge px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+              2 unread
+            </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Archived feeds</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- Card 6 (Unread, Nutrition) -->
+<article class="notification-card group bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer" data-category="nutrition" data-id="6" data-unread="true">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-tertiary-fixed flex items-center justify-center shrink-0 mt-0.5 text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[22px]">edit_calendar</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-primary-container shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Daily diary reminder
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-secondary-fixed/50 text-on-secondary-fixed font-label-sm text-label-sm">
+                      Nutrition
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Yesterday, 8:00 PM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Don't forget to complete your evening dinner and hydration entries for yesterday to finalize your adherence score.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="food-diary-macro-log" href="#">
+<span>Log Meals</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark read
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 7 (Read, Progress) -->
+<article class="notification-card group bg-surface-container-lowest/80 hover:bg-surface-container-lowest transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer opacity-90" data-category="progress" data-id="7" data-unread="false">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">show_chart</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-transparent shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Body weight trend updated
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                      Progress
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Yesterday, 6:30 PM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Your 7-day exponential moving average has been recalculated. Steady metabolic trend indicated across the last 14 logs.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="biomarkers-anthropometry" href="#">
+<span>View Curve</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark unread
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 8 (Unread, Account) -->
+<article class="notification-card group bg-surface-container-lowest hover:bg-surface-container-low transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer" data-category="account" data-id="8" data-unread="true">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-error-container flex items-center justify-center shrink-0 mt-0.5 text-on-error-container">
+<span class="material-symbols-outlined text-[22px]">security</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-error shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      New security sign-in
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
+                      Account Security
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Yesterday, 9:15 AM</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  A new clinician portal sign-in to your PoshanCare account was detected from Chrome on macOS (Bengaluru, IN).
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-error font-semibold hover:underline" data-path="settings" href="#">
+<span>Review Active Sessions</span>
+<span class="material-symbols-outlined text-[16px]">open_in_new</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark read
+                  </button>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- SECTION 3: EARLIER -->
+<div class="notification-group flex flex-col gap-space-sm" data-group="earlier">
+<div class="flex items-center justify-between px-space-xs pb-1">
+<div class="flex items-center gap-space-xs">
+<h2 class="font-title-md text-title-md text-primary font-bold">Earlier</h2>
+<span class="unread-group-badge px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+              0 unread
+            </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Older events</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- Card 9 (Read, Nutrition) -->
+<article class="notification-card group bg-surface-container-lowest/80 hover:bg-surface-container-lowest transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer opacity-90" data-category="nutrition" data-id="9" data-unread="false">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">track_changes</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-transparent shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Nutrition goal updated
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                      Nutrition
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Sep 4</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Your daily calorie and macronutrient targets were calibrated by Dr. Sharma to optimize postprandial glucose stability.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="nutrition-goals-protocols" href="#">
+<span>View Updated Protocol</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark unread
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 10 (Read, System) -->
+<article class="notification-card group bg-surface-container-lowest/80 hover:bg-surface-container-lowest transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer opacity-90" data-category="system" data-id="10" data-unread="false">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">calculate</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-transparent shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Clinical calculation completed
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                      System
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Sep 3</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  Your revised Basal Metabolic Rate (BMR: 1,620 kcal) and Total Daily Energy Expenditure (TDEE: 2,430 kcal) are certified.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="nutrition-goals-protocols" href="#">
+<span>View Prescription</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark unread
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 11 (Read, Account) -->
+<article class="notification-card group bg-surface-container-lowest/80 hover:bg-surface-container-lowest transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer opacity-90" data-category="account" data-id="11" data-unread="false">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">manage_accounts</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-transparent shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      Clinic caregiver access authorized
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                      Account
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Aug 28</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  You granted read-only metabolic telemetry access to Dr. Adi Sharma (Lead Clinical Dietitian, Registration #PC-8891).
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<a class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="settings" href="#">
+<span>Manage Access</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark unread
+                  </button>
+</div>
+</div>
+</div>
+</article>
+<!-- Card 12 (Read, System) -->
+<article class="notification-card group bg-surface-container-lowest/80 hover:bg-surface-container-lowest transition-all duration-200 rounded-xl p-space-md shadow-sm relative cursor-pointer opacity-90" data-category="system" data-id="12" data-unread="false">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center shrink-0 mt-0.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[22px]">health_and_safety</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-space-xs">
+<div class="flex items-center gap-space-2xs flex-wrap">
+<span class="status-dot w-2 h-2 rounded-full bg-transparent shrink-0"></span>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold group-hover:text-primary transition-colors">
+                      DISHA telemetry protocol updated
+                    </h3>
+<span class="px-2 py-0.5 rounded-md bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+                      System
+                    </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant shrink-0">Aug 22</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                  All local nutritional data pipelines are operating under DISHA (Digital Information Security in Healthcare Act) compliant transit nodes.
+                </p>
+<div class="mt-space-sm flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-surface-tint flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+                    Compliance Verified
+                  </span>
+<button class="toggle-read-btn opacity-0 group-hover:opacity-100 transition-opacity font-label-sm text-label-sm text-on-surface-variant hover:text-primary" type="button">
+                    Mark unread
+                  </button>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+<!-- EMPTY STATE CARD (Displays when all are read or filtered out) -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-xl shadow-sm text-center flex flex-col items-center justify-center gap-space-sm" id="all-caught-up-card">
+<div class="w-16 h-16 rounded-full bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed shadow-inner">
+<span class="material-symbols-outlined text-[32px]">task_alt</span>
+</div>
+<div class="max-w-md">
+<h3 class="font-headline-sm text-headline-sm text-primary font-bold">You're all caught up</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            No new notifications right now. We'll let you know when clinical targets shift, biomarkers sync, or clinical notes are filed.
+          </p>
+</div>
+<div class="flex items-center gap-2 mt-2 px-3 py-1.5 rounded-full bg-surface-container-low font-label-sm text-label-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-surface-tint"></span>
+<span>Telemetry listener: Active (Every 15 mins)</span>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN (30% ~ 4 cols): Sticky Notification Preferences & Telemetry -->
+<aside class="lg:col-span-4 flex flex-col gap-space-lg lg:sticky lg:top-24">
+<!-- Panel 1: Notification Preferences -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-start justify-between">
+<div>
+<h3 class="font-title-lg text-title-lg text-primary font-bold">Notification Preferences</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Channels &amp; clinical alerts configuration</p>
+</div>
+<span class="material-symbols-outlined text-surface-tint text-[22px]">notifications_active</span>
+</div>
+<!-- Toggle List -->
+<div class="flex flex-col gap-space-sm pt-space-2xs">
+<!-- Preference 1 -->
+<label class="flex items-center justify-between p-space-xs rounded-xl hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface text-[14px]">Nutrition reminders</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">Meal logging, macro thresholds</span>
+</div>
+<input checked="" class="pref-toggle w-5 h-5 accent-primary-container rounded cursor-pointer" type="checkbox"/>
+</label>
+<!-- Preference 2 -->
+<label class="flex items-center justify-between p-space-xs rounded-xl hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface text-[14px]">Weight tracking reminders</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">Morning anthropometric weigh-in</span>
+</div>
+<input checked="" class="pref-toggle w-5 h-5 accent-primary-container rounded cursor-pointer" type="checkbox"/>
+</label>
+<!-- Preference 3 -->
+<label class="flex items-center justify-between p-space-xs rounded-xl hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface text-[14px]">Weekly progress reports</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">Aggregated clinical summaries</span>
+</div>
+<input checked="" class="pref-toggle w-5 h-5 accent-primary-container rounded cursor-pointer" type="checkbox"/>
+</label>
+<!-- Preference 4 -->
+<label class="flex items-center justify-between p-space-xs rounded-xl hover:bg-surface-container-low cursor-pointer transition-colors">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface text-[14px]">System updates</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">ICMR-NIN IFCT revisions</span>
+</div>
+<input checked="" class="pref-toggle w-5 h-5 accent-primary-container rounded cursor-pointer" type="checkbox"/>
+</label>
+<!-- Preference 5 (Locked) -->
+<div class="flex items-center justify-between p-space-xs rounded-xl bg-surface-container-low/50">
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-title-md text-title-md text-on-surface text-[14px]">Security alerts</span>
+<span class="material-symbols-outlined text-[14px] text-on-surface-variant">lock</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant text-[12px]">Sign-ins, auth tokens (Always On)</span>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold">
+              Mandatory
+            </span>
+</div>
+</div>
+<div class="pt-space-xs border-t border-surface-variant">
+<a class="inline-flex items-center gap-1.5 font-label-md text-label-md text-primary font-semibold hover:underline" data-path="settings" href="#">
+<span>Manage detailed notification channels</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Panel 2: Telemetry Delivery Channels -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-surface-tint text-[20px]">hub</span>
+<span class="font-title-md text-title-md text-primary font-semibold">Active Dispatch Nodes</span>
+</div>
+<div class="flex flex-col gap-2.5">
+<div class="flex items-center justify-between text-body-sm">
+<span class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-surface-tint">notifications</span>
+              Web Browser Push
+            </span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">Granted</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-surface-tint">mail</span>
+              Email Reports
+            </span>
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate max-w-[140px]" title="adi.sharma@example.com">adi.sharma@example.com</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="flex items-center gap-2 text-on-surface">
+<span class="material-symbols-outlined text-[16px] text-surface-tint">chat</span>
+              WhatsApp Telemetry
+            </span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">Active Sync</span>
+</div>
+</div>
+</div>
+<!-- Clinical Tip Card -->
+<div class="bg-primary text-on-primary rounded-2xl p-space-md shadow-md flex flex-col gap-space-xs relative overflow-hidden">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[18px] text-primary-fixed">psychology</span>
+<span class="font-label-sm text-label-sm text-primary-fixed uppercase tracking-wider font-semibold">Care Team Protocol</span>
+</div>
+<p class="font-body-sm text-body-sm text-inverse-on-surface leading-relaxed">
+          Notifications are prioritized by metabolic clinical urgency. High postprandial deviation alerts bypass quiet-hours mode per ICMR guidelines.
+        </p>
+<div class="mt-space-xs flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary-fixed-dim">Clinical Tier 1 Escalation</span>
+<span class="w-2 h-2 rounded-full bg-tertiary-fixed"></span>
+</div>
+</div>
+</aside>
+</div>
+<!-- CLINICAL FOOTER BAR -->
+<footer class="mt-space-3xl pt-space-lg border-t border-surface-variant/80 flex flex-col sm:flex-row items-center justify-between gap-space-sm text-on-surface-variant font-label-sm text-label-sm">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-surface-tint">lock</span>
+<span>All notifications encrypted via AES-256 GCM • DISHA/HIPAA Standard Compliant</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-surface-tint"></span>
+<span>Last synchronized: Just now</span>
+</div>
+</footer>
+</div>
+<script>
+  // PoshanCare Notification Center Interactivity
+  (function() {
+    let unreadCount = 5;
+    const cards = document.querySelectorAll('.notification-card');
+    const metricUnreadCount = document.getElementById('metric-unread-count');
+    const badgeUnreadCount = document.getElementById('badge-unread-count');
+    const markAllBtn = document.getElementById('mark-all-read-btn');
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const activeShowingLabel = document.getElementById('active-showing-label');
+    const caughtUpCard = document.getElementById('all-caught-up-card');
+
+    function updateCounts() {
+      const currentUnreads = document.querySelectorAll('.notification-card[data-unread="true"]').length;
+      unreadCount = currentUnreads;
+      if (metricUnreadCount) metricUnreadCount.textContent = currentUnreads;
+      if (badgeUnreadCount) badgeUnreadCount.textContent = currentUnreads;
+
+      // Update Today section badge
+      const todayUnreads = document.querySelectorAll('.notification-group[data-group="today"] .notification-card[data-unread="true"]').length;
+      const todayBadge = document.querySelector('.notification-group[data-group="today"] .unread-group-badge');
+      if (todayBadge) {
+        todayBadge.textContent = todayUnreads + ' unread';
+        todayBadge.className = todayUnreads > 0 
+          ? 'unread-group-badge px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold'
+          : 'unread-group-badge px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm';
+      }
+
+      // Update Yesterday section badge
+      const yesterdayUnreads = document.querySelectorAll('.notification-group[data-group="yesterday"] .notification-card[data-unread="true"]').length;
+      const yesterdayBadge = document.querySelector('.notification-group[data-group="yesterday"] .unread-group-badge');
+      if (yesterdayBadge) {
+        yesterdayBadge.textContent = yesterdayUnreads + ' unread';
+        yesterdayBadge.className = yesterdayUnreads > 0 
+          ? 'unread-group-badge px-2 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold'
+          : 'unread-group-badge px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm';
+      }
+    }
+
+    // Toggle single card read/unread
+    cards.forEach(card => {
+      card.addEventListener('click', function(e) {
+        // Prevent triggering if clicked directly on an explicit action link
+        if (e.target.closest('a')) return;
+
+        const isUnread = card.getAttribute('data-unread') === 'true';
+        const newStatus = !isUnread;
+        card.setAttribute('data-unread', newStatus ? 'true' : 'false');
+
+        const dot = card.querySelector('.status-dot');
+        const toggleBtn = card.querySelector('.toggle-read-btn');
+
+        if (newStatus) {
+          card.classList.remove('opacity-90', 'bg-surface-container-lowest/80');
+          card.classList.add('bg-surface-container-lowest');
+          if (dot) dot.className = 'status-dot w-2 h-2 rounded-full bg-primary-container shrink-0';
+          if (toggleBtn) toggleBtn.textContent = 'Mark read';
+        } else {
+          card.classList.add('opacity-90', 'bg-surface-container-lowest/80');
+          if (dot) dot.className = 'status-dot w-2 h-2 rounded-full bg-transparent shrink-0';
+          if (toggleBtn) toggleBtn.textContent = 'Mark unread';
+        }
+
+        updateCounts();
+
+        // If currently filtering by unread, hide if marked read
+        const activeTab = document.querySelector('.filter-tab.bg-primary');
+        if (activeTab && activeTab.getAttribute('data-filter') === 'unread' && !newStatus) {
+          card.style.display = 'none';
+        }
+      });
+    });
+
+    // Mark All As Read
+    if (markAllBtn) {
+      markAllBtn.addEventListener('click', function() {
+        cards.forEach(card => {
+          card.setAttribute('data-unread', 'false');
+          card.classList.add('opacity-90', 'bg-surface-container-lowest/80');
+          const dot = card.querySelector('.status-dot');
+          if (dot) dot.className = 'status-dot w-2 h-2 rounded-full bg-transparent shrink-0';
+          const toggleBtn = card.querySelector('.toggle-read-btn');
+          if (toggleBtn) toggleBtn.textContent = 'Mark unread';
+        });
+        updateCounts();
+
+        // Temporary visual confirmation on button
+        const originalText = markAllBtn.innerHTML;
+        markAllBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] text-surface-tint">check_circle</span><span>All marked as read</span>';
+        setTimeout(() => {
+          markAllBtn.innerHTML = originalText;
+        }, 2200);
+
+        // If filtering by unread, hide all
+        const activeTab = document.querySelector('.filter-tab.bg-primary');
+        if (activeTab && activeTab.getAttribute('data-filter') === 'unread') {
+          cards.forEach(c => c.style.display = 'none');
+          if (activeShowingLabel) activeShowingLabel.textContent = 'Showing 0 notifications';
+        }
+      });
+    }
+
+    // Segmented Control Filters
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        filterTabs.forEach(t => {
+          t.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm');
+          t.classList.add('text-on-surface-variant');
+        });
+        this.classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+        this.classList.remove('text-on-surface-variant');
+
+        const filter = this.getAttribute('data-filter');
+        let visibleCount = 0;
+
+        cards.forEach(card => {
+          const category = card.getAttribute('data-category');
+          const isUnread = card.getAttribute('data-unread') === 'true';
+
+          let show = false;
+          if (filter === 'all') {
+            show = true;
+          } else if (filter === 'unread') {
+            show = isUnread;
+          } else if (filter === category) {
+            show = true;
+          }
+
+          if (show) {
+            card.style.display = 'block';
+            visibleCount++;
+          } else {
+            card.style.display = 'none';
+          }
+        });
+
+        // Toggle section headers if all cards in group hidden
+        document.querySelectorAll('.notification-group').forEach(group => {
+          const visibleCardsInGroup = group.querySelectorAll('.notification-card:not([style*="display: none"])');
+          group.style.display = visibleCardsInGroup.length > 0 ? 'flex' : 'none';
+        });
+
+        if (activeShowingLabel) {
+          activeShowingLabel.textContent = `Showing ${visibleCount} notification${visibleCount === 1 ? '' : 's'}`;
+        }
+      });
+    });
+
+    updateCounts();
+  })();
+</script></main></div></body></html>

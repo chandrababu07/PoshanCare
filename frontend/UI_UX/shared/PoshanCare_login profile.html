@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-tint": "#376757",
+          "secondary-fixed-dim": "#fabc4d",
+          "on-background": "#111c2d",
+          "on-secondary-fixed": "#281900",
+          "inverse-surface": "#263143",
+          "inverse-primary": "#9ed1bd",
+          "on-primary-container": "#8abda9",
+          "inverse-on-surface": "#ecf1ff",
+          "surface-bright": "#f9f9ff",
+          "on-surface-variant": "#404945",
+          "on-tertiary-fixed": "#002115",
+          "surface-container-high": "#dee8ff",
+          "on-primary": "#ffffff",
+          "on-secondary": "#ffffff",
+          "error": "#ba1a1a",
+          "secondary": "#7e5700",
+          "secondary-fixed": "#ffdead",
+          "on-primary-fixed": "#002117",
+          "primary": "#003629",
+          "surface-container": "#e7eeff",
+          "primary-fixed-dim": "#9ed1bd",
+          "secondary-container": "#fdbe50",
+          "on-error": "#ffffff",
+          "surface-variant": "#d8e3fb",
+          "tertiary": "#003625",
+          "on-error-container": "#93000a",
+          "on-primary-fixed-variant": "#1d4f40",
+          "error-container": "#ffdad6",
+          "surface-container-highest": "#d8e3fb",
+          "on-secondary-container": "#714d00",
+          "on-surface": "#111c2d",
+          "outline-variant": "#c0c9c3",
+          "surface": "#f9f9ff",
+          "on-secondary-fixed-variant": "#604100",
+          "outline": "#707974",
+          "tertiary-fixed": "#abf1d0",
+          "surface-container-lowest": "#ffffff",
+          "surface-dim": "#cfdaf2",
+          "primary-fixed": "#baeed9",
+          "on-tertiary": "#ffffff",
+          "background": "#f9f9ff",
+          "tertiary-container": "#004f38",
+          "on-tertiary-container": "#7cc0a1",
+          "tertiary-fixed-dim": "#90d5b5",
+          "on-tertiary-fixed-variant": "#00513a",
+          "primary-container": "#1b4d3e",
+          "surface-container-low": "#f0f3ff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-lg": "1.5rem",
+          "gutter-mobile": "1rem",
+          "space-sm": "0.75rem",
+          "space-md": "1rem",
+          "margin-desktop": "3rem",
+          "space-2xl": "3rem",
+          "space-2xs": "0.25rem",
+          "margin-tablet": "2rem",
+          "gutter-desktop": "1.5rem",
+          "space-3xl": "4rem",
+          "space-xs": "0.5rem",
+          "margin-mobile": "1rem",
+          "container-max-width": "1280px",
+          "space-xl": "2rem"
+        },
+        "fontFamily": {
+          "body-lg": [
+            "Inter"
+          ],
+          "title-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "headline-md": [
+            "Plus Jakarta Sans"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "display-lg-mobile": [
+            "Plus Jakarta Sans"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "headline-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "title-md": [
+            "Plus Jakarta Sans"
+          ],
+          "headline-sm": [
+            "Plus Jakarta Sans"
+          ],
+          "display-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "headline-lg-mobile": [
+            "Plus Jakarta Sans"
+          ]
+        },
+        "fontSize": {
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "fontWeight": "400"
+            }
+          ],
+          "title-lg": [
+            "18px",
+            {
+              "lineHeight": "26px",
+              "fontWeight": "600"
+            }
+          ],
+          "label-md": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "fontWeight": "400"
+            }
+          ],
+          "label-lg": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.005em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg-mobile": [
+            "36px",
+            {
+              "lineHeight": "44px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "label-sm": [
+            "11px",
+            {
+              "lineHeight": "14px",
+              "letterSpacing": "0.04em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-lg": [
+            "32px",
+            {
+              "lineHeight": "40px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "title-md": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg": [
+            "48px",
+            {
+              "lineHeight": "56px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "700"
+            }
+          ],
+          "headline-lg-mobile": [
+            "26px",
+            {
+              "lineHeight": "34px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-space-md px-space-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-space-md"><div class="flex items-center gap-space-xs px-space-xs"><img alt="Minimalist modern botanical leaf and clinical nutrition emblem for PoshanCare, featuring clean geometric overlapping leaf curves in deep emerald green and soft sage with clinical cross harmony. Brand logo. - Primary color: #1b4d3e
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WCNdNdam7r35XPgY13QfmlUnJWF3PVLdzz5eqqvKpIEG0II8ulaw_df47VHm958zATi59ACPeYQa8fmCUnpmlcLPMX7VLS-nanoHVP8n-sMtcVCTtNmvUCfdQbyi1XFeeymfjqhoXs2De25vy6WIzO1mZQH0i1Ab5DMNyviAW-XzQN2H0c1RXG7DWBtrsK50I8GUfZr-Mvdh7kUjPcY3F3mw8QznSqXqYUJuhsRoxaoSyFDxRz5DqxVUI"/><div class="flex flex-col"><span class="font-title-md text-title-md text-primary tracking-tight">PoshanCare</span><span class="font-label-sm text-label-sm text-on-surface-variant">Clinical Intelligence</span></div></div><div class="flex flex-col gap-space-xs"><span class="px-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Clinical Operations</span><nav class="flex flex-col gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard-overview" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span>Dashboard / Overview</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="food-diary-macro-log" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span>Food Diary &amp; Macro Log</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="regional-food-database" href="#"><span class="material-symbols-outlined text-[20px]">nutrition</span><span>Regional Food (ICMR-NIN)</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="biomarkers-anthropometry" href="#"><span class="material-symbols-outlined text-[20px]">vital_signs</span><span>Biomarkers &amp; Anthropometry</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="nutrition-goals-protocols" href="#"><span class="material-symbols-outlined text-[20px]">assignment_turned_in</span><span>Goals &amp; Protocols</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reports-longitudinal-analytics" href="#"><span class="material-symbols-outlined text-[20px]">monitoring</span><span>Reports &amp; Analytics</span></a></nav></div><div class="h-[1px] bg-surface-variant mx-space-2xs"></div><div class="flex flex-col gap-space-xs"><span class="px-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Care Management</span><nav class="flex flex-col gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span>Settings</span></a><a aria-current="page" class="flex items-center gap-space-sm px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]" data-path="my-profile" href="#"><span class="material-symbols-outlined text-[20px]">account_circle</span><span>My Profile</span></a><a class="flex items-center gap-space-sm px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="help-clinical-support" href="#"><span class="material-symbols-outlined text-[20px]">support_agent</span><span>Help &amp; Clinical Support</span></a></nav></div></div><div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-[0_1px_3px_0_rgba(30,41,59,0.04)] flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-surface-tint text-[18px]">verified_user</span><span class="font-label-sm text-label-sm text-primary font-title-md">Clinical Compliance</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">HIPAA, DISHA &amp; ICMR-NIN 2024 validated encrypted medical telemetry.</p><div class="flex items-center gap-space-2xs"><span class="w-2 h-2 rounded-full bg-surface-tint"></span><span class="font-label-sm text-label-sm text-on-surface">Audit Ready (v2.4)</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="Minimalist modern botanical leaf and clinical nutrition emblem for PoshanCare, featuring clean geometric overlapping leaf curves in deep emerald green and soft sage with clinical cross harmony. Brand logo. - Primary color: #1b4d3e
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WCNdNdam7r35XPgY13QfmlUnJWF3PVLdzz5eqqvKpIEG0II8ulaw_df47VHm958zATi59ACPeYQa8fmCUnpmlcLPMX7VLS-nanoHVP8n-sMtcVCTtNmvUCfdQbyi1XFeeymfjqhoXs2De25vy6WIzO1mZQH0i1Ab5DMNyviAW-XzQN2H0c1RXG7DWBtrsK50I8GUfZr-Mvdh7kUjPcY3F3mw8QznSqXqYUJuhsRoxaoSyFDxRz5DqxVUI"/><div class="flex items-center gap-space-xs"><span class="font-title-lg text-title-lg text-primary">PoshanCare</span><span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-space-xs py-space-2xs rounded-full">Clinical Nutrition Intelligence</span></div></div><div class="hidden md:flex items-center bg-surface-container-lowest rounded-xl px-space-sm py-space-xs gap-space-xs w-96 shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><span class="material-symbols-outlined text-on-surface-variant text-[18px]">search</span><span class="font-body-sm text-body-sm text-on-surface-variant flex-1">Search foods, biomarkers, logs...</span><kbd class="bg-surface-container-low px-space-2xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface-variant">⌘K</kbd></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-2xs bg-surface-container-low px-space-sm py-space-2xs rounded-full"><span class="material-symbols-outlined text-surface-tint text-[16px]">shield</span><span class="font-label-sm text-label-sm text-primary">Clinical Privacy Verified</span></div><div class="relative cursor-pointer"><span class="material-symbols-outlined text-on-surface-variant text-[22px]">notifications</span><span class="absolute top-0 right-0 w-2 h-2 rounded-full bg-secondary-container"></span></div><div class="flex items-center gap-space-xs cursor-pointer pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden sm:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface">Adi Sharma</span><span class="font-label-sm text-label-sm text-on-surface-variant">Lead Dietitian</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div></div></header><main class="w-full pt-16 bg-surface px-space-lg"><div class="flex flex-col w-full">
+<div class="max-w-[1240px] w-full mx-auto py-space-xl flex flex-col gap-space-xl">
+<!-- Top Meta & Title Hierarchy -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-md">
+<span class="hover:text-primary transition-colors cursor-pointer">Shared Account &amp; Clinical Records</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-primary font-medium">My Profile</span>
+</div>
+<div class="flex items-baseline gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">My Profile</h1>
+<span class="bg-surface-container-high text-primary px-space-xs py-space-2xs rounded-full font-label-sm">v2.4 Telemetry Linked</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl">
+          Manage your personal identity, clinical baseline biometrics, and PoshanCare metabolic intelligence preferences.
+        </p>
+</div>
+<!-- Sync Status Pill -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-md py-space-xs rounded-xl shadow-sm">
+<span class="material-symbols-outlined text-surface-tint text-[18px]">cloud_done</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-primary font-semibold">ICMR Cloud Telemetry Active</span>
+<span class="font-body-sm text-on-surface-variant text-[11px]">Last synced: Today, 09:42 AM</span>
+</div>
+</div>
+</div>
+<!-- Profile Header Card -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg relative overflow-hidden">
+<div class="absolute -right-16 -top-16 w-64 h-64 rounded-full bg-surface-container-high/40 pointer-events-none blur-3xl"></div>
+<div class="flex flex-col sm:flex-row sm:items-center gap-space-lg z-10">
+<!-- Avatar with Clinical Ring -->
+<div class="relative flex-shrink-0">
+<div class="w-24 h-24 rounded-full bg-surface-container-high p-1 flex items-center justify-center">
+<div class="w-full h-full rounded-full bg-primary flex items-center justify-center text-on-primary font-headline-md text-headline-md shadow-inner">
+              AS
+            </div>
+</div>
+<div class="absolute bottom-0 right-1 bg-surface-container-lowest p-1 rounded-full shadow-sm">
+<span class="w-4 h-4 rounded-full bg-surface-tint block ring-2 ring-surface-container-lowest"></span>
+</div>
+</div>
+<!-- Identity Information -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<h2 class="font-headline-md text-headline-md text-on-surface">Adi Sharma</h2>
+<span class="inline-flex items-center gap-1 bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-space-xs py-space-2xs rounded-full">
+<span class="w-1.5 h-1.5 rounded-full bg-surface-tint animate-ping"></span>
+              Active
+            </span>
+<span class="bg-surface-container-low text-primary font-label-sm text-label-sm px-space-xs py-space-2xs rounded-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-surface-tint">verified</span>
+              Verified Patient · Clinical Intake Complete
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px]">mail</span>
+            adi.sharma@example.com
+            <span class="mx-space-2xs text-outline-variant">•</span>
+<span class="font-label-sm uppercase tracking-wider text-primary font-medium">Record ID: PC-98420</span>
+</p>
+<div class="flex items-center gap-space-md pt-space-2xs">
+<div class="flex items-center gap-space-2xs font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-surface-tint">calendar_month</span>
+              Enrolled: November 14, 2023
+            </div>
+<div class="flex items-center gap-space-2xs font-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-secondary">shield_person</span>
+              Protocol: Hypertrophy Phase II
+            </div>
+</div>
+</div>
+</div>
+<!-- Quick Action Buttons -->
+<div class="flex items-center gap-space-xs z-10">
+<button class="h-11 px-space-md bg-primary hover:bg-primary-container text-on-primary rounded-xl font-label-lg text-label-lg flex items-center gap-space-xs transition-all shadow-sm" id="quick-edit-btn">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+<span>Edit Profile</span>
+</button>
+<button class="h-11 px-space-md bg-surface-container hover:bg-surface-container-high text-primary rounded-xl font-label-lg text-label-lg flex items-center gap-space-xs transition-colors" id="export-summary-btn">
+<span class="material-symbols-outlined text-[18px]">print</span>
+<span>EHR Summary</span>
+</button>
+</div>
+</div>
+<!-- Main Two-Column Structure -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT COLUMN: Personal Identity & Anthropometrics -->
+<div class="lg:col-span-6 flex flex-col gap-space-xl">
+<!-- Section 1: Personal Information -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">badge</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-primary">Personal Information</h3>
+</div>
+<button class="text-surface-tint font-label-lg hover:underline flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">mode_edit</span>
+              Modify
+            </button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Full Legal Name</span>
+<span class="font-title-md text-title-md text-on-surface">Adi Sharma</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Email Address</span>
+<span class="material-symbols-outlined text-surface-tint text-[16px]">verified</span>
+</div>
+<span class="font-title-md text-title-md text-on-surface truncate">adi.sharma@example.com</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Date of Birth &amp; Age</span>
+<span class="font-title-md text-title-md text-on-surface">August 18, 1997 <span class="font-body-sm text-on-surface-variant font-normal">(Age 27)</span></span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Biological Sex</span>
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Female</span>
+<span class="material-symbols-outlined text-surface-tint text-[18px]" title="Clinical formula anchor">female</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-surface-tint text-[18px] mt-0.5">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Biological sex and chronologic age calibrate the baseline <strong class="text-on-surface font-medium">Mifflin-St Jeor &amp; ICMR 2024 Reference Indian Adult</strong> metabolic equations.
+            </p>
+</div>
+</div>
+<!-- Section 2: Body & Biometrics -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">monitor_weight</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">Body &amp; Biometrics</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Validated bioimpedance and stature telemetry</span>
+</div>
+</div>
+<button class="h-9 px-space-sm bg-surface-container hover:bg-surface-container-high text-primary rounded-xl font-label-md text-label-md flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+              Update Metrics
+            </button>
+</div>
+<!-- BMI Clinical Diagnostic Pill Callout -->
+<div class="bg-surface-container rounded-xl p-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[24px]">vital_signs</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">21.2</span>
+<span class="font-label-md text-label-md text-on-surface-variant">kg/m² (BMI)</span>
+</div>
+<span class="font-label-sm text-label-sm text-surface-tint font-medium">Optimal Clinical Asian-Indian Reference Range</span>
+</div>
+</div>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-space-xs py-space-2xs rounded-full">
+              Normal Weight (18.5 - 22.9)
+            </span>
+</div>
+<!-- Biometric Metric Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Stature / Height</span>
+<span class="font-title-lg text-title-lg text-on-surface">163 <span class="font-body-sm text-on-surface-variant">cm</span></span>
+<span class="font-body-sm text-on-surface-variant text-[11px]">5 ft 4.2 in</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Current Weight</span>
+<div class="flex items-baseline gap-1">
+<span class="font-title-lg text-title-lg text-primary font-bold">56.4</span>
+<span class="font-body-sm text-on-surface-variant">kg</span>
+</div>
+<span class="font-label-sm text-surface-tint text-[11px] flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span> +0.2 kg / 14d
+              </span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Baseline Intake</span>
+<span class="font-title-lg text-title-lg text-on-surface">52.0 <span class="font-body-sm text-on-surface-variant">kg</span></span>
+<span class="font-body-sm text-on-surface-variant text-[11px]">Nov 2023 baseline</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-1">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Lean Target Milestone</span>
+<span class="font-title-lg text-title-lg text-secondary font-bold">58.5 <span class="font-body-sm text-on-surface-variant">kg</span></span>
+<span class="font-body-sm text-on-surface-variant text-[11px]">Hypertrophy phase target</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-1 col-span-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Physical Activity Level (PAL)</span>
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">Moderately Active</span>
+<span class="bg-surface-container text-primary font-label-sm px-space-xs py-0.5 rounded-md font-mono">1.55× PAL</span>
+</div>
+<span class="font-body-sm text-on-surface-variant text-[11px]">Resistance training 4× / week + 8k daily steps</span>
+</div>
+</div>
+<!-- Sparkline / Mini Trend Visualization -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-on-surface font-medium">Longitudinal Weight Trend (Last 90 Days)</span>
+<span class="font-label-sm text-surface-tint">+4.4 kg overall progress</span>
+</div>
+<div class="w-full h-16 relative">
+<svg class="w-full h-full text-primary" fill="none" preserveaspectratio="none" viewbox="0 0 320 60">
+<path d="M0,52 Q40,48 80,42 T160,35 T240,24 T320,12" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0,52 Q40,48 80,42 T160,35 T240,24 T320,12 L320,60 L0,60 Z" fill="currentColor" fill-opacity="0.08"></path>
+<circle class="fill-surface-tint" cx="320" cy="12" r="4"></circle>
+</svg>
+</div>
+<div class="flex justify-between font-label-sm text-[11px] text-on-surface-variant">
+<span>52.0 kg (Nov)</span>
+<span>54.1 kg (Jan)</span>
+<span>55.8 kg (Mar)</span>
+<span class="text-primary font-semibold">56.4 kg (Current)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Targets, Preferences & Security -->
+<div class="lg:col-span-6 flex flex-col gap-space-xl">
+<!-- Section 3: Nutrition Profile -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">restaurant</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-primary">Nutrition Profile</h3>
+</div>
+<button class="h-9 px-space-sm bg-surface-container hover:bg-surface-container-high text-primary rounded-xl font-label-md text-label-md flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">tune</span>
+              Edit Targets
+            </button>
+</div>
+<!-- Primary Objective Header -->
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex flex-col">
+<span class="font-label-sm text-on-surface-variant uppercase tracking-wider">Clinical Nutrition Strategy</span>
+<span class="font-title-md text-title-md text-primary font-semibold">Gain Muscle / Hypertrophy</span>
+</div>
+<span class="bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm px-space-xs py-space-2xs rounded-full font-medium">
+              High Nitrogen Density
+            </span>
+</div>
+<!-- Macro Targets Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs">
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-0.5">
+<span class="font-label-sm text-on-surface-variant">Total Daily Energy</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">2,606</span>
+<span class="font-body-sm text-on-surface-variant text-[11px]">kcal / day</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-on-surface-variant">Protein</span>
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">100 <span class="text-[12px] font-normal">g</span></span>
+<span class="font-body-sm text-surface-tint text-[11px] font-medium">1.77 g/kg body wt</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-on-surface-variant">Carbohydrates</span>
+<span class="w-2 h-2 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">320 <span class="text-[12px] font-normal">g</span></span>
+<span class="font-body-sm text-on-surface-variant text-[11px]">Complex pulses &amp; grains</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-space-sm flex flex-col gap-0.5">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-on-surface-variant">Lipids / Fats</span>
+<span class="w-2 h-2 rounded-full bg-surface-tint"></span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">80 <span class="text-[12px] font-normal">g</span></span>
+<span class="font-body-sm text-on-surface-variant text-[11px]">Cold-pressed &amp; seed oils</span>
+</div>
+</div>
+<!-- Multi-Segment Macro Ratio Bar -->
+<div class="flex flex-col gap-space-2xs pt-space-xs">
+<div class="flex justify-between font-label-sm text-on-surface-variant">
+<span>Macronutrient Caloric Allocation</span>
+<span class="text-primary font-medium">15% P · 55% C · 30% F</span>
+</div>
+<div class="h-3 w-full bg-surface-container rounded-full overflow-hidden flex">
+<div class="bg-primary h-full transition-all" style="width: 15%" title="Protein: 15%"></div>
+<div class="bg-secondary-container h-full transition-all" style="width: 55%" title="Carbohydrates: 55%"></div>
+<div class="bg-surface-tint h-full transition-all" style="width: 30%" title="Fats: 30%"></div>
+</div>
+<div class="flex items-center justify-between font-body-sm text-[11px] text-on-surface-variant">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary inline-block"></span> 400 kcal Protein</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-secondary-container inline-block"></span> 1,280 kcal Carbs</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-surface-tint inline-block"></span> 720 kcal Lipids</span>
+</div>
+</div>
+</div>
+<!-- Section 4: Account & Dietary Preferences -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-primary">Account Preferences</h3>
+</div>
+<span class="font-label-sm text-surface-tint bg-tertiary-fixed px-space-xs py-space-2xs rounded-full">Standard Metric Active</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Unit System</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Clinical standards: Kilograms (kg), Centimeters (cm), Kilocalories (kcal)</span>
+</div>
+<div class="bg-surface-container-highest p-1 rounded-lg flex items-center gap-1">
+<button class="px-space-xs py-1 rounded bg-surface-container-lowest text-primary font-label-sm shadow-sm font-semibold">Metric</button>
+<button class="px-space-xs py-1 rounded text-on-surface-variant font-label-sm hover:text-on-surface">Imperial</button>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Dietary Regional Profile</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Indian Culinary Matrix (Standard Katori &amp; Roti volumetric conversion)</span>
+</div>
+<span class="bg-surface-container text-primary font-label-sm px-space-sm py-1 rounded-full">North &amp; South Fusion</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Nutritional Reference Database</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Default source for macro and micronutrient bio-availability</span>
+</div>
+<span class="bg-surface-container text-primary font-label-sm px-space-sm py-1 rounded-full font-medium">ICMR-NIN IFCT (2024 Edition)</span>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-container-low rounded-xl">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Clinical Notifications</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Weekly longitudinal biomarker summary, glycemic variance, &amp; logging alert</span>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox"/>
+<div class="w-11 h-6 bg-surface-variant peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-surface-container-lowest after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+</label>
+</div>
+</div>
+</div>
+<!-- Section 5: Privacy & Clinical Security -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">security</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">Privacy &amp; Security</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">HIPAA &amp; DISHA compliant credential telemetry</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-surface-tint">verified_user</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between p-space-sm hover:bg-surface-container-low rounded-xl transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-on-surface-variant">lock</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Change Password</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Last updated 42 days ago (Strong entropy)</span>
+</div>
+</div>
+<button class="font-label-md text-primary hover:underline">Update</button>
+</div>
+<div class="flex items-center justify-between p-space-sm hover:bg-surface-container-low rounded-xl transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-surface-tint">phonelink_lock</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Two-Factor Authentication (2FA)</span>
+<span class="font-body-sm text-body-sm text-surface-tint font-medium">Enabled · Authenticator App (TOTP)</span>
+</div>
+</div>
+<button class="font-label-md text-on-surface-variant hover:underline">Manage</button>
+</div>
+<div class="flex items-center justify-between p-space-sm hover:bg-surface-container-low rounded-xl transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-on-surface-variant">devices</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Active Telemetry Sessions</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">2 active nodes · Chrome on macOS (Current Session)</span>
+</div>
+</div>
+<button class="font-label-md text-on-surface-variant hover:underline">Revoke Other</button>
+</div>
+<div class="flex items-center justify-between p-space-sm hover:bg-surface-container-low rounded-xl transition-colors">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-on-surface-variant">file_download</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Download Clinical Records</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Export complete longitudinal logs in FHIR JSON / Medical PDF</span>
+</div>
+</div>
+<button class="px-space-xs py-1 rounded bg-surface-container hover:bg-surface-container-high text-primary font-label-sm">Export</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Danger Zone Card -->
+<div class="bg-error-container/20 rounded-xl p-space-lg shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-error-container text-error flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[24px]">warning</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<h4 class="font-title-lg text-title-lg text-error font-semibold">Delete Account &amp; Clinical Data</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-2xl">
+            Permanently deactivates your PoshanCare record, clears biometric calibrations, and purges stored dietary telemetry. This action cannot be reversed or recovered.
+          </p>
+</div>
+</div>
+<button class="px-space-md py-space-xs bg-surface-container-lowest hover:bg-error-container text-error rounded-xl font-label-lg text-label-lg transition-colors flex-shrink-0 shadow-sm" id="delete-btn">
+        Delete Account
+      </button>
+</div>
+<!-- Sticky Bottom Persistence Action Bar -->
+<div class="sticky bottom-4 z-30 bg-surface-container-lowest/90 backdrop-blur-md rounded-xl p-space-md shadow-md flex items-center justify-between">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm">
+<span class="material-symbols-outlined text-surface-tint text-[18px]">verified</span>
+<span>All data encrypted using AES-256 GCM telemetry. Changes sync across linked clinician portals.</span>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="h-10 px-space-md bg-surface-container-low hover:bg-surface-container text-on-surface rounded-xl font-label-lg text-label-lg transition-colors" id="discard-btn">
+          Reset Changes
+        </button>
+<button class="h-10 px-space-lg bg-primary hover:bg-primary-container text-on-primary rounded-xl font-label-lg text-label-lg font-medium transition-all shadow-sm flex items-center gap-space-2xs" id="save-btn">
+<span class="material-symbols-outlined text-[18px]">save</span>
+<span>Save Changes</span>
+</button>
+</div>
+</div>
+<!-- Interactive Floating Notification Toast -->
+<div class="fixed bottom-20 right-8 z-50 transform translate-y-8 opacity-0 pointer-events-none transition-all duration-300 bg-primary text-on-primary px-space-md py-space-sm rounded-xl shadow-xl flex items-center gap-space-sm" id="toast">
+<span class="material-symbols-outlined text-tertiary-fixed text-[20px]">check_circle</span>
+<div class="flex flex-col">
+<span class="font-title-md text-[14px]">Profile Synchronized</span>
+<span class="font-body-sm text-[12px] text-on-primary/80">Clinical baseline &amp; macro targets updated in ICMR telemetry cloud.</span>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Simple micro-interactions for profile buttons
+  const saveBtn = document.getElementById('save-btn');
+  const toast = document.getElementById('toast');
+  const discardBtn = document.getElementById('discard-btn');
+  const deleteBtn = document.getElementById('delete-btn');
+  const quickEditBtn = document.getElementById('quick-edit-btn');
+
+  function showToast(title, msg) {
+    if (!toast) return;
+    if (title) toast.querySelector('.font-title-md').textContent = title;
+    if (msg) toast.querySelector('.font-body-sm').textContent = msg;
+    
+    toast.classList.remove('translate-y-8', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    
+    setTimeout(() => {
+      toast.classList.add('translate-y-8', 'opacity-0', 'pointer-events-none');
+      toast.classList.remove('translate-y-0', 'opacity-100');
+    }, 3200);
+  }
+
+  if (saveBtn) {
+    saveBtn.addEventListener('click', () => {
+      showToast('Profile & Baseline Updated', 'All biometric telemetry and macro distributions saved successfully.');
+    });
+  }
+
+  if (discardBtn) {
+    discardBtn.addEventListener('click', () => {
+      showToast('Preferences Reset', 'All uncommitted form fields reverted to baseline clinical state.');
+    });
+  }
+
+  if (quickEditBtn) {
+    quickEditBtn.addEventListener('click', () => {
+      showToast('Edit Mode Active', 'You can now update personal demographics and contact coordinates.');
+    });
+  }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', () => {
+      if (confirm('Clinical Safeguard: Are you certain you wish to request permanent de-identification and deletion of metabolic records?')) {
+        showToast('Request Logged', 'A verification link has been sent to your primary clinical email.');
+      }
+    });
+  }
+</script></main></div></body></html>

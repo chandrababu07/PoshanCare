@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><title>PoshanCare - Smarter Nutrition. Better Health.</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base { html, body { margin: 0; padding: 0; } body { overscroll-behavior: none; } main > :first-child { margin-top: 0 !important; } main > :last-child { margin-bottom: 0 !important; } } ::-webkit-scrollbar { display: none; } .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-primary": "#ffffff", "tertiary": "#004530", "surface": "#f9f9ff", "on-primary-fixed-variant": "#00513b", "on-error": "#ffffff", "secondary-fixed": "#ffdcc3", "on-secondary": "#ffffff", "surface-container-highest": "#d8e3fb", "outline": "#6f7973", "surface-dim": "#cfdaf2", "on-primary-fixed": "#002116", "primary-fixed": "#a6f2d1", "surface-bright": "#f9f9ff", "inverse-primary": "#8bd6b6", "on-primary-container": "#8bd6b7", "on-secondary-fixed-variant": "#6e3900", "on-secondary-container": "#663500", "on-tertiary-container": "#7cd9b1", "tertiary-fixed-dim": "#7bd8b1", "secondary-fixed-dim": "#ffb77d", "error": "#ba1a1a", "background": "#f9f9ff", "on-background": "#111c2d", "tertiary-fixed": "#97f5cc", "on-tertiary-fixed": "#002115", "tertiary-container": "#005f44", "inverse-on-surface": "#ecf1ff", "on-tertiary": "#ffffff", "surface-container-lowest": "#ffffff", "on-surface": "#111c2d", "surface-container": "#e7eeff", "on-error-container": "#93000a", "inverse-surface": "#263143", "primary-container": "#065f46", "surface-variant": "#d8e3fb", "surface-tint": "#1b6b51", "on-secondary-fixed": "#2f1500", "secondary-container": "#fe932c", "surface-container-low": "#f0f3ff", "error-container": "#ffdad6", "secondary": "#904d00", "surface-container-high": "#dee8ff", "on-surface-variant": "#3f4944", "primary-fixed-dim": "#8bd6b6", "on-tertiary-fixed-variant": "#00513a", "outline-variant": "#bec9c2", "primary": "#004532" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-xs": "0.5rem", "space-2xl": "3rem", "space-xl": "2rem", "space-sm": "0.75rem", "container-max": "80rem", "space-2xs": "0.25rem", "gutter-lg": "1.5rem", "gutter-md": "1rem", "gutter-sm": "0.75rem", "space-lg": "1.5rem", "space-md": "1rem" }, "fontFamily": { "headline-sm": [ "Inter" ], "headline-lg": [ "Inter" ], "title-md": [ "Inter" ], "label-sm": [ "Inter" ], "body-sm": [ "Inter" ], "body-md": [ "Inter" ], "label-md": [ "Inter" ], "body-lg": [ "Inter" ], "numeric-metric": [ "Inter" ], "headline-md": [ "Inter" ], "headline-lg-mobile": [ "Inter" ], "display-lg": [ "Inter" ] }, "fontSize": { "headline-sm": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" } ], "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "title-md": [ "16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" } ], "label-md": [ "13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "numeric-metric": [ "28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-6 px-4 shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-y-6"><div class="flex items-center gap-x-3 px-3"><img alt="PoshanCare Brand Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDn2bkN6GN0cENFj9dPBEL_q3xdEvBF2WBM8qbdD7irfEIVecwk87Uo8zHW7b5Ng5O-0TkSnc98CiurjrXmJan1B6YCQp0k4z6V3sToBw6S4Hz_gcOJVPuCpekoZkwPRjd5UcOnkFM_cQvQsR_ZkWuXpwi8TSsLvYChgBwY93i5JeNdWqEqaobq6fB7ipCERu3_hXCwca31PFbtUaf945Bg7IElguB4wtMu64EwVjMZVclQREWXqBc"/><div class="flex flex-col"><span class="font-title-md text-title-md text-primary tracking-tight leading-none">PoshanCare</span><span class="font-label-sm text-label-sm text-secondary leading-tight mt-1">Smarter Nutrition</span></div></div><nav class="flex flex-col gap-y-1 mt-2" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[20px]">pie_chart</span><span class="font-body-md text-body-md">Dashboard</span></a><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="food-diary" href="#"><span class="material-symbols-outlined text-[20px]">menu_book</span><span class="font-body-md text-body-md">Food Diary</span></a><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="food-database" href="#"><span class="material-symbols-outlined text-[20px]">database</span><span class="font-body-md text-body-md">Food Database</span></a><a aria-current="page" class="flex items-center gap-x-3 px-3 py-2 transition-colors bg-primary-container text-on-primary-container font-semibold rounded-lg" data-path="nutrition-calculator" href="#"><span class="material-symbols-outlined text-[20px]">calculate</span><span class="font-body-md text-body-md">Nutrition Calculator</span></a><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="nutrition-breakdown" href="#"><span class="material-symbols-outlined text-[20px]">bar_chart</span><span class="font-body-md text-body-md">Nutrition Breakdown</span></a><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="progress-weight" href="#"><span class="material-symbols-outlined text-[20px]">trending_up</span><span class="font-body-md text-body-md">Progress &amp; Weight</span></a><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="recipes" href="#"><span class="material-symbols-outlined text-[20px]">restaurant</span><span class="font-body-md text-body-md">Recipes</span></a><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="reports" href="#"><span class="material-symbols-outlined text-[20px]">description</span><span class="font-body-md text-body-md">Reports</span></a></nav></div><div class="flex flex-col gap-y-4 pt-4"><nav class="flex flex-col gap-y-1" data-active-classes="bg-primary-container text-on-primary-container font-semibold rounded-lg"><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="settings" href="#"><span class="material-symbols-outlined text-[20px]">settings</span><span class="font-body-md text-body-md">Settings</span></a><a class="flex items-center gap-x-3 px-3 py-2 rounded-lg text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors" data-path="help-support" href="#"><span class="material-symbols-outlined text-[20px]">help</span><span class="font-body-md text-body-md">Help &amp; Support</span></a></nav><div class="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex items-center gap-x-3 overflow-hidden"><img alt="Adi Avatar" class="w-9 h-9 rounded-full object-cover shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlUnK4UDuhCOMmiRwFjewlkymnIlV8iMOZxiVRbc63fBqlOP2jYlHCdgP_mY0em2Cj7rtYQF6xT7xzV4fFkp399NWnc2mu4_oq4vAOcwBsvgEb43gAQ5vwZRibJqumEA8jgdXn0q76mLgTHVimTUKomV2eX8LBsPr1C2jjuCCz3674oMrxJLwwJUoIByBQnXGqy9aF4sdneOnAhThGIfh9G0IMmavCQGT1ZxhUFyFBy3P8EyXSTyk"/><div class="flex flex-col min-w-0"><span class="font-label-md text-label-md text-on-surface truncate">Adi</span><span class="font-body-sm text-body-sm text-on-surface-variant truncate">adi@poshancare.in</span></div></div><span class="font-label-sm text-label-sm px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant shrink-0 font-medium">Premium</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 z-40 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 w-full px-8 flex items-center justify-between gap-x-6"><div class="flex items-center gap-x-2 text-on-surface-variant"><span class="material-symbols-outlined text-[20px] text-primary">calendar_today</span><span class="font-label-md text-label-md text-on-surface">Today, October 24</span></div><div class="flex-1 max-w-xl mx-auto"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px]">search</span><input class="w-full h-10 pl-10 pr-12 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)] placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary" placeholder="Search Indian foods, dishes, ingredients (Press /)..." type="text"/><kbd class="absolute right-3 px-1.5 py-0.5 text-[10px] font-medium bg-surface-container text-on-surface-variant rounded shadow-sm">/</kbd></div></div><div class="flex items-center gap-x-4"><button aria-label="Notifications" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-secondary-container"></span></button><div class="flex items-center gap-x-3 pl-3"><button class="flex items-center gap-x-2 p-1 rounded-lg hover:bg-surface-container hover:text-on-surface transition-colors" type="button"><img alt="Profile" class="w-8 h-8 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlUnK4UDuhCOMmiRwFjewlkymnIlV8iMOZxiVRbc63fBqlOP2jYlHCdgP_mY0em2Cj7rtYQF6xT7xzV4fFkp399NWnc2mu4_oq4vAOcwBsvgEb43gAQ5vwZRibJqumEA8jgdXn0q76mLgTHVimTUKomV2eX8LBsPr1C2jjuCCz3674oMrxJLwwJUoIByBQnXGqy9aF4sdneOnAhThGIfh9G0IMmavCQGT1ZxhUFyFBy3P8EyXSTyk"/><span class="font-label-md text-label-md text-on-surface hidden sm:inline-block">Adi</span><span class="material-symbols-outlined text-[18px] text-on-surface-variant">expand_more</span></button></div></div></div></header><main class="w-full pt-16 bg-surface"><div class="flex flex-col w-full">
+<!-- Active Navigation Sync Script -->
+<script>
+    (function() {
+      const activeLink = document.querySelector('aside nav a[data-path="progress-weight"]');
+      if (activeLink) {
+        document.querySelectorAll('aside nav a').forEach(el => {
+          el.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-semibold');
+          el.classList.add('text-on-surface-variant');
+        });
+        activeLink.classList.remove('text-on-surface-variant');
+        activeLink.classList.add('bg-primary-container', 'text-on-primary-container', 'font-semibold');
+      }
+    })();
+  </script>
+<!-- Main Canvas Container -->
+<div class="w-full max-w-7xl mx-auto px-6 lg:px-10 py-8 flex flex-col gap-y-8">
+<!-- Section 1: Clinical Header & Actions -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-y-6 pb-2">
+<div class="flex flex-col gap-y-2">
+<div class="flex items-center gap-x-2.5">
+<span class="inline-flex items-center gap-x-1.5 px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+            Body Metrics &amp; Composition
+          </span>
+<span class="text-outline text-body-sm">•</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+            Reference: ICMR-NIN 2024 Standards
+          </span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Progress &amp; Weight
+        </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-3xl">
+          Track daily weight fluctuations, 7-day moving averages, caloric intake correlation, and lean mass milestones toward your 68.0 kg target.
+        </p>
+</div>
+<!-- Timeframe Filters & Action Trigger -->
+<div class="flex items-center flex-wrap gap-3 self-start md:self-auto">
+<div class="inline-flex p-1 bg-surface-container-low rounded-xl shadow-sm">
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md bg-surface-container-lowest text-primary font-semibold shadow-sm transition-all" type="button">30 Days</button>
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">90 Days</button>
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">6 Months</button>
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">1 Year</button>
+<button class="px-3.5 py-1.5 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" type="button">All Time</button>
+</div>
+<button class="inline-flex items-center gap-x-2 px-4 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md shadow-sm hover:shadow transition-all duration-150 active:scale-[0.98]" onclick="openWeightModal()" type="button">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>Log Today's Weight</span>
+</button>
+</div>
+</section>
+<!-- Section 2: Metric Overview Cards (4 Grid) -->
+<section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+<!-- Current Weight Card -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Current Weight</span>
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">arrow_upward</span>
+            +0.2 kg/wk
+          </span>
+</div>
+<div class="mt-4 flex items-baseline gap-x-2">
+<span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">56.4</span>
+<span class="font-title-md text-title-md text-on-surface-variant font-medium">kg</span>
+</div>
+<div class="mt-3 pt-3 flex flex-col gap-y-1 bg-surface-container-low/40 -mx-5 -mb-5 px-5 py-3">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>Baseline: 52.0 kg</span>
+<span class="text-primary font-medium">+4.4 kg overall</span>
+</div>
+<span class="text-body-sm font-body-sm text-outline">Logged 07:15 AM (Fasted)</span>
+</div>
+</div>
+<!-- Target Weight Card -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Target Weight</span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-semibold">
+            Lean Hypertrophy
+          </span>
+</div>
+<div class="mt-4 flex items-baseline gap-x-2">
+<span class="font-display-lg text-display-lg text-on-surface font-semibold tracking-tight">68.0</span>
+<span class="font-title-md text-title-md text-on-surface-variant font-medium">kg</span>
+</div>
+<div class="mt-3 pt-3 flex flex-col gap-y-1.5 bg-surface-container-low/40 -mx-5 -mb-5 px-5 py-3">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant">
+<span>11.6 kg remaining</span>
+<span class="font-semibold text-on-surface">27.5% complete</span>
+</div>
+<div class="w-full h-1.5 bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-secondary rounded-full" style="width: 27.5%"></div>
+</div>
+</div>
+</div>
+<!-- 7-Day Moving Average -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">7-Day Moving Avg</span>
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+            Ideal Rate
+          </span>
+</div>
+<div class="mt-4 flex items-baseline gap-x-2">
+<span class="font-display-lg text-display-lg text-primary font-semibold tracking-tight">56.2</span>
+<span class="font-title-md text-title-md text-on-surface-variant font-medium">kg</span>
+</div>
+<div class="mt-3 pt-3 flex flex-col gap-y-1 bg-surface-container-low/40 -mx-5 -mb-5 px-5 py-3">
+<span class="text-body-sm font-body-sm text-primary font-medium">+0.25 kg/week</span>
+<span class="text-body-sm font-body-sm text-outline truncate">Smooths sodium &amp; glycogen variance</span>
+</div>
+</div>
+<!-- Calorie Surplus Card -->
+<div class="bg-surface-container-lowest rounded-xl p-5 shadow-sm flex flex-col justify-between relative overflow-hidden group hover:shadow-md transition-shadow">
+<div class="flex items-start justify-between">
+<span class="font-label-md text-label-md text-on-surface-variant">Energy Balance</span>
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+            Surplus
+          </span>
+</div>
+<div class="mt-4 flex items-baseline gap-x-1.5">
+<span class="font-display-lg text-display-lg text-secondary font-semibold tracking-tight">+185</span>
+<span class="font-title-md text-title-md text-on-surface-variant font-medium">kcal/day</span>
+</div>
+<div class="mt-3 pt-3 flex flex-col gap-y-1 bg-surface-container-low/40 -mx-5 -mb-5 px-5 py-3">
+<span class="text-body-sm font-body-sm text-on-surface font-medium">Hypertrophic Window</span>
+<span class="text-body-sm font-body-sm text-outline truncate">Targets 0.25–0.35 kg/wk lean accretion</span>
+</div>
+</div>
+</section>
+<!-- Section 3: Primary Chart Section (Weight Trend & Trajectory) -->
+<section class="bg-surface-container-lowest rounded-xl p-6 lg:p-8 shadow-sm flex flex-col gap-y-6">
+<!-- Chart Top Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-y-4">
+<div class="flex flex-col gap-y-1">
+<div class="flex items-center gap-x-3">
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Weight Trend &amp; Trajectory</h2>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-medium">Telemetry Confidence: High</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Daily logs filtered by morning fasted protocol against the 7-day algorithmic trajectory curve.
+          </p>
+</div>
+<!-- Legend -->
+<div class="flex flex-wrap items-center gap-x-5 gap-y-2 font-label-sm text-label-sm text-on-surface-variant">
+<div class="flex items-center gap-x-2">
+<span class="w-3 h-3 rounded-full bg-surface-container-highest flex items-center justify-center">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+</span>
+<span>Daily Log (kg)</span>
+</div>
+<div class="flex items-center gap-x-2">
+<span class="w-4 h-1 rounded-full bg-primary"></span>
+<span class="font-medium text-on-surface">7-Day Moving Avg</span>
+</div>
+<div class="flex items-center gap-x-2">
+<span class="w-4 h-0.5 border-t-2 border-dashed border-secondary"></span>
+<span>Target Trajectory (68 kg)</span>
+</div>
+<div class="flex items-center gap-x-2">
+<span class="w-3.5 h-2 rounded bg-surface-container-high"></span>
+<span>Optimal Lean Band</span>
+</div>
+</div>
+</div>
+<!-- High-Fidelity SVG Line Chart -->
+<div class="w-full overflow-x-auto relative">
+<div class="min-w-[760px] h-[340px] w-full relative flex flex-col justify-between select-none">
+<!-- Milestone Marker Flag Overlay -->
+<div class="absolute left-[48%] top-[148px] -translate-x-1/2 -translate-y-full z-10 flex flex-col items-center pointer-events-none">
+<div class="px-2.5 py-1 rounded-md bg-primary text-on-primary font-label-sm text-label-sm shadow-md flex items-center gap-x-1">
+<span class="material-symbols-outlined text-[13px] text-primary-fixed">verified</span>
+<span>Milestone 1: 55.0 kg reached (Oct 10)</span>
+</div>
+<div class="w-0.5 h-5 bg-primary"></div>
+</div>
+<!-- Active Day Marker -->
+<div class="absolute right-[3%] top-[98px] -translate-x-1/2 -translate-y-full z-10 flex flex-col items-center pointer-events-none">
+<div class="px-2 py-0.5 rounded bg-inverse-surface text-inverse-on-surface font-label-sm text-label-sm shadow-md">
+              Today: 56.4 kg
+            </div>
+<div class="w-0.5 h-3 bg-inverse-surface"></div>
+</div>
+<!-- Inline Responsive SVG Canvas -->
+<svg class="w-full h-full" fill="none" preserveaspectratio="none" viewbox="0 0 960 300">
+<defs>
+<lineargradient id="areaGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#065f46" stop-opacity="0.12"></stop>
+<stop offset="100%" stop-color="#065f46" stop-opacity="0.0"></stop>
+</lineargradient>
+<lineargradient id="targetBandGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#fe932c" stop-opacity="0.08"></stop>
+<stop offset="100%" stop-color="#fe932c" stop-opacity="0.02"></stop>
+</lineargradient>
+</defs>
+<!-- Horizontal Grid Lines & Y Axis Labels (54kg to 58kg) -->
+<!-- 58.0 kg (Y: 20) -->
+<line stroke="#e7eeff" stroke-dasharray="4 4" stroke-width="1" x1="45" x2="940" y1="20" y2="20"></line>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="end" x="36" y="24">58.0</text>
+<!-- 57.0 kg (Y: 75) -->
+<line stroke="#e7eeff" stroke-dasharray="4 4" stroke-width="1" x1="45" x2="940" y1="75" y2="75"></line>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="end" x="36" y="79">57.0</text>
+<!-- 56.0 kg (Y: 130) -->
+<line stroke="#e7eeff" stroke-dasharray="4 4" stroke-width="1" x1="45" x2="940" y1="130" y2="130"></line>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="end" x="36" y="134">56.0</text>
+<!-- 55.0 kg (Y: 185) -->
+<line stroke="#e7eeff" stroke-dasharray="4 4" stroke-width="1" x1="45" x2="940" y1="185" y2="185"></line>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="end" x="36" y="189">55.0</text>
+<!-- 54.0 kg (Y: 240) -->
+<line stroke="#e7eeff" stroke-width="1" x1="45" x2="940" y1="240" y2="240"></line>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="end" x="36" y="244">54.0</text>
+<!-- Target Recommended Growth Band -->
+<polygon fill="url(#targetBandGradient)" points="45,210 940,90 940,135 45,230"></polygon>
+<!-- Area fill beneath smoothed 7-day average -->
+<path d="M 50 205 
+                     C 150 198, 250 185, 350 178 
+                     C 450 170, 550 148, 650 138 
+                     C 750 130, 850 118, 930 112 
+                     L 930 240 L 50 240 Z" fill="url(#areaGradient)"></path>
+<!-- Trajectory Planned Path (Amber Dashed) -->
+<line opacity="0.8" stroke="#d97706" stroke-dasharray="6 4" stroke-width="2" x1="50" x2="930" y1="215" y2="118"></line>
+<!-- 7-Day Moving Average Line (Bold Clinical Forest Green) -->
+<path d="M 50 205 
+                     C 150 198, 250 185, 350 178 
+                     C 450 170, 550 148, 650 138 
+                     C 750 130, 850 118, 930 112" fill="none" stroke="#004532" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<!-- Daily Weight Data Points & Connecting hairline -->
+<path d="M 50,200 L 80,195 L 110,210 L 140,190 L 170,185 L 200,195 L 230,180 L 260,172 L 290,182 L 320,170 L 350,175 L 380,165 L 410,160 L 440,170 L 470,155 L 500,150 L 530,162 L 560,145 L 590,140 L 620,148 L 650,132 L 680,128 L 710,135 L 740,122 L 770,120 L 800,128 L 830,115 L 860,122 L 890,118 L 930,105" fill="none" stroke="#6f7973" stroke-dasharray="2 2" stroke-opacity="0.35" stroke-width="1.2"></path>
+<!-- Circles for daily logged values -->
+<g fill="#ffffff" stroke="#6f7973" stroke-width="1.5">
+<circle cx="50" cy="200" r="3"></circle>
+<circle cx="80" cy="195" r="3"></circle>
+<circle cx="110" cy="210" r="3"></circle>
+<circle cx="140" cy="190" r="3"></circle>
+<circle cx="170" cy="185" r="3"></circle>
+<circle cx="200" cy="195" r="3"></circle>
+<circle cx="230" cy="180" r="3"></circle>
+<circle cx="260" cy="172" r="3"></circle>
+<circle cx="290" cy="182" r="3"></circle>
+<circle cx="320" cy="170" r="3"></circle>
+<circle cx="350" cy="175" r="3"></circle>
+<circle cx="380" cy="165" r="3"></circle>
+<circle cx="410" cy="160" r="3"></circle>
+<circle cx="440" cy="170" r="3"></circle>
+<!-- Oct 10 Milestone Intersection -->
+<circle cx="470" cy="155" fill="#004532" r="4.5" stroke="#ffffff" stroke-width="2"></circle>
+<circle cx="500" cy="150" r="3"></circle>
+<circle cx="530" cy="162" r="3"></circle>
+<circle cx="560" cy="145" r="3"></circle>
+<circle cx="590" cy="140" r="3"></circle>
+<circle cx="620" cy="148" r="3"></circle>
+<circle cx="650" cy="132" r="3"></circle>
+<circle cx="680" cy="128" r="3"></circle>
+<circle cx="710" cy="135" r="3"></circle>
+<circle cx="740" cy="122" r="3"></circle>
+<circle cx="770" cy="120" r="3"></circle>
+<circle cx="800" cy="128" r="3"></circle>
+<circle cx="830" cy="115" r="3"></circle>
+<circle cx="860" cy="122" r="3"></circle>
+<circle cx="890" cy="118" r="3"></circle>
+<!-- Oct 24 Today Point -->
+<circle cx="930" cy="105" fill="#004532" r="5" stroke="#ffffff" stroke-width="2.5"></circle>
+</g>
+<!-- X Axis Date Labels -->
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="middle" x="50" y="266">Sep 25</text>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="middle" x="260" y="266">Oct 02</text>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="middle" x="470" y="266">Oct 09</text>
+<text fill="#6f7973" font-family="Inter" font-size="11" text-anchor="middle" x="710" y="266">Oct 16</text>
+<text fill="#111c2d" font-family="Inter" font-size="11" font-weight="600" text-anchor="middle" x="930" y="266">Oct 24 (Today)</text>
+</svg>
+</div>
+</div>
+<!-- Quick Context Footnote -->
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 p-3 bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-x-2 text-body-sm font-body-sm text-on-surface">
+<span class="material-symbols-outlined text-[18px] text-primary">insights</span>
+<span><strong>Analysis:</strong> Daily variance (+0.4 kg on Oct 22) aligns with higher evening sodium intake (sambar dal). True baseline velocity remains on pace.</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline shrink-0">Updated 42m ago</span>
+</div>
+</section>
+<!-- Section 4: Dual-Grid Analytics (Correlation & Anthropometric Audit) -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+<!-- Left: Calorie Intake vs Weight Velocity Correlation (7 Cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div class="flex flex-col gap-y-1 mb-5">
+<div class="flex items-center justify-between">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Calorie Intake vs. Weight Velocity</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface-container px-2.5 py-0.5 rounded-full">4-Week Window</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Weekly average energy intake compared to measured net mass accretion.</p>
+</div>
+<!-- Weekly Comparative Micro Bars -->
+<div class="flex flex-col gap-y-4">
+<!-- Week 1 -->
+<div class="flex flex-col gap-y-1.5 p-3 rounded-lg bg-surface-container-low/50">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface font-semibold">Sep 27 – Oct 03</span>
+<div class="flex items-center gap-x-3 text-body-sm font-body-sm">
+<span class="text-on-surface-variant">2,580 kcal/day avg</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-medium">+0.20 kg</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="bg-secondary-container h-full" style="width: 82%"></div>
+</div>
+</div>
+<!-- Week 2 -->
+<div class="flex flex-col gap-y-1.5 p-3 rounded-lg bg-surface-container-low/50">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface font-semibold">Oct 04 – Oct 10</span>
+<div class="flex items-center gap-x-3 text-body-sm font-body-sm">
+<span class="text-on-surface-variant">2,640 kcal/day avg</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-medium">+0.30 kg</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="bg-secondary-container h-full" style="width: 86%"></div>
+</div>
+</div>
+<!-- Week 3 -->
+<div class="flex flex-col gap-y-1.5 p-3 rounded-lg bg-surface-container-low/50">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface font-semibold">Oct 11 – Oct 17</span>
+<div class="flex items-center gap-x-3 text-body-sm font-body-sm">
+<span class="text-on-surface-variant">2,680 kcal/day avg</span>
+<span class="px-2 py-0.5 rounded bg-surface-container text-primary font-medium">+0.25 kg</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="bg-secondary-container h-full" style="width: 89%"></div>
+</div>
+</div>
+<!-- Week 4 (Current) -->
+<div class="flex flex-col gap-y-1.5 p-3 rounded-lg bg-surface-container-high/40">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="text-on-surface font-semibold">Oct 18 – Oct 24 (In Progress)</span>
+<div class="flex items-center gap-x-3 text-body-sm font-body-sm">
+<span class="text-on-surface-variant">2,700 kcal/day avg</span>
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary font-medium">+0.20 kg</span>
+</div>
+</div>
+<div class="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden flex">
+<div class="bg-primary h-full" style="width: 91%"></div>
+</div>
+</div>
+</div>
+<!-- Clinical Takeaway Box -->
+<div class="mt-4 p-3.5 rounded-lg bg-surface-container-low flex items-start gap-x-3">
+<span class="material-symbols-outlined text-[20px] text-primary shrink-0 mt-0.5">verified_user</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+<strong class="text-on-surface">Metabolic Takeaway:</strong> Intake surplus of ~180 kcal/day is tightly coupled with healthy hypertrophy velocity without uncalibrated adipose accumulation.
+          </p>
+</div>
+</div>
+<!-- Right: Body Circumference & Measurements Audit (5 Cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-1">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold">Body Measurements</h3>
+<button class="font-label-sm text-label-sm text-primary hover:text-primary-container font-semibold transition-colors" type="button">
+              + New Tape Audit
+            </button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-5">Bi-weekly tape audit (Last: Oct 20).</p>
+<!-- Circumference Table -->
+<div class="flex flex-col divide-y-0 gap-y-2">
+<!-- Chest -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low/40">
+<div class="flex items-center gap-x-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">straighten</span>
+</span>
+<span class="font-label-md text-label-md text-on-surface">Chest</span>
+</div>
+<div class="flex items-baseline gap-x-2">
+<span class="font-title-md text-title-md text-on-surface font-semibold">94.0 cm</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">+2.5 cm</span>
+</div>
+</div>
+<!-- Waist -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low/40">
+<div class="flex items-center gap-x-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">adjust</span>
+</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface">Waist (Umbilicus)</span>
+<span class="font-label-sm text-label-sm text-outline">Visceral stable</span>
+</div>
+</div>
+<div class="flex items-baseline gap-x-2">
+<span class="font-title-md text-title-md text-on-surface font-semibold">76.0 cm</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">+0.5 cm</span>
+</div>
+</div>
+<!-- Biceps -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low/40">
+<div class="flex items-center gap-x-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[18px]">fitness_center</span>
+</span>
+<span class="font-label-md text-label-md text-on-surface">Biceps (Flexed)</span>
+</div>
+<div class="flex items-baseline gap-x-2">
+<span class="font-title-md text-title-md text-on-surface font-semibold">32.5 cm</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">+1.8 cm</span>
+</div>
+</div>
+<!-- Thighs -->
+<div class="flex items-center justify-between p-2.5 rounded-lg bg-surface-container-low/40">
+<div class="flex items-center gap-x-3">
+<span class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">accessibility_new</span>
+</span>
+<span class="font-label-md text-label-md text-on-surface">Thighs (Mid-quad)</span>
+</div>
+<div class="flex items-baseline gap-x-2">
+<span class="font-title-md text-title-md text-on-surface font-semibold">52.0 cm</span>
+<span class="font-label-sm text-label-sm text-primary font-medium">+1.4 cm</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Standards Footnote -->
+<div class="mt-4 pt-3 flex items-center gap-x-2 text-label-sm font-label-sm text-outline">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>Evaluated under ICMR Body Mass Index standard guidelines.</span>
+</div>
+</div>
+</section>
+<!-- Section 5: Recent Weight Log History Table -->
+<section class="bg-surface-container-lowest rounded-xl p-6 lg:p-8 shadow-sm flex flex-col gap-y-6">
+<!-- Table Header Bar -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div class="flex flex-col gap-y-1">
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold">Recent Weight Log History</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Validated clinical logs from synchronized digital scale and manual entries.</p>
+</div>
+<div class="flex items-center gap-x-2.5">
+<button class="inline-flex items-center gap-x-1 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">filter_list</span>
+            Filter
+          </button>
+<button class="inline-flex items-center gap-x-1 px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md hover:bg-surface-container-high transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">file_download</span>
+            Export CSV
+          </button>
+</div>
+</div>
+<!-- Modern Data Table -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm uppercase tracking-wider">
+<th class="py-3 px-4 rounded-l-lg">Date &amp; Time</th>
+<th class="py-3 px-4 text-right">Logged Weight</th>
+<th class="py-3 px-4 text-right">24h Delta</th>
+<th class="py-3 px-4 text-right">7-Day Avg</th>
+<th class="py-3 px-4 text-right">Calorie Intake</th>
+<th class="py-3 px-4">Protocol Condition</th>
+<th class="py-3 px-4">Clinical Tags</th>
+<th class="py-3 px-4 text-center rounded-r-lg">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y-0 font-body-md text-body-md text-on-surface">
+<!-- Entry 1: Oct 24 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Oct 24, 2024</span>
+<span class="text-body-sm font-body-sm text-outline">07:15 AM</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-title-md text-title-md font-semibold text-on-surface tabular-nums">
+                56.4 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums">
+<span class="inline-flex items-center font-label-sm text-label-sm text-primary font-semibold">
+                  +0.3 kg
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant tabular-nums">
+                56.2 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums font-medium text-on-surface">
+                2,740 kcal
+              </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-x-1 px-2.5 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[13px]">water_drop</span>
+                  Morning Fasted
+                </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+                  Normal hydration
+                </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Entry 2: Oct 23 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Oct 23, 2024</span>
+<span class="text-body-sm font-body-sm text-outline">07:22 AM</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-title-md text-title-md font-semibold text-on-surface tabular-nums">
+                56.1 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums">
+<span class="inline-flex items-center font-label-sm text-label-sm text-outline font-semibold">
+                  -0.2 kg
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant tabular-nums">
+                56.1 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums font-medium text-on-surface">
+                2,690 kcal
+              </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-x-1 px-2.5 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[13px]">water_drop</span>
+                  Morning Fasted
+                </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+                  Rest day baseline
+                </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Entry 3: Oct 22 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Oct 22, 2024</span>
+<span class="text-body-sm font-body-sm text-outline">07:30 AM</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-title-md text-title-md font-semibold text-on-surface tabular-nums">
+                56.3 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums">
+<span class="inline-flex items-center font-label-sm text-label-sm text-primary font-semibold">
+                  +0.4 kg
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant tabular-nums">
+                56.1 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums font-medium text-on-surface">
+                2,810 kcal
+              </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-x-1 px-2.5 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[13px]">water_drop</span>
+                  Morning Fasted
+                </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm">
+                  High sodium refeed
+                </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Entry 4: Oct 21 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Oct 21, 2024</span>
+<span class="text-body-sm font-body-sm text-outline">07:10 AM</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-title-md text-title-md font-semibold text-on-surface tabular-nums">
+                55.9 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums">
+<span class="inline-flex items-center font-label-sm text-label-sm text-outline font-semibold">
+                  -0.1 kg
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant tabular-nums">
+                56.0 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums font-medium text-on-surface">
+                2,650 kcal
+              </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-x-1 px-2.5 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[13px]">water_drop</span>
+                  Morning Fasted
+                </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+                  Post-leg day
+                </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Entry 5: Oct 20 -->
+<tr class="hover:bg-surface-container-low/60 transition-colors">
+<td class="py-3.5 px-4">
+<div class="flex flex-col">
+<span class="font-medium text-on-surface">Oct 20, 2024</span>
+<span class="text-body-sm font-body-sm text-outline">07:45 AM</span>
+</div>
+</td>
+<td class="py-3.5 px-4 text-right font-title-md text-title-md font-semibold text-on-surface tabular-nums">
+                56.0 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums">
+<span class="inline-flex items-center font-label-sm text-label-sm text-primary font-semibold">
+                  +0.2 kg
+                </span>
+</td>
+<td class="py-3.5 px-4 text-right text-on-surface-variant tabular-nums">
+                55.9 kg
+              </td>
+<td class="py-3.5 px-4 text-right tabular-nums font-medium text-on-surface">
+                2,620 kcal
+              </td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-x-1 px-2.5 py-0.5 rounded-full bg-surface-container text-primary font-label-sm text-label-sm font-medium">
+<span class="material-symbols-outlined text-[13px]">water_drop</span>
+                  Morning Fasted
+                </span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm">
+                  Tape audit completed
+                </span>
+</td>
+<td class="py-3.5 px-4 text-center">
+<button class="p-1 rounded text-outline hover:text-on-surface hover:bg-surface-container transition-colors" type="button">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination & Summary footer -->
+<div class="flex items-center justify-between pt-2">
+<span class="font-body-sm text-body-sm text-outline">Showing 5 of 30 logged sessions</span>
+<div class="flex items-center gap-x-2">
+<button class="px-3 py-1 rounded bg-surface-container-low text-outline font-label-md text-label-md cursor-not-allowed" disabled="" type="button">Previous</button>
+<button class="px-3 py-1 rounded bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors" type="button">Next</button>
+</div>
+</div>
+</section>
+</div>
+<!-- Interactive Weight Entry Modal -->
+<div class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-inverse-surface/40 backdrop-blur-sm" id="weightLogModal">
+<div class="bg-surface-container-lowest w-full max-w-md rounded-xl p-6 shadow-xl flex flex-col gap-y-5 animate-in fade-in duration-200">
+<!-- Modal Header -->
+<div class="flex items-start justify-between">
+<div class="flex flex-col">
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Log Daily Weight</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Recommended: Morning, post-void, fasted</span>
+</div>
+<button class="p-1 rounded-lg text-outline hover:text-on-surface hover:bg-surface-container transition-colors" onclick="closeWeightModal()" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Modal Body / Form -->
+<div class="flex flex-col gap-y-4">
+<!-- Input 1: Weight -->
+<div class="flex flex-col gap-y-1.5">
+<label class="font-label-md text-label-md text-on-surface">Weight Value (kg)</label>
+<div class="relative flex items-center">
+<input class="w-full h-11 pl-3 pr-12 rounded-lg bg-surface-container-low text-on-surface font-title-md text-title-md focus:outline-none focus:ring-2 focus:ring-primary" id="modalWeightInput" step="0.1" type="number" value="56.4"/>
+<span class="absolute right-3 font-label-md text-label-md text-outline">kg</span>
+</div>
+</div>
+<!-- Input 2: Date & Condition -->
+<div class="grid grid-cols-2 gap-3">
+<div class="flex flex-col gap-y-1.5">
+<label class="font-label-md text-label-md text-on-surface">Time Taken</label>
+<input class="h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary" type="text" value="07:15 AM"/>
+</div>
+<div class="flex flex-col gap-y-1.5">
+<label class="font-label-md text-label-md text-on-surface">Condition</label>
+<select class="h-10 px-2 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:outline-none focus:ring-1 focus:ring-primary">
+<option>Fasted (Standard)</option>
+<option>Post-Meal</option>
+<option>Post-Workout</option>
+</select>
+</div>
+</div>
+<!-- Input 3: Notes -->
+<div class="flex flex-col gap-y-1.5">
+<label class="font-label-md text-label-md text-on-surface">Notes / Refeed Context</label>
+<input class="h-10 px-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-primary" placeholder="e.g. Higher sodium dinner, rested 8 hours" type="text"/>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="flex items-center justify-end gap-x-3 pt-2">
+<button class="px-4 py-2 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors" onclick="closeWeightModal()" type="button">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-md text-label-md shadow-sm transition-all" onclick="saveWeightModal()" type="button">
+          Save Entry
+        </button>
+</div>
+</div>
+</div>
+<!-- Interactive Scripts -->
+<script>
+    function openWeightModal() {
+      const modal = document.getElementById('weightLogModal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeWeightModal() {
+      const modal = document.getElementById('weightLogModal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function saveWeightModal() {
+      const val = document.getElementById('modalWeightInput').value;
+      if (val) {
+        closeWeightModal();
+      }
+    }
+  </script>
+</div></main></div></body></html>

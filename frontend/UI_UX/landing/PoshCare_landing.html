@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-tertiary-fixed": "#002115", "surface-container-high": "#dee8ff", "on-primary": "#ffffff", "inverse-primary": "#8bd6b6", "on-primary-container": "#8bd6b7", "surface-tint": "#1b6b51", "on-tertiary": "#ffffff", "tertiary-container": "#005f44", "on-secondary": "#ffffff", "inverse-surface": "#263143", "primary-fixed-dim": "#8bd6b6", "background": "#f9f9ff", "surface-container-lowest": "#ffffff", "on-surface": "#111c2d", "primary-container": "#065f46", "on-surface-variant": "#3f4944", "on-background": "#111c2d", "surface-container-low": "#f0f3ff", "on-secondary-fixed-variant": "#6e3900", "primary-fixed": "#a6f2d1", "tertiary-fixed-dim": "#7bd8b1", "error-container": "#ffdad6", "on-primary-fixed-variant": "#00513b", "on-secondary-container": "#663500", "surface": "#f9f9ff", "tertiary": "#004530", "surface-dim": "#cfdaf2", "on-primary-fixed": "#002116", "on-secondary-fixed": "#2f1500", "outline-variant": "#bec9c2", "secondary": "#904d00", "on-error": "#ffffff", "tertiary-fixed": "#97f5cc", "on-error-container": "#93000a", "secondary-fixed": "#ffdcc3", "secondary-fixed-dim": "#ffb77d", "surface-container-highest": "#d8e3fb", "primary": "#004532", "error": "#ba1a1a", "on-tertiary-container": "#7cd9b1", "surface-variant": "#d8e3fb", "surface-container": "#e7eeff", "inverse-on-surface": "#ecf1ff", "on-tertiary-fixed-variant": "#00513a", "outline": "#6f7973", "secondary-container": "#fe932c", "surface-bright": "#f9f9ff" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-2xl": "3rem", "gutter-lg": "1.5rem", "space-lg": "1.5rem", "container-max": "80rem", "gutter-md": "1rem", "space-2xs": "0.25rem", "space-xs": "0.5rem", "space-xl": "2rem", "space-md": "1rem", "gutter-sm": "0.75rem", "space-sm": "0.75rem" }, "fontFamily": { "numeric-metric": [ "Inter" ], "body-md": [ "Inter" ], "title-md": [ "Inter" ], "headline-md": [ "Inter" ], "headline-sm": [ "Inter" ], "body-sm": [ "Inter" ], "body-lg": [ "Inter" ], "headline-lg": [ "Inter" ], "label-sm": [ "Inter" ], "display-lg": [ "Inter" ], "headline-lg-mobile": [ "Inter" ], "label-md": [ "Inter" ] }, "fontSize": { "numeric-metric": [ "28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "body-md": [ "14px", { "lineHeight": "20px", "letterSpacing": "0em", "fontWeight": "400" } ], "title-md": [ "16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "600" } ], "headline-md": [ "24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "headline-sm": [ "20px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" } ], "body-sm": [ "12px", { "lineHeight": "18px", "letterSpacing": "0.01em", "fontWeight": "400" } ], "body-lg": [ "16px", { "lineHeight": "24px", "letterSpacing": "0em", "fontWeight": "400" } ], "headline-lg": [ "32px", { "lineHeight": "40px", "letterSpacing": "-0.015em", "fontWeight": "600" } ], "label-sm": [ "11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" } ], "display-lg": [ "40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600" } ], "headline-lg-mobile": [ "26px", { "lineHeight": "34px", "letterSpacing": "-0.01em", "fontWeight": "600" } ], "label-md": [ "13px", { "lineHeight": "16px", "letterSpacing": "0.01em", "fontWeight": "500" } ] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-sm shrink-0"><img alt="Clean geometric vector logo for PoshanCare, a modern Indian nutrition science and food tracking platform. Minimalist twin curved leaves forming an elegant botanical shield or wellness seed emblem in deep emerald forest green (#065f46) with a subtle warm golden amber (#d97706) accent dot. Flat modern SVG style, crisp geometry, high contrast on white and dark backgrounds, professional healthcare tech aesthetic.. Design context: - Primary color: #065f46
+- Font: inter
+- Mode: light
+- Roundness: rounded-sm
+. The logo should be visually consistent with these brand tokens." class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UMlkZmgkNA2loVq4fNPDYHxTWurcFX-sBkOSF5r7OOAv1CyakJtkelbVeHi1sLpgscIJuW3annqUzGSO0ljjfDwlVwwas5ok-DHWqif68vf6ZtC0xcPCe5JpnuTBX8yCYdjtySt43D1W_xAHdJsqXTFWoP5k9RptRjgUT3G1mf-zclqoE8OhHLPzbh10Ep-NURuqcIKO3OIIvsyK82MLsoiQzpxKI2etjlxJnW4EMhoMAk945TNo2M_Q"/><span class="font-title-md text-title-md text-primary tracking-tight">PoshanCare</span></div><nav class="hidden md:flex items-center gap-space-lg" data-active-classes="text-primary font-semibold"><a aria-current="page" class="transition-colors text-primary font-semibold" data-path="home" href="#">Home</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="features" href="#">Features</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">How It Works</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="indian-food-intelligence" href="#">Indian Food Intelligence</a><a class="font-body-md text-body-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#">About</a></nav><div class="flex items-center gap-space-sm shrink-0"><a class="font-label-md text-label-md px-space-sm py-space-xs text-on-surface-variant hover:text-on-surface transition-colors" data-path="sign-in" href="#">Sign In</a><a class="font-label-md text-label-md px-space-md py-space-xs bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shadow-[0_1px_3px_0_rgba(15,23,42,0.03)]" data-path="get-started" href="#">Get Started</a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- 1. HERO SECTION -->
+<section class="w-full py-space-xl lg:py-space-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl lg:gap-space-2xl items-center">
+<!-- Left: Copy & Actions -->
+<div class="lg:col-span-6 flex flex-col gap-space-md">
+<!-- Tagline pill -->
+<div class="inline-flex items-center gap-space-xs px-space-sm py-space-2xs bg-surface-container rounded-full w-fit">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider">Personalized • Evidence-informed • Indian food focused</span>
+</div>
+<!-- Headline -->
+<h1 class="font-display-lg text-display-lg text-on-surface tracking-tight leading-tight">
+            Nutrition intelligence built around <span class="text-primary font-bold">you</span>.
+          </h1>
+<!-- Supporting copy -->
+<p class="font-body-lg text-body-lg text-on-surface-variant leading-relaxed max-w-xl">
+            Understand what you eat, track your progress, and build a personalized nutrition routine with evidence-informed insights designed for real life.
+          </p>
+<!-- Action buttons -->
+<div class="flex flex-wrap items-center gap-space-md pt-space-xs">
+<a class="inline-flex items-center gap-space-xs px-space-lg py-space-xs bg-primary text-on-primary rounded hover:bg-primary-container transition-all shadow-sm" data-path="get-started" href="#">
+<span class="font-label-md text-label-md font-medium">Get Started</span>
+<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</a>
+<a class="inline-flex items-center gap-space-xs px-space-lg py-space-xs bg-surface-container text-on-surface rounded hover:bg-surface-container-high transition-colors" href="#features">
+<span class="font-label-md text-label-md font-medium">Explore PoshanCare</span>
+</a>
+</div>
+<!-- Micro assurance notes -->
+<div class="flex items-center gap-space-lg pt-space-sm text-on-surface-variant">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+<span class="font-body-sm text-body-sm">4,500+ IFCT Validated Foods</span>
+</div>
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[16px] text-primary">analytics</span>
+<span class="font-body-sm text-body-sm">Mifflin-St Jeor Engine</span>
+</div>
+</div>
+</div>
+<!-- Right: Compact Nutrition Intelligence Preview Card -->
+<div class="lg:col-span-6 relative">
+<!-- Ambient soft aura -->
+<div class="absolute -inset-4 bg-surface-container-highest/60 rounded-xl filter blur-xl -z-10"></div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-xl flex flex-col gap-space-md">
+<!-- Target Card Header -->
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant">Daily Caloric Target</span>
+<div class="flex items-baseline gap-space-xs">
+<span class="font-numeric-metric text-numeric-metric text-on-surface">2,140</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">/ 2,600 kcal</span>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs px-space-xs py-space-2xs bg-surface-container rounded-full text-primary">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span class="font-label-sm text-label-sm font-semibold">+120 kcal pacing</span>
+</div>
+</div>
+<!-- Macro Progress Grid -->
+<div class="grid grid-cols-3 gap-space-sm p-space-sm bg-surface rounded-lg">
+<!-- Protein -->
+<div class="flex flex-col gap-space-2xs">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm text-label-sm font-semibold text-primary">Protein</span>
+<span class="font-label-sm text-label-sm">72%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 72%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">98g <span class="text-on-surface-variant font-normal">/ 135g</span></span>
+</div>
+<!-- Carbs -->
+<div class="flex flex-col gap-space-2xs">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm text-label-sm font-semibold text-secondary">Carbs</span>
+<span class="font-label-sm text-label-sm">80%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full" style="width: 80%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">265g <span class="text-on-surface-variant font-normal">/ 330g</span></span>
+</div>
+<!-- Fat -->
+<div class="flex flex-col gap-space-2xs">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm text-label-sm font-semibold text-on-secondary-fixed-variant">Fat</span>
+<span class="font-label-sm text-label-sm">80%</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 80%;"></div>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface font-medium">68g <span class="text-on-surface-variant font-normal">/ 85g</span></span>
+</div>
+</div>
+<!-- Logged Meal Snippet -->
+<div class="p-space-sm bg-surface-container-low rounded-lg flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md font-semibold text-on-surface flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-primary text-[16px]">restaurant</span> Midday Lunch
+                </span>
+<span class="font-label-md text-label-md text-primary font-semibold">720 kcal</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                Sona Masoori Rice (150g) + Palak Paneer (1 bowl) + Tadka Dal
+              </p>
+<div class="flex gap-space-xs font-label-sm text-label-sm text-on-surface-variant mt-space-2xs">
+<span class="bg-surface px-space-xs py-space-2xs rounded">P: 28g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">C: 84g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">F: 22g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">Fiber: 9.4g</span>
+</div>
+</div>
+<!-- Contextual Clinical Insight Tag -->
+<div class="p-space-sm bg-surface-container rounded-lg flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0">vital_signs</span>
+<p class="font-body-sm text-body-sm text-on-surface leading-snug">
+<strong class="font-semibold text-primary">Clinical Insight:</strong> Optimal protein-to-fiber ratio achieved for midday satiety index, stabilizing postprandial glucose levels.
+              </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 2. TRUST / VALUE STRIP -->
+<section class="w-full py-space-lg bg-surface-container-lowest shadow-sm">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+<div class="flex items-start gap-space-sm">
+<div class="p-space-xs bg-surface-container rounded shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">menu_book</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Indian Food Intelligence</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">4,500+ authentic regional items calibrated against IFCT benchmarks.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="p-space-xs bg-surface-container rounded shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">tune</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Personalized Nutrition</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Tailored to your metabolic rate, body metrics, and lifestyle pace.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="p-space-xs bg-surface-container rounded shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">calculate</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Transparent Calculations</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Every calorie and macronutrient backed by inspectable formulas.</p>
+</div>
+</div>
+<div class="flex items-start gap-space-sm">
+<div class="p-space-xs bg-surface-container rounded shrink-0 text-primary">
+<span class="material-symbols-outlined text-[24px]">show_chart</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">Progress Tracking</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Continuous 7-day rolling averages and net body composition trends.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 3. PROBLEM / VALUE PROPOSITION -->
+<section class="w-full py-space-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl">
+<div class="max-w-2xl flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Evidence Over Guesswork</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Nutrition is more than counting calories.
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Food choices, cooking mediums, regional traditions, and metabolic rates dictate real health. PoshanCare bridges the gap between scientific precision and traditional Indian diets.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="p-space-lg bg-surface-container-lowest rounded-xl flex flex-col gap-space-sm shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">pie_chart</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Understand Your Nutrition</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Track calories, bioavailable protein, complex carbohydrates, healthy fats, and vital micronutrients without obsessive restrictions.
+          </p>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl flex flex-col gap-space-sm shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">skillet</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Make Indian Food Count</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Native support for multi-ingredient regional recipes, traditional thalis, and real home serving sizes like katori, cup, or piece.
+          </p>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl flex flex-col gap-space-sm shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">functions</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Understand the Numbers</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Demystify BMR, TDEE, and cooking yield changes. Transparent mathematics replace obscure black-box wellness estimates.
+          </p>
+</div>
+<div class="p-space-lg bg-surface-container-lowest rounded-xl flex flex-col gap-space-sm shadow-sm hover:shadow-md transition-shadow">
+<div class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">stacked_line_chart</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Track Your Progress</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+            Correlate daily dietary adherence with stable body composition trajectories, sustained energy, and clinical wellness biomarkers.
+          </p>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. CORE FEATURES SECTION -->
+<section class="w-full py-space-2xl bg-surface-container-low" id="features">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl">
+<div class="flex flex-col gap-space-xs text-center items-center max-w-2xl mx-auto">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Platform Capabilities</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Everything you need to understand your nutrition
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Engineered for precision, clarity, and ease. Every tool connects clinical telemetry with the rhythm of everyday meals.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
+<!-- Feature 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">space_dashboard</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface px-space-xs py-space-2xs rounded">Core Hub</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Personal Nutrition Dashboard</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Daily targets, micro and macro distribution, and metabolic pacing unified in one calm, low-cognitive-load canvas.
+            </p>
+</div>
+<div class="p-space-sm bg-surface rounded flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Dynamic daily recalculation</span>
+<span class="text-primary font-semibold">Active</span>
+</div>
+</div>
+<!-- Feature 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">edit_note</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface px-space-xs py-space-2xs rounded">Daily Log</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Food Diary</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Frictionless logging with intelligent meal slots, fractional portion toggles, and instant Indian food search index.
+            </p>
+</div>
+<div class="p-space-sm bg-surface rounded flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Average log time: &lt; 20s</span>
+<span class="text-primary font-semibold">Optimized</span>
+</div>
+</div>
+<!-- Feature 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">database</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface px-space-xs py-space-2xs rounded">IFCT Calibrated</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Indian Food Database</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Comprehensive regional repository with verified micro/macro composition, glycemic load indices, and standard domestic weights.
+            </p>
+</div>
+<div class="p-space-sm bg-surface rounded flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>4,500+ Regional items</span>
+<span class="text-primary font-semibold">Audited</span>
+</div>
+</div>
+<!-- Feature 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">straighten</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface px-space-xs py-space-2xs rounded">Formulas</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Nutrition Calculator</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Deterministic BMR and TDEE estimation powered by peer-reviewed Mifflin-St Jeor formulas, adjusted for south asian phenotypes.
+            </p>
+</div>
+<div class="p-space-sm bg-surface rounded flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>100% Deterministic math</span>
+<span class="text-primary font-semibold">Inspectable</span>
+</div>
+</div>
+<!-- Feature 5 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">monitoring</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface px-space-xs py-space-2xs rounded">Smoothing</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Weight &amp; Progress</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              7-day moving averages that smooth away daily sodium, carbohydrate retention, and hydration fluctuations for truthful trend analysis.
+            </p>
+</div>
+<div class="p-space-sm bg-surface rounded flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Noise-free weight trends</span>
+<span class="text-primary font-semibold">Clinical</span>
+</div>
+</div>
+<!-- Feature 6 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="w-10 h-10 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">soup_kitchen</span>
+</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant bg-surface px-space-xs py-space-2xs rounded">Yield Engine</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">Custom Recipes</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Multi-ingredient home recipe builder with automated water loss, cooking oil retention, and final cooked yield calculations.
+            </p>
+</div>
+<div class="p-space-sm bg-surface rounded flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Accurate moisture adjustment</span>
+<span class="text-primary font-semibold">Verified</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. INDIAN FOOD INTELLIGENCE SECTION -->
+<section class="w-full py-space-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl">
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+<div class="max-w-xl flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Culinary Accuracy</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+            Nutrition that understands the food you actually eat
+          </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+            From everyday staples to regional preparations, PoshanCare is designed around the authentic diversity of Indian dishes and real-world domestic serving patterns.
+          </p>
+</div>
+<a class="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-primary text-on-primary rounded hover:bg-primary-container transition-colors shrink-0" data-path="indian-food-intelligence" href="#">
+<span class="font-label-md text-label-md font-medium">Explore Food Intelligence</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Regional Pills Selector -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-space-xs no-scrollbar">
+<button class="px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-md text-label-md shrink-0 font-medium">
+          Andhra &amp; Telangana
+        </button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md shrink-0">
+          Tamil Nadu &amp; Kerala
+        </button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md shrink-0">
+          Karnataka
+        </button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md shrink-0">
+          North Indian / Punjabi
+        </button>
+<button class="px-space-md py-space-xs rounded-full bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md shrink-0">
+          Maharashtra &amp; Gujarat
+        </button>
+</div>
+<!-- 4 Structured Food Cards (NOT restaurant cards, clinical nutrition records) -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Food Card 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="bg-surface-container px-space-xs py-space-2xs rounded">Andhra / Telangana</span>
+<span>1 piece (35g)</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Potato Bonda (Batata Vada)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Gram flour batter with seasoned potato core</p>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs bg-surface-container-low p-space-xs rounded-lg">
+<div class="flex justify-between items-baseline">
+<span class="font-numeric-metric text-numeric-metric text-primary">98</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">kcal</span>
+</div>
+<div class="grid grid-cols-3 gap-space-2xs text-center font-label-sm text-label-sm text-on-surface">
+<div class="bg-surface p-space-2xs rounded">P: <strong class="font-semibold">2.0g</strong></div>
+<div class="bg-surface p-space-2xs rounded">C: <strong class="font-semibold">12.0g</strong></div>
+<div class="bg-surface p-space-2xs rounded">F: <strong class="font-semibold">5.0g</strong></div>
+</div>
+</div>
+</div>
+<!-- Food Card 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="bg-surface-container px-space-xs py-space-2xs rounded">South Indian</span>
+<span>1 medium (120g)</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Masala Dosa</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Fermented rice-lentil crepe with potato filling</p>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs bg-surface-container-low p-space-xs rounded-lg">
+<div class="flex justify-between items-baseline">
+<span class="font-numeric-metric text-numeric-metric text-primary">240</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">kcal</span>
+</div>
+<div class="grid grid-cols-3 gap-space-2xs text-center font-label-sm text-label-sm text-on-surface">
+<div class="bg-surface p-space-2xs rounded">P: <strong class="font-semibold">5.2g</strong></div>
+<div class="bg-surface p-space-2xs rounded">C: <strong class="font-semibold">36.0g</strong></div>
+<div class="bg-surface p-space-2xs rounded">F: <strong class="font-semibold">8.5g</strong></div>
+</div>
+</div>
+</div>
+<!-- Food Card 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="bg-surface-container px-space-xs py-space-2xs rounded">Andhra Pradesh</span>
+<span>1 piece (85g)</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Pesarattu (Moong Crepe)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Whole green gram batter with ginger &amp; chilies</p>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs bg-surface-container-low p-space-xs rounded-lg">
+<div class="flex justify-between items-baseline">
+<span class="font-numeric-metric text-numeric-metric text-primary">145</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">kcal</span>
+</div>
+<div class="grid grid-cols-3 gap-space-2xs text-center font-label-sm text-label-sm text-on-surface">
+<div class="bg-surface p-space-2xs rounded">P: <strong class="font-semibold">8.1g</strong></div>
+<div class="bg-surface p-space-2xs rounded">C: <strong class="font-semibold">21.0g</strong></div>
+<div class="bg-surface p-space-2xs rounded">F: <strong class="font-semibold">3.2g</strong></div>
+</div>
+</div>
+</div>
+<!-- Food Card 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span class="bg-surface-container px-space-xs py-space-2xs rounded">South / Central</span>
+<span>1 cup cooked (150g)</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-surface">Sona Masoori Rice</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Steamed medium-grain aromatic white rice</p>
+</div>
+<div class="flex flex-col gap-space-xs pt-space-xs bg-surface-container-low p-space-xs rounded-lg">
+<div class="flex justify-between items-baseline">
+<span class="font-numeric-metric text-numeric-metric text-primary">195</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">kcal</span>
+</div>
+<div class="grid grid-cols-3 gap-space-2xs text-center font-label-sm text-label-sm text-on-surface">
+<div class="bg-surface p-space-2xs rounded">P: <strong class="font-semibold">3.9g</strong></div>
+<div class="bg-surface p-space-2xs rounded">C: <strong class="font-semibold">42.0g</strong></div>
+<div class="bg-surface p-space-2xs rounded">F: <strong class="font-semibold">0.5g</strong></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. HOW IT WORKS -->
+<section class="w-full py-space-2xl bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl">
+<div class="flex flex-col gap-space-xs text-center items-center max-w-2xl mx-auto">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Structured Onboarding</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          From your first meal to a clearer nutrition plan
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Four disciplined steps designed to turn dietary confusion into daily scientific clarity.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<span class="font-numeric-metric text-numeric-metric text-primary">01</span>
+<h3 class="font-title-md text-title-md text-on-surface">Create Your Profile</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Input age, biometrics, height, routine activity tier, and regional dietary preferences with complete privacy.
+            </p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Step 1: Baseline telemetry</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<span class="font-numeric-metric text-numeric-metric text-primary">02</span>
+<h3 class="font-title-md text-title-md text-on-surface">Set Your Goal</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Select targeted vectors: lean hypertrophy, stable maintenance, gentle deficit, or metabolic glycemic stabilization.
+            </p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Step 2: Caloric modulation</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<span class="font-numeric-metric text-numeric-metric text-primary">03</span>
+<h3 class="font-title-md text-title-md text-on-surface">Track Your Food</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Log regional dishes, home cooked recipes, or dine-outs in seconds using intuitive unit representations.
+            </p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Step 3: Frictionless capture</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-md">
+<div class="flex flex-col gap-space-sm">
+<span class="font-numeric-metric text-numeric-metric text-primary">04</span>
+<h3 class="font-title-md text-title-md text-on-surface">Understand Your Progress</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Observe rolling weekly averages and actionable physiological insights instead of day-to-day panic.
+            </p>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Step 4: Longitudinal clarity</span>
+</div>
+</div>
+</div>
+</section>
+<!-- 7. SCIENCE & TRANSPARENCY -->
+<section class="w-full py-space-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl">
+<div class="max-w-2xl flex flex-col gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Scientific Rigor</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          See the thinking behind the numbers
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          No black boxes. PoshanCare shows you every mathematical step behind your caloric targets, macronutrient distributions, and metabolic pacing.
+        </p>
+</div>
+<!-- Interactive calculation proof box -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-md flex flex-col gap-space-md">
+<div class="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-space-md">
+<!-- Element 1: BMR -->
+<div class="flex-1 p-space-md bg-surface rounded-lg flex flex-col gap-space-2xs">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase font-semibold">Basal Metabolic Rate</span>
+<span class="font-label-sm text-label-sm">Mifflin-St Jeor</span>
+</div>
+<div class="flex items-baseline gap-space-2xs">
+<span class="font-numeric-metric text-numeric-metric text-on-surface">1,520</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">kcal</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">10×kg + 6.25×cm − 5×age + 5</span>
+</div>
+<div class="hidden md:flex text-primary font-title-md text-title-md font-bold">+</div>
+<!-- Element 2: Activity PAL -->
+<div class="flex-1 p-space-md bg-surface rounded-lg flex flex-col gap-space-2xs">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase font-semibold">Activity Multiplier</span>
+<span class="font-label-sm text-label-sm">PAL Index</span>
+</div>
+<div class="flex items-baseline gap-space-2xs">
+<span class="font-numeric-metric text-numeric-metric text-on-surface">× 1.55</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">PAL</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Moderately active (3-5 sessions)</span>
+</div>
+<div class="hidden md:flex text-primary font-title-md text-title-md font-bold">+</div>
+<!-- Element 3: Goal Modulation -->
+<div class="flex-1 p-space-md bg-surface rounded-lg flex flex-col gap-space-2xs">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase font-semibold">Goal Modulation</span>
+<span class="font-label-sm text-label-sm">Hypertrophy</span>
+</div>
+<div class="flex items-baseline gap-space-2xs">
+<span class="font-numeric-metric text-numeric-metric text-secondary font-semibold">+250</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">kcal</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Controlled lean tissue surplus</span>
+</div>
+<div class="hidden md:flex text-primary font-title-md text-title-md font-bold">=</div>
+<!-- Result: Daily Target -->
+<div class="flex-1 p-space-md bg-primary text-on-primary rounded-lg flex flex-col gap-space-2xs">
+<div class="flex justify-between items-center text-on-primary/80">
+<span class="font-label-sm text-label-sm uppercase font-semibold">Caloric Target</span>
+<span class="font-label-sm text-label-sm font-semibold">Verified</span>
+</div>
+<div class="flex items-baseline gap-space-2xs">
+<span class="font-numeric-metric text-numeric-metric text-on-primary font-bold">2,600</span>
+<span class="font-body-sm text-body-sm text-on-primary/80">kcal/day</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-primary/80">Adaptive weekly rebalancing</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md pt-space-xs text-on-surface-variant">
+<p class="font-body-sm text-body-sm max-w-2xl">
+            Every target is inspectable. PoshanCare relies on peer-reviewed anthropometric equations calibrated with Indian Council of Medical Research (ICMR) metabolic baselines.
+          </p>
+<a class="inline-flex items-center gap-space-2xs text-primary hover:underline font-label-md text-label-md font-semibold shrink-0" data-path="how-it-works" href="#">
+<span>Learn How It Works</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- 8. PRODUCT PREVIEW SHOWCASE -->
+<section class="w-full py-space-2xl bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl">
+<div class="flex flex-col gap-space-xs text-center items-center max-w-2xl mx-auto">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">The Interface</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          A clearer way to see your daily nutrition
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Clean visual architecture engineered to remove clutter and focus on essential daily dietary actions.
+        </p>
+</div>
+<!-- SaaS Window Frame Mockup -->
+<div class="bg-surface-container-lowest rounded-xl shadow-xl overflow-hidden">
+<!-- App Window Header -->
+<div class="bg-surface-container-high px-space-md py-space-xs flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="w-3 h-3 rounded-full bg-outline-variant"></span>
+<span class="w-3 h-3 rounded-full bg-outline-variant"></span>
+<span class="w-3 h-3 rounded-full bg-outline-variant"></span>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>poshancare.internal/dashboard/daily-log</span>
+</div>
+<div class="w-12"></div>
+</div>
+<!-- Dashboard Canvas -->
+<div class="p-space-lg flex flex-col gap-space-lg">
+<!-- Top Telemetry Row -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Date & Phase Navigation -->
+<div class="p-space-md bg-surface rounded-lg flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Active Intake Period</span>
+<h4 class="font-title-md text-title-md text-on-surface">Today • Wednesday</h4>
+</div>
+<div class="flex items-center gap-space-2xs text-on-surface-variant">
+<button class="p-space-2xs hover:bg-surface-container rounded"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="p-space-2xs hover:bg-surface-container rounded"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+<!-- Caloric Surplus Meter -->
+<div class="p-space-md bg-surface rounded-lg flex flex-col justify-center gap-space-2xs">
+<div class="flex justify-between items-center font-label-sm text-label-sm">
+<span class="text-on-surface-variant">Caloric Target: 2,600 kcal</span>
+<span class="text-primary font-semibold">96% Fulfilled</span>
+</div>
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full rounded-full" style="width: 96%;"></div>
+</div>
+</div>
+<!-- Net Daily Surplus Assessment -->
+<div class="p-space-md bg-surface rounded-lg flex items-center justify-between">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Pacing Assessment</span>
+<h4 class="font-title-md text-title-md text-primary font-semibold">+180 kcal Controlled Surplus</h4>
+</div>
+<span class="material-symbols-outlined text-primary text-[28px]">check_circle</span>
+</div>
+</div>
+<!-- Chronological Food Timeline -->
+<div class="flex flex-col gap-space-sm">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-semibold tracking-wider">Logged Meal Flow</span>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<!-- Morning -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold text-primary uppercase">Breakfast • 08:30 AM</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">315 kcal</span>
+</div>
+<h5 class="font-title-md text-title-md text-on-surface">3 Boiled Eggs &amp; Robusta Banana</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Whole large eggs (150g) + 1 medium banana (95g)</p>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="bg-surface px-space-xs py-space-2xs rounded">P: 21g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">C: 28g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">F: 15g</span>
+</div>
+</div>
+<!-- Midday -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold text-primary uppercase">Lunch • 01:15 PM</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">480 kcal</span>
+</div>
+<h5 class="font-title-md text-title-md text-on-surface">Dal Tadka &amp; 2 Whole Wheat Phulkas</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Toor dal (1 cup) with ghee tempering + handmade phulkas</p>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="bg-surface px-space-xs py-space-2xs rounded">P: 18g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">C: 72g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">F: 12g</span>
+</div>
+</div>
+<!-- Evening -->
+<div class="p-space-md bg-surface-container-low rounded-lg flex flex-col justify-between gap-space-sm">
+<div class="flex flex-col gap-space-2xs">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm font-semibold text-primary uppercase">Evening Snack • 05:45 PM</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface">180 kcal</span>
+</div>
+<h5 class="font-title-md text-title-md text-on-surface">Roasted Chana &amp; Black Coffee</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dry roasted chickpeas (45g) without added oil</p>
+</div>
+<div class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<span class="bg-surface px-space-xs py-space-2xs rounded">P: 8g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">C: 26g</span>
+<span class="bg-surface px-space-xs py-space-2xs rounded">F: 3g</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Clinical Insight Banner -->
+<div class="p-space-md bg-surface-container rounded-lg flex items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">insights</span>
+<p class="font-body-md text-body-md text-on-surface">
+<strong>Progress Audit:</strong> Energy balance aligns directly with your hypertrophy surplus pacing for Week 4. Micronutrient iron and zinc intake remain at 98% of RDI.
+              </p>
+</div>
+<span class="font-label-sm text-label-sm text-primary font-semibold shrink-0 uppercase tracking-wider">Clinical Status: Optimal</span>
+</div>
+</div>
+</div>
+<div class="flex justify-center pt-space-xs">
+<a class="inline-flex items-center gap-space-xs px-space-lg py-space-xs bg-primary text-on-primary rounded hover:bg-primary-container transition-colors" data-path="get-started" href="#">
+<span class="font-label-md text-label-md font-medium">Explore the PoshanCare Experience</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 9. PERSONALIZATION SECTION -->
+<section class="w-full py-space-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl">
+<div class="flex flex-col gap-space-xs text-center items-center max-w-2xl mx-auto">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Targeted Modalities</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">
+          Built around your goals, not a generic meal plan
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+          Adaptive algorithms calibrate macronutrient targets, micronutrient thresholds, and metabolic adjustments based on your primary objective.
+        </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-lg">
+<!-- Archetype 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-lg">
+<div class="flex flex-col gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]">fitness_center</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Build Muscle</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Calibrated lean surplus targets, bioavailable leucine thresholds, and protein distribution across traditional Indian lentil and dairy preparations.
+            </p>
+</div>
+<div class="flex flex-col gap-space-2xs bg-surface p-space-sm rounded font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex justify-between">
+<span>Protein Target:</span>
+<strong class="text-on-surface">1.6 - 2.0g/kg</strong>
+</div>
+<div class="flex justify-between">
+<span>Energy Vector:</span>
+<strong class="text-on-surface">+200 to +350 kcal</strong>
+</div>
+</div>
+</div>
+<!-- Archetype 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-lg">
+<div class="flex flex-col gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]">balance</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Maintain Weight</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Precision energy equilibrium, steady glycemic index pacing, and micronutrient density optimization for steady stamina and sustainable lifestyle balance.
+            </p>
+</div>
+<div class="flex flex-col gap-space-2xs bg-surface p-space-sm rounded font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex justify-between">
+<span>Protein Target:</span>
+<strong class="text-on-surface">1.2 - 1.4g/kg</strong>
+</div>
+<div class="flex justify-between">
+<span>Energy Vector:</span>
+<strong class="text-on-surface">Exact TDEE parity</strong>
+</div>
+</div>
+</div>
+<!-- Archetype 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-lg shadow-sm flex flex-col justify-between gap-space-lg">
+<div class="flex flex-col gap-space-sm">
+<div class="w-12 h-12 rounded bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[28px]">spa</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Improve Nutrition</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Habitual dietary diversity metrics, soluble and insoluble fiber allocations, anti-inflammatory whole spice tracking, and digestive microbiome support.
+            </p>
+</div>
+<div class="flex flex-col gap-space-2xs bg-surface p-space-sm rounded font-body-sm text-body-sm text-on-surface-variant">
+<div class="flex justify-between">
+<span>Dietary Fiber:</span>
+<strong class="text-on-surface">35g - 45g/day</strong>
+</div>
+<div class="flex justify-between">
+<span>Diversity Index:</span>
+<strong class="text-on-surface">25+ plants/week</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 10. FINAL CALL TO ACTION -->
+<section class="w-full py-space-2xl bg-surface">
+<div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg">
+<div class="bg-primary rounded-xl p-space-xl lg:p-space-2xl text-on-primary shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-space-xl relative overflow-hidden">
+<!-- Subtle botanical watermarked emblem -->
+<div class="absolute -right-12 -bottom-12 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-[280px]">eco</span>
+</div>
+<div class="max-w-xl flex flex-col gap-space-xs z-10">
+<span class="font-label-sm text-label-sm text-on-primary/80 uppercase tracking-widest font-semibold">Start Today</span>
+<h2 class="font-headline-lg text-headline-lg text-on-primary tracking-tight">
+            Start understanding your nutrition better.
+          </h2>
+<p class="font-body-lg text-body-lg text-on-primary/80 leading-relaxed">
+            Build a clearer picture of what you eat, how your nutrition is progressing, and where you can improve with authentic Indian food intelligence.
+          </p>
+</div>
+<div class="flex flex-col sm:flex-row items-center gap-space-md shrink-0 z-10 w-full sm:w-auto">
+<a class="w-full sm:w-auto px-space-xl py-space-xs bg-surface-container-lowest text-primary rounded font-label-md text-label-md font-semibold hover:bg-surface transition-colors text-center shadow-md" data-path="get-started" href="#">
+            Get Started
+          </a>
+<a class="w-full sm:w-auto px-space-md py-space-xs text-on-primary/90 hover:text-on-primary font-label-md text-label-md font-semibold text-center transition-colors" data-path="sign-in" href="#">
+            Sign In
+          </a>
+</div>
+</div>
+</div>
+</section>
+</div></main><footer class="w-full bg-surface-container-low py-space-2xl"><div class="max-w-container-max mx-auto px-gutter-md lg:px-gutter-lg flex flex-col gap-space-xl"><div class="grid grid-cols-1 md:grid-cols-5 gap-space-xl"><div class="md:col-span-2 flex flex-col gap-space-sm"><div class="flex items-center gap-space-sm"><img alt="PoshanCare Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1UMlkZmgkNA2loVq4fNPDYHxTWurcFX-sBkOSF5r7OOAv1CyakJtkelbVeHi1sLpgscIJuW3annqUzGSO0ljjfDwlVwwas5ok-DHWqif68vf6ZtC0xcPCe5JpnuTBX8yCYdjtySt43D1W_xAHdJsqXTFWoP5k9RptRjgUT3G1mf-zclqoE8OhHLPzbh10Ep-NURuqcIKO3OIIvsyK82MLsoiQzpxKI2etjlxJnW4EMhoMAk945TNo2M_Q"/><span class="font-title-md text-title-md text-primary tracking-tight">PoshanCare</span></div><p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Personalized nutrition intelligence for everyday life. Bridging metabolic science with authentic Indian dietary lifestyles.</p></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface">Product</h3><div class="flex flex-col gap-space-xs"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="features" href="#">Macro Engine</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="indian-food-intelligence" href="#">Glycemic Index DB</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="features" href="#">Clinical Telemetry</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="features" href="#">Meal Composition</a></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface">Resources</h3><div class="flex flex-col gap-space-xs"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">Clinical Methodology</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="indian-food-intelligence" href="#">Regional Food Studies</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">Evidence Library</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="how-it-works" href="#">Metabolic Guides</a></div></div><div class="flex flex-col gap-space-sm"><h3 class="font-label-md text-label-md uppercase tracking-wider text-on-surface">Company</h3><div class="flex flex-col gap-space-xs"><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#">About Us</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#">Medical Advisory Board</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#">Careers</a><a class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface transition-colors" data-path="about" href="#">Contact &amp; Support</a></div></div></div><div class="flex flex-col sm:flex-row items-center justify-between gap-space-md pt-space-lg text-on-surface-variant font-body-sm text-body-sm"><p>© 2026 PoshanCare. All rights reserved.</p><div class="flex items-center gap-space-lg"><a class="hover:text-on-surface transition-colors" data-path="about" href="#">Privacy Policy</a><a class="hover:text-on-surface transition-colors" data-path="about" href="#">Terms of Service</a><a class="hover:text-on-surface transition-colors" data-path="about" href="#">Clinical Disclaimers</a></div></div></div></footer></body></html>

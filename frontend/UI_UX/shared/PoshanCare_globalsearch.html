@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "surface-tint": "#376757",
+          "secondary-fixed-dim": "#fabc4d",
+          "on-background": "#111c2d",
+          "on-secondary-fixed": "#281900",
+          "inverse-surface": "#263143",
+          "inverse-primary": "#9ed1bd",
+          "on-primary-container": "#8abda9",
+          "inverse-on-surface": "#ecf1ff",
+          "surface-bright": "#f9f9ff",
+          "on-surface-variant": "#404945",
+          "on-tertiary-fixed": "#002115",
+          "surface-container-high": "#dee8ff",
+          "on-primary": "#ffffff",
+          "on-secondary": "#ffffff",
+          "error": "#ba1a1a",
+          "secondary": "#7e5700",
+          "secondary-fixed": "#ffdead",
+          "on-primary-fixed": "#002117",
+          "primary": "#003629",
+          "surface-container": "#e7eeff",
+          "primary-fixed-dim": "#9ed1bd",
+          "secondary-container": "#fdbe50",
+          "on-error": "#ffffff",
+          "surface-variant": "#d8e3fb",
+          "tertiary": "#003625",
+          "on-error-container": "#93000a",
+          "on-primary-fixed-variant": "#1d4f40",
+          "error-container": "#ffdad6",
+          "surface-container-highest": "#d8e3fb",
+          "on-secondary-container": "#714d00",
+          "on-surface": "#111c2d",
+          "outline-variant": "#c0c9c3",
+          "surface": "#f9f9ff",
+          "on-secondary-fixed-variant": "#604100",
+          "outline": "#707974",
+          "tertiary-fixed": "#abf1d0",
+          "surface-container-lowest": "#ffffff",
+          "surface-dim": "#cfdaf2",
+          "primary-fixed": "#baeed9",
+          "on-tertiary": "#ffffff",
+          "background": "#f9f9ff",
+          "tertiary-container": "#004f38",
+          "on-tertiary-container": "#7cc0a1",
+          "tertiary-fixed-dim": "#90d5b5",
+          "on-tertiary-fixed-variant": "#00513a",
+          "primary-container": "#1b4d3e",
+          "surface-container-low": "#f0f3ff"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-lg": "1.5rem",
+          "gutter-mobile": "1rem",
+          "space-sm": "0.75rem",
+          "space-md": "1rem",
+          "margin-desktop": "3rem",
+          "space-2xl": "3rem",
+          "space-2xs": "0.25rem",
+          "margin-tablet": "2rem",
+          "gutter-desktop": "1.5rem",
+          "space-3xl": "4rem",
+          "space-xs": "0.5rem",
+          "margin-mobile": "1rem",
+          "container-max-width": "1280px",
+          "space-xl": "2rem"
+        },
+        "fontFamily": {
+          "body-lg": [
+            "Inter"
+          ],
+          "title-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "label-md": [
+            "Inter"
+          ],
+          "body-sm": [
+            "Inter"
+          ],
+          "label-lg": [
+            "Inter"
+          ],
+          "headline-md": [
+            "Plus Jakarta Sans"
+          ],
+          "body-md": [
+            "Inter"
+          ],
+          "display-lg-mobile": [
+            "Plus Jakarta Sans"
+          ],
+          "label-sm": [
+            "Inter"
+          ],
+          "headline-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "title-md": [
+            "Plus Jakarta Sans"
+          ],
+          "headline-sm": [
+            "Plus Jakarta Sans"
+          ],
+          "display-lg": [
+            "Plus Jakarta Sans"
+          ],
+          "headline-lg-mobile": [
+            "Plus Jakarta Sans"
+          ]
+        },
+        "fontSize": {
+          "body-lg": [
+            "16px",
+            {
+              "lineHeight": "26px",
+              "fontWeight": "400"
+            }
+          ],
+          "title-lg": [
+            "18px",
+            {
+              "lineHeight": "26px",
+              "fontWeight": "600"
+            }
+          ],
+          "label-md": [
+            "12px",
+            {
+              "lineHeight": "16px",
+              "letterSpacing": "0.02em",
+              "fontWeight": "500"
+            }
+          ],
+          "body-sm": [
+            "12px",
+            {
+              "lineHeight": "18px",
+              "fontWeight": "400"
+            }
+          ],
+          "label-lg": [
+            "14px",
+            {
+              "lineHeight": "20px",
+              "letterSpacing": "0.01em",
+              "fontWeight": "500"
+            }
+          ],
+          "headline-md": [
+            "24px",
+            {
+              "lineHeight": "32px",
+              "letterSpacing": "-0.005em",
+              "fontWeight": "600"
+            }
+          ],
+          "body-md": [
+            "14px",
+            {
+              "lineHeight": "22px",
+              "fontWeight": "400"
+            }
+          ],
+          "display-lg-mobile": [
+            "36px",
+            {
+              "lineHeight": "44px",
+              "letterSpacing": "-0.015em",
+              "fontWeight": "700"
+            }
+          ],
+          "label-sm": [
+            "11px",
+            {
+              "lineHeight": "14px",
+              "letterSpacing": "0.04em",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-lg": [
+            "32px",
+            {
+              "lineHeight": "40px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ],
+          "title-md": [
+            "16px",
+            {
+              "lineHeight": "24px",
+              "fontWeight": "600"
+            }
+          ],
+          "headline-sm": [
+            "20px",
+            {
+              "lineHeight": "28px",
+              "fontWeight": "600"
+            }
+          ],
+          "display-lg": [
+            "48px",
+            {
+              "lineHeight": "56px",
+              "letterSpacing": "-0.02em",
+              "fontWeight": "700"
+            }
+          ],
+          "headline-lg-mobile": [
+            "26px",
+            {
+              "lineHeight": "34px",
+              "letterSpacing": "-0.01em",
+              "fontWeight": "600"
+            }
+          ]
+        }
+      },
+    },
+  }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-72 bg-surface-container-low z-50 flex flex-col justify-between py-space-md px-space-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="flex flex-col gap-space-md"><div class="flex items-center gap-space-xs px-space-xs"><img alt="Minimalist modern botanical leaf and clinical nutrition emblem for PoshanCare, featuring clean geometric overlapping leaf curves in deep emerald green and soft sage with clinical cross harmony. Brand logo. - Primary color: #1b4d3e
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WCNdNdam7r35XPgY13QfmlUnJWF3PVLdzz5eqqvKpIEG0II8ulaw_df47VHm958zATi59ACPeYQa8fmCUnpmlcLPMX7VLS-nanoHVP8n-sMtcVCTtNmvUCfdQbyi1XFeeymfjqhoXs2De25vy6WIzO1mZQH0i1Ab5DMNyviAW-XzQN2H0c1RXG7DWBtrsK50I8GUfZr-Mvdh7kUjPcY3F3mw8QznSqXqYUJuhsRoxaoSyFDxRz5DqxVUI"/><div class="flex flex-col"><span class="font-title-md text-title-md text-primary tracking-tight">PoshanCare</span><span class="font-label-sm text-label-sm text-on-surface-variant">Clinical Intelligence</span></div></div><div class="flex flex-col gap-space-xs"><span class="px-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Clinical Operations</span><nav class="flex flex-col gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="dashboard-overview" href="#">Dashboard / Overview</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="food-diary-macro-log" href="#">Food Diary &amp; Macro Log</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="regional-food-database" href="#">Regional Food (ICMR-NIN)</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="biomarkers-anthropometry" href="#">Biomarkers &amp; Anthropometry</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="nutrition-goals-protocols" href="#">Goals &amp; Protocols</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="reports-longitudinal-analytics" href="#">Reports &amp; Analytics</a></nav></div><div class="h-[1px] bg-surface-variant mx-space-2xs"></div><div class="flex flex-col gap-space-xs"><span class="px-space-xs font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider">Care Management</span><nav class="flex flex-col gap-space-2xs" data-active-classes="bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="settings" href="#">Settings</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="my-profile" href="#">My Profile</a><a aria-current="page" class="px-space-sm py-space-xs transition-colors bg-primary-container text-on-primary font-title-md rounded-xl shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]" data-path="notifications" href="#">Notifications</a><a class="px-space-sm py-space-xs rounded-xl font-label-lg text-label-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" data-path="help-clinical-support" href="#">Help &amp; Clinical Support</a></nav></div></div><div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-[0_1px_3px_0_rgba(30,41,59,0.04)] flex flex-col gap-space-xs"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-surface-tint text-[18px]">verified_user</span><span class="font-label-sm text-label-sm text-primary font-title-md">Clinical Compliance</span></div><p class="font-body-sm text-body-sm text-on-surface-variant">HIPAA, DISHA &amp; ICMR-NIN 2024 validated encrypted medical telemetry.</p><div class="flex items-center gap-space-2xs"><span class="w-2 h-2 rounded-full bg-surface-tint"></span><span class="font-label-sm text-label-sm text-on-surface">Audit Ready (v2.4)</span></div></div></aside><div class="pl-72"><header class="fixed top-0 left-72 right-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-space-lg"><div class="flex items-center gap-space-md"><img alt="Minimalist modern botanical leaf and clinical nutrition emblem for PoshanCare, featuring clean geometric overlapping leaf curves in deep emerald green and soft sage with clinical cross harmony. Brand logo. - Primary color: #1b4d3e
+- Font: plusJakartaSans
+- Mode: light
+- Roundness: rounded-md
+" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1WCNdNdam7r35XPgY13QfmlUnJWF3PVLdzz5eqqvKpIEG0II8ulaw_df47VHm958zATi59ACPeYQa8fmCUnpmlcLPMX7VLS-nanoHVP8n-sMtcVCTtNmvUCfdQbyi1XFeeymfjqhoXs2De25vy6WIzO1mZQH0i1Ab5DMNyviAW-XzQN2H0c1RXG7DWBtrsK50I8GUfZr-Mvdh7kUjPcY3F3mw8QznSqXqYUJuhsRoxaoSyFDxRz5DqxVUI"/><div class="flex items-center gap-space-xs"><span class="font-title-lg text-title-lg text-primary">PoshanCare</span><span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-space-xs py-space-2xs rounded-full">Clinical Nutrition Intelligence</span></div></div><div class="hidden md:flex items-center bg-surface-container-lowest rounded-xl px-space-sm py-space-xs gap-space-xs w-96 shadow-[0_1px_3px_0_rgba(30,41,59,0.04)]"><span class="material-symbols-outlined text-on-surface-variant text-[18px]">search</span><span class="font-body-sm text-body-sm text-on-surface-variant flex-1">Search foods, biomarkers, logs...</span><kbd class="bg-surface-container-low px-space-2xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface-variant">⌘K</kbd></div><div class="flex items-center gap-space-md"><div class="hidden lg:flex items-center gap-space-2xs bg-surface-container-low px-space-sm py-space-2xs rounded-full"><span class="material-symbols-outlined text-surface-tint text-[16px]">shield</span><span class="font-label-sm text-label-sm text-primary">Clinical Privacy Verified</span></div><nav class="flex items-center" data-active-classes="bg-surface-container-high rounded-full ring-2 ring-primary"><a aria-current="page" class="relative flex items-center justify-center w-9 h-9 text-on-surface-variant transition-colors bg-surface-container-high rounded-full ring-2 ring-primary" data-path="notifications" href="#" title="Notifications"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-secondary-container ring-2 ring-surface"></span></a></nav><div class="flex items-center gap-space-xs cursor-pointer pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden sm:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface">Adi Sharma</span><span class="font-label-sm text-label-sm text-on-surface-variant">Lead Dietitian</span></div><span class="material-symbols-outlined text-on-surface-variant text-[18px]">expand_more</span></div></div></header><main class="w-full pt-16 bg-surface px-space-lg"><div class="flex flex-col w-full">
+<!-- Interactive State Controller Script & Style -->
+<style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+<!-- Main Hero Search & Command Header Container -->
+<section class="relative bg-surface-container-low px-space-xl py-space-xl rounded-2xl mb-space-xl overflow-hidden shadow-sm">
+<!-- Subtle Ambient Green Diffusion in Background -->
+<div class="absolute -right-16 -top-24 w-96 h-96 rounded-full bg-primary-fixed-dim/20 blur-3xl pointer-events-none"></div>
+<div class="absolute left-1/3 -bottom-20 w-80 h-80 rounded-full bg-surface-tint/10 blur-3xl pointer-events-none"></div>
+<div class="relative z-10 max-w-5xl mx-auto flex flex-col gap-space-md">
+<!-- Title & Context Overline -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-space-xs mb-space-2xs">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-primary-container text-on-primary">
+<span class="material-symbols-outlined text-[14px]">manage_search</span>
+</span>
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-wider font-semibold">Universal Clinical Registry</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-primary tracking-tight">Search PoshanCare</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-space-2xs">
+            Find foods, clinical nutrition telemetry, patient records, biomarkers, and ICMR-NIN IFCT protocols across the health engine.
+          </p>
+</div>
+<!-- Global Index Telemetry Chip -->
+<div class="flex items-center gap-space-xs bg-surface-container-lowest px-space-sm py-space-2xs rounded-full shadow-sm">
+<span class="w-2 h-2 rounded-full bg-surface-tint animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface font-medium">9,412 Verified Indian Foods · ICMR-NIN 2024</span>
+</div>
+</div>
+<!-- Main Search Input Bar with Omnibox Treatment -->
+<div class="relative mt-space-xs">
+<div class="relative flex items-center bg-surface-container-lowest rounded-2xl shadow-md transition-all duration-200 focus-within:shadow-xl">
+<div class="pl-space-md flex items-center text-primary pointer-events-none">
+<span class="material-symbols-outlined text-[26px]">search</span>
+</div>
+<input class="w-full h-14 bg-transparent pl-space-sm pr-24 font-body-lg text-body-lg text-on-surface focus:outline-none placeholder:text-outline" id="globalSearchInput" placeholder="Search foods, biomarkers, logs..." type="text" value="paneer"/>
+<!-- Fast Clear & Keyboard Shortcut Badges inside input -->
+<div class="absolute right-3 flex items-center gap-space-xs">
+<button class="flex items-center justify-center w-7 h-7 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface-variant transition-colors" id="clearQueryBtn" title="Clear search">
+<span class="material-symbols-outlined text-[16px]">close</span>
+</button>
+<span class="hidden sm:inline-flex items-center font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-space-xs py-1 rounded-md font-semibold">
+              ⌘K
+            </span>
+</div>
+</div>
+<!-- Autocomplete Suggestions Flyout Dropdown (Demonstrated in live active preview) -->
+<div class="absolute top-16 left-0 right-0 z-30 bg-surface-container-lowest rounded-xl shadow-xl p-space-sm flex flex-col gap-space-2xs" id="autocompleteFlyout">
+<div class="flex items-center justify-between px-space-xs py-space-2xs text-on-surface-variant">
+<span class="font-label-sm text-label-sm uppercase tracking-wider font-semibold">Verified Suggestions matching “pan…”</span>
+<span class="font-label-sm text-label-sm text-outline">ICMR-NIN IFCT 2024</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-2xs">
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg hover:bg-surface-container-low transition-colors group" href="#foods-section">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-surface-tint text-[18px]">nutrition</span>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary">Paneer (Fresh Indian Cottage Cheese)</span>
+</div>
+<span class="font-label-sm text-label-sm bg-tertiary-fixed text-on-tertiary-fixed px-space-xs py-0.5 rounded-full">Whole Milk</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg hover:bg-surface-container-low transition-colors group" href="#foods-section">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[18px]">restaurant</span>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary">Paneer Bhurji (Scrambled)</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-space-xs py-0.5 rounded-full">Recipe</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg hover:bg-surface-container-low transition-colors group" href="#foods-section">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-surface-tint text-[18px]">skillet</span>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary">Palak Paneer (Spinach Gravy)</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-space-xs py-0.5 rounded-full">North Indian</span>
+</a>
+<a class="flex items-center justify-between px-space-sm py-space-xs rounded-lg hover:bg-surface-container-low transition-colors group" href="#foods-section">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[18px]">history</span>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary">Paneer protein bio-availability</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline">Clinical Query</span>
+</a>
+</div>
+<div class="mt-space-2xs pt-space-2xs bg-surface-container-low/50 px-space-sm py-space-2xs rounded-lg flex items-center justify-between text-outline font-label-sm text-label-sm">
+<span>Press <kbd class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-on-surface shadow-xs font-mono">↑</kbd> <kbd class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-on-surface shadow-xs font-mono">↓</kbd> to navigate</span>
+<span>Press <kbd class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-on-surface shadow-xs font-mono">↵</kbd> to select</span>
+<span>Press <kbd class="px-1.5 py-0.5 rounded bg-surface-container-lowest text-on-surface shadow-xs font-mono">Esc</kbd> to dismiss preview</span>
+</div>
+</div>
+</div>
+<!-- Quick Status & Filters Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-sm pt-space-xs">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-lg text-label-lg">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<span>Showing <strong class="text-on-surface font-semibold">24 verified results</strong> across 5 clinical domains</span>
+</div>
+<!-- Filter Pills with Pill Count -->
+<div class="flex items-center gap-space-2xs overflow-x-auto pb-1 no-scrollbar">
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-primary-container text-on-primary font-label-md text-label-md shadow-xs">
+<span>All</span>
+<span class="w-5 h-5 rounded-full bg-on-primary/20 text-on-primary flex items-center justify-center text-[10px]">24</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-xs">
+<span>Foods</span>
+<span class="w-5 h-5 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[10px]">12</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-xs">
+<span>Recipes</span>
+<span class="w-5 h-5 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[10px]">5</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-xs">
+<span>Diary</span>
+<span class="w-5 h-5 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[10px]">2</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-xs">
+<span>Nutrition</span>
+<span class="w-5 h-5 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[10px]">1</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-xs whitespace-nowrap">
+<span>Progress &amp; Biometrics</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-xs">
+<span>Reports</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1.5 rounded-full bg-surface-container-lowest hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors shadow-xs">
+<span>Help</span>
+<span class="w-5 h-5 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center text-[10px]">4</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- DEFAULT & POPULAR SEARCHES DRAWER BAR -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md mb-space-xl shadow-xs flex flex-col gap-space-sm">
+<!-- Recent Searches Row -->
+<div class="flex flex-wrap items-center justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-[18px]">history</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Recent Searches:</span>
+<div class="flex flex-wrap items-center gap-space-2xs">
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-space-xs py-1 rounded-full font-label-sm text-label-sm text-primary">
+            Paneer
+            <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-space-xs py-1 rounded-full font-label-sm text-label-sm text-primary">
+            Idli (2 katori)
+            <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-space-xs py-1 rounded-full font-label-sm text-label-sm text-primary">
+            Chicken breast
+            <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-space-xs py-1 rounded-full font-label-sm text-label-sm text-primary">
+            Biryani
+            <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-low px-space-xs py-1 rounded-full font-label-sm text-label-sm text-primary">
+            Protein target recalibration
+            <button class="hover:text-error transition-colors"><span class="material-symbols-outlined text-[14px]">close</span></button>
+</span>
+</div>
+</div>
+<button class="font-label-sm text-label-sm text-outline hover:text-primary transition-colors underline underline-offset-4">
+        Clear search history
+      </button>
+</div>
+<!-- Clinical Quick Tags Row -->
+<div class="flex flex-wrap items-center gap-space-xs pt-space-2xs">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Clinical Fast Tags:</span>
+<div class="flex flex-wrap items-center gap-space-2xs">
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Rice</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Idli</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Dosa</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Chapati</button>
+<button class="px-space-xs py-1 bg-primary-container text-on-primary font-label-sm text-label-sm rounded-lg shadow-xs">Paneer</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Egg (Whole)</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Chicken</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Dal Tadka</button>
+<button class="px-space-xs py-1 bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm rounded-lg transition-colors">Curd</button>
+<button class="px-space-xs py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm rounded-lg transition-colors font-medium">High Protein</button>
+<button class="px-space-xs py-1 bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm rounded-lg transition-colors font-medium">Low Sodium</button>
+</div>
+</div>
+</div>
+<!-- MAIN RESULTS GRID (Asymmetric Multi-Domain Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT & CENTER STACK (8 Columns): Primary Food, Recipe, & Historical Diary Matches -->
+<div class="lg:col-span-8 flex flex-col gap-space-xl">
+<!-- RESULT GROUP 1: FOODS (ICMR-NIN IFCT Verified) -->
+<div class="flex flex-col gap-space-md" id="foods-section">
+<!-- Section Title Bar -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="flex items-center justify-center w-7 h-7 rounded-lg bg-primary-container text-on-primary">
+<span class="material-symbols-outlined text-[18px]">restaurant_menu</span>
+</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Foods (ICMR-NIN IFCT Verified)</h2>
+<span class="bg-surface-container-high text-primary font-label-sm text-label-sm px-space-xs py-0.5 rounded-full font-medium">12 matches</span>
+</div>
+<span class="hidden sm:inline-flex items-center gap-1 font-label-sm text-label-sm text-surface-tint font-medium bg-tertiary-fixed/40 px-space-xs py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+            Indian Food Composition Tables 2024
+          </span>
+</div>
+<!-- Food Cards List -->
+<div class="flex flex-col gap-space-sm">
+<!-- Card 1: Fresh Whole Milk Paneer -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<!-- Food Photo Thumbnail -->
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Close up photograph of fresh raw white paneer cottage cheese cubes arranged on a dark green ceramic surface with soft studio lighting, showcasing texture, freshness and clinical purity" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_0K7VD9WZlAX_q-VfQw38M9Ww1zzI2HN4DqbB0ir0lwIDRmMBoRlauMK-HdjNhZ8_Zcm2j_Sz11fWEiUZVhsTerp2Fxw-YUXNlsrDsdsxO73DP1zS68zYihgSthokPmKbZBl3gccfRxAkn5KRlyAXgWyqWlFaK0ELUrW5KxUtnfSXyfv8deQbKbrUpPUUUyzjermw6C4lxxF5Bz36HYwCVdH__bHCp0icLD3ZfAnQB7rClQmWyVSL"/>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-space-xs">
+<h3 class="font-title-lg text-title-lg text-primary">Paneer (Fresh Whole Milk Cottage Cheese)</h3>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-2 py-0.5 rounded-full font-medium">Vegetarian</span>
+<span class="bg-surface-container-high text-primary font-label-sm text-label-sm px-2 py-0.5 rounded-full font-medium">High Bio-Value</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standard portion: 100 g portion · ICMR IFCT Code: D018</p>
+</div>
+</div>
+<!-- Energy Callout -->
+<div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start">
+<span class="font-headline-sm text-headline-sm text-primary">265 <span class="text-label-md text-on-surface-variant font-normal">kcal</span></span>
+<span class="font-label-sm text-label-sm text-surface-tint">per 100g</span>
+</div>
+</div>
+<!-- Macro Nutrients Pill Matrix -->
+<div class="grid grid-cols-4 gap-space-xs my-space-sm p-space-xs bg-surface-container-low rounded-xl">
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Protein</span>
+<span class="font-title-md text-title-md text-primary font-bold">18.3g</span>
+<div class="w-full h-1 bg-primary/20 rounded-full mt-1"><div class="w-4/5 h-full bg-primary rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Fat (Lipids)</span>
+<span class="font-title-md text-title-md text-secondary font-bold">20.8g</span>
+<div class="w-full h-1 bg-secondary/20 rounded-full mt-1"><div class="w-3/5 h-full bg-secondary rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Carbs</span>
+<span class="font-title-md text-title-md text-on-surface font-bold">3.4g</span>
+<div class="w-full h-1 bg-outline-variant/30 rounded-full mt-1"><div class="w-1/5 h-full bg-outline rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Calcium</span>
+<span class="font-title-md text-title-md text-surface-tint font-bold">480mg</span>
+<div class="w-full h-1 bg-surface-tint/20 rounded-full mt-1"><div class="w-full h-full bg-surface-tint rounded-full"></div></div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-space-xs pt-space-2xs">
+<button class="px-space-sm py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-colors" onclick="document.getElementById('nutritionModal').classList.remove('hidden')">
+                View Nutrition Breakdown
+              </button>
+<button class="px-space-md py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg shadow-sm flex items-center gap-1 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Add to Diary
+              </button>
+</div>
+</div>
+<!-- Card 2: Skimmed / Low Fat Paneer -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Clean minimal shot of sliced lean cottage cheese on neutral grey stone slab, crisp studio lighting, clinical nutrition context with soft mint green tint" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBHyuQ15chKKP0O9JVQGBK1RXbQ_2FIOKr4h3OF80loEgmKCYdpBiIoX0utCV2cZHUyi1PK5T8k7SpQgCYeVKJ7MOJioBwwA_J9mtLI9xgBbAnbIMdxmoA9V58QExihaSC7WsVSdwE1Z05dAU23qNKFIJFSX0dOdfFON3ylrwrAZ6NeDlBYTdsoIiAmCpKFKFKGPgxa19HdbSBm0TZQfqHLdxYfnguglH3_xqn6yd7698GggRfn42st"/>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-space-xs">
+<h3 class="font-title-lg text-title-lg text-primary">Paneer, Low Fat / Skimmed</h3>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-2 py-0.5 rounded-full font-medium">Lean Protein</span>
+<span class="bg-surface-container-high text-primary font-label-sm text-label-sm px-2 py-0.5 rounded-full font-medium">Clinical Low Lipid</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standard portion: 100 g portion · ICMR IFCT Code: D024</p>
+</div>
+</div>
+<div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start">
+<span class="font-headline-sm text-headline-sm text-primary">172 <span class="text-label-md text-on-surface-variant font-normal">kcal</span></span>
+<span class="font-label-sm text-label-sm text-surface-tint">per 100g</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-space-xs my-space-sm p-space-xs bg-surface-container-low rounded-xl">
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Protein</span>
+<span class="font-title-md text-title-md text-primary font-bold">24.2g</span>
+<div class="w-full h-1 bg-primary/20 rounded-full mt-1"><div class="w-11/12 h-full bg-primary rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Fat (Lipids)</span>
+<span class="font-title-md text-title-md text-secondary font-bold">5.1g</span>
+<div class="w-full h-1 bg-secondary/20 rounded-full mt-1"><div class="w-1/4 h-full bg-secondary rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Carbs</span>
+<span class="font-title-md text-title-md text-on-surface font-bold">4.2g</span>
+<div class="w-full h-1 bg-outline-variant/30 rounded-full mt-1"><div class="w-1/6 h-full bg-outline rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Calcium</span>
+<span class="font-title-md text-title-md text-surface-tint font-bold">520mg</span>
+<div class="w-full h-1 bg-surface-tint/20 rounded-full mt-1"><div class="w-full h-full bg-surface-tint rounded-full"></div></div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-xs pt-space-2xs">
+<button class="px-space-sm py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-colors" onclick="document.getElementById('nutritionModal').classList.remove('hidden')">
+                View Nutrition Breakdown
+              </button>
+<button class="px-space-md py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg shadow-sm flex items-center gap-1 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Add to Diary
+              </button>
+</div>
+</div>
+<!-- Card 3: Tofu / Soya Paneer (Plant Alternative) -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row sm:items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container">
+<img class="w-full h-full object-cover" data-alt="Clean presentation of diced tofu soya paneer on a light sage background with fresh soybean pods, bright natural lighting, nutritional editorial" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmoRrg3hSCKaqatjCOPYPS3B_uC3AX3lmbur0Q48H78MLmjefexbL6xeiAYhQWLJk6fvd7QFPXbtd_C_hv_H6U8zbp4zY5i9Xw0tJ5cLSPWEmtblvhmWTx-JjMtoXrsdP1C7skMuMg-bQ__2xyKteB2VE6ThgfDPuPC5CUxb9J7oyDoGayv4YOb46tdRNnlHMEskuBDKBBSWTheHGpahbMnbVzhYFXY4wryZa6pR0YnxDfPqqvSjNH"/>
+</div>
+<div class="flex flex-col gap-1">
+<div class="flex flex-wrap items-center gap-space-xs">
+<h3 class="font-title-lg text-title-lg text-primary">Tofu / Soya Paneer (Plant Alternative)</h3>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-2 py-0.5 rounded-full font-medium">100% Plant Protein</span>
+<span class="bg-surface-container-high text-primary font-label-sm text-label-sm px-2 py-0.5 rounded-full font-medium">Lactose Free</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Standard portion: 100 g portion · ICMR IFCT Code: V112</p>
+</div>
+</div>
+<div class="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start">
+<span class="font-headline-sm text-headline-sm text-primary">140 <span class="text-label-md text-on-surface-variant font-normal">kcal</span></span>
+<span class="font-label-sm text-label-sm text-surface-tint">per 100g</span>
+</div>
+</div>
+<div class="grid grid-cols-4 gap-space-xs my-space-sm p-space-xs bg-surface-container-low rounded-xl">
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Protein</span>
+<span class="font-title-md text-title-md text-primary font-bold">15.8g</span>
+<div class="w-full h-1 bg-primary/20 rounded-full mt-1"><div class="w-3/4 h-full bg-primary rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Fat (Lipids)</span>
+<span class="font-title-md text-title-md text-secondary font-bold">8.5g</span>
+<div class="w-full h-1 bg-secondary/20 rounded-full mt-1"><div class="w-2/5 h-full bg-secondary rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Carbs</span>
+<span class="font-title-md text-title-md text-on-surface font-bold">2.1g</span>
+<div class="w-full h-1 bg-outline-variant/30 rounded-full mt-1"><div class="w-1/6 h-full bg-outline rounded-full"></div></div>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Iron (Bioactive)</span>
+<span class="font-title-md text-title-md text-surface-tint font-bold">5.4mg</span>
+<div class="w-full h-1 bg-surface-tint/20 rounded-full mt-1"><div class="w-4/5 h-full bg-surface-tint rounded-full"></div></div>
+</div>
+</div>
+<div class="flex items-center justify-end gap-space-xs pt-space-2xs">
+<button class="px-space-sm py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-colors" onclick="document.getElementById('nutritionModal').classList.remove('hidden')">
+                View Nutrition Breakdown
+              </button>
+<button class="px-space-md py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg shadow-sm flex items-center gap-1 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                Add to Diary
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- RESULT GROUP 2: RECIPES & COMPOSITE PREPARATIONS -->
+<div class="flex flex-col gap-space-md pt-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="flex items-center justify-center w-7 h-7 rounded-lg bg-secondary-container text-on-secondary-container">
+<span class="material-symbols-outlined text-[18px]">cooking</span>
+</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Recipes &amp; Composite Preparations</h2>
+<span class="bg-surface-container-high text-primary font-label-sm text-label-sm px-space-xs py-0.5 rounded-full font-medium">5 matches</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Recipe Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between gap-space-xs mb-space-xs">
+<span class="bg-surface-container text-on-surface-variant font-label-sm text-label-sm px-space-xs py-0.5 rounded-md font-medium">North Indian Cuisine</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">timer</span> 15 mins
+                </span>
+</div>
+<h3 class="font-title-lg text-title-lg text-primary mb-space-2xs">Paneer Bhurji (Scrambled Cottage Cheese)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+                Tempered with onions, diced Roma tomatoes, green chillies, and cold-pressed cumin seed oil.
+              </p>
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded-xl mb-space-sm">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Portion: 1 cup (150g)</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">312 kcal</span>
+</div>
+<div class="text-right font-label-sm text-label-sm text-on-surface-variant">
+<span class="text-primary font-semibold">21.4g</span> Prot · <span class="text-secondary font-semibold">21.0g</span> Fat
+                </div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-space-xs">
+<button class="flex-1 py-2 px-space-xs rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors text-center">
+                View Protocol
+              </button>
+<button class="flex-1 py-2 px-space-xs rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md shadow-xs text-center flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">add</span> Add to Log
+              </button>
+</div>
+</div>
+<!-- Recipe Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+<div>
+<div class="flex items-start justify-between gap-space-xs mb-space-xs">
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm px-space-xs py-0.5 rounded-md font-medium">Micronutrient Rich</span>
+<span class="flex items-center gap-1 font-label-sm text-label-sm text-outline">
+<span class="material-symbols-outlined text-[14px]">timer</span> 25 mins
+                </span>
+</div>
+<h3 class="font-title-lg text-title-lg text-primary mb-space-2xs">Palak Paneer (Spinach Puree &amp; Paneer)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-space-sm">
+                Steam-blanched spinach puree preserves heat-labile folate with unripened soft cottage cheese cubes.
+              </p>
+<div class="flex items-center justify-between p-space-xs bg-surface-container-low rounded-xl mb-space-sm">
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">Portion: 1 katori (180g)</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">240 kcal</span>
+</div>
+<div class="text-right font-label-sm text-label-sm text-on-surface-variant">
+<span class="text-primary font-semibold">14.5g</span> Prot · <span class="text-secondary font-semibold">16.5g</span> Fat
+                </div>
+</div>
+</div>
+<div class="flex items-center gap-space-xs pt-space-xs">
+<button class="flex-1 py-2 px-space-xs rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md transition-colors text-center">
+                View Protocol
+              </button>
+<button class="flex-1 py-2 px-space-xs rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md shadow-xs text-center flex items-center justify-center gap-1">
+<span class="material-symbols-outlined text-[16px]">add</span> Add to Log
+              </button>
+</div>
+</div>
+</div>
+</div>
+<!-- RESULT GROUP 3: YOUR FOOD DIARY (Historical Patient Logs) -->
+<div class="flex flex-col gap-space-md pt-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="flex items-center justify-center w-7 h-7 rounded-lg bg-surface-tint text-on-primary">
+<span class="material-symbols-outlined text-[18px]">calendar_today</span>
+</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Your Food Diary History</h2>
+<span class="bg-surface-container-high text-primary font-label-sm text-label-sm px-space-xs py-0.5 rounded-full font-medium">2 logs found</span>
+</div>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- Log Entry 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-primary-container/10 text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">lunch_dining</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface">Paneer Bhurji + 2 Multigrain Roti</span>
+<span class="font-label-sm text-label-sm bg-tertiary-fixed/60 text-on-tertiary-fixed px-2 py-0.2 rounded-full">98% Adherence</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Logged: Today · Lunch (1:15 PM) by Adi Sharma</span>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-space-md">
+<div class="text-left sm:text-right">
+<span class="font-title-md text-title-md text-primary font-semibold block">540 kcal</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">32.5g Protein</span>
+</div>
+<button class="font-label-md text-label-md text-primary hover:text-surface-tint font-medium flex items-center gap-1">
+                View Entry <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Log Entry 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-space-sm shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-secondary-container/20 text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">fitness_center</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-title-md text-title-md text-on-surface">Raw Paneer Cubes (Post-Workout)</span>
+<span class="font-label-sm text-label-sm bg-surface-container text-on-surface-variant px-2 py-0.2 rounded-full">Snack</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Logged: Yesterday · Evening Snack (5:45 PM)</span>
+</div>
+</div>
+<div class="flex items-center justify-between sm:justify-end gap-space-md">
+<div class="text-left sm:text-right">
+<span class="font-title-md text-title-md text-primary font-semibold block">180 kcal</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">14.0g Protein</span>
+</div>
+<button class="font-label-md text-label-md text-primary hover:text-surface-tint font-medium flex items-center gap-1">
+                View Entry <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- RIGHT STACK (4 Columns): Tools, Clinical Features & Knowledge Base Articles -->
+<div class="lg:col-span-4 flex flex-col gap-space-xl">
+<!-- RESULT GROUP 4: APPLICATION FEATURES & CLINICAL TOOLS -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">hub</span>
+<h2 class="font-title-lg text-title-lg text-primary">Clinical Tools &amp; Engines</h2>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Tool 1 -->
+<a class="p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-colors group" href="#">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary font-semibold">ICMR-NIN IFCT Explorer</span>
+<span class="material-symbols-outlined text-primary text-[18px]">open_in_new</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Explore 9,400+ authenticated regional foods with micro-nutrient &amp; phytate profiles.
+            </p>
+</a>
+<!-- Tool 2 -->
+<a class="p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-colors group" href="#">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary font-semibold">Macro &amp; Target Calculator</span>
+<span class="material-symbols-outlined text-primary text-[18px]">calculate</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Calibrate BMR, TDEE, and amino-acid distribution for clinical metabolic goals.
+            </p>
+</a>
+<!-- Tool 3 -->
+<a class="p-space-sm rounded-xl bg-surface-container-low hover:bg-surface-container-high transition-colors group" href="#">
+<div class="flex items-center justify-between mb-1">
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary font-semibold">Clinical Telemetry Reports</span>
+<span class="material-symbols-outlined text-primary text-[18px]">bar_chart</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Generate DISHA/HIPAA encrypted longitudinal reports for clinical reviews.
+            </p>
+</a>
+</div>
+</div>
+<!-- RESULT GROUP 5: CLINICAL GUIDES & DOCS -->
+<div class="bg-surface-container-lowest rounded-2xl p-space-md shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-surface-tint text-[20px]">menu_book</span>
+<h2 class="font-title-lg text-title-lg text-primary">Clinical Knowledge Base</h2>
+</div>
+<span class="font-label-sm text-label-sm text-outline">4 articles</span>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Article 1 -->
+<a class="flex flex-col gap-1 pb-space-xs border-b border-surface-variant group" href="#">
+<span class="font-label-sm text-label-sm text-surface-tint font-medium">Indian Food Database · 6 min read</span>
+<h4 class="font-title-md text-title-md text-on-surface group-hover:text-primary">
+              How are Indian food nutrition values determined? (ICMR-NIN IFCT)
+            </h4>
+</a>
+<!-- Article 2 -->
+<a class="flex flex-col gap-1 pb-space-xs border-b border-surface-variant group" href="#">
+<span class="font-label-sm text-label-sm text-surface-tint font-medium">Nutrition Calculations · 5 min read</span>
+<h4 class="font-title-md text-title-md text-on-surface group-hover:text-primary">
+              How does PoshanCare calculate my daily protein and calorie target?
+            </h4>
+</a>
+<!-- Article 3 -->
+<a class="flex flex-col gap-1 group" href="#">
+<span class="font-label-sm text-label-sm text-surface-tint font-medium">Food Diary · 3 min read</span>
+<h4 class="font-title-md text-title-md text-on-surface group-hover:text-primary">
+              How do I log custom regional Indian portion sizes (katori, tea glass)?
+            </h4>
+</a>
+</div>
+</div>
+<!-- ALTERNATIVE STATES INTERACTIVE PREVIEW DRAWER (Demonstrating design depth) -->
+<div class="bg-surface-container-low rounded-2xl p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-on-surface-variant font-semibold">Engine System States</span>
+<span class="font-label-sm text-label-sm bg-surface-container px-2 py-0.5 rounded text-outline">Interactive</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<!-- Toggleable mini preview for Zero Results -->
+<details class="group bg-surface-container-lowest rounded-xl p-space-xs text-on-surface cursor-pointer">
+<summary class="font-label-md text-label-md font-medium text-primary flex items-center justify-between">
+<span>Preview “Zero Results” State</span>
+<span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-space-sm pb-space-xs text-center flex flex-col items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-outline mb-space-2xs">
+<span class="material-symbols-outlined text-[20px]">search_off</span>
+</div>
+<h5 class="font-title-md text-title-md text-on-surface">No results found for “xyzfood123”</h5>
+<p class="font-body-sm text-body-sm text-on-surface-variant max-w-xs mt-1">
+                Check regional transliteration or browse the authenticated ICMR-NIN food groups.
+              </p>
+<button class="mt-space-xs font-label-md text-label-md text-primary bg-surface-container hover:bg-surface-container-high px-space-sm py-1.5 rounded-lg">
+                Browse ICMR Taxonomy
+              </button>
+</div>
+</details>
+<!-- Toggleable mini preview for Loading Skeleton -->
+<details class="group bg-surface-container-lowest rounded-xl p-space-xs text-on-surface cursor-pointer">
+<summary class="font-label-md text-label-md font-medium text-primary flex items-center justify-between">
+<span>Preview “Skeleton Indexing” State</span>
+<span class="material-symbols-outlined text-[18px] group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-space-sm pb-space-xs flex flex-col gap-space-2xs animate-pulse">
+<div class="h-4 bg-surface-container rounded w-3/4"></div>
+<div class="h-8 bg-surface-container-high rounded w-full"></div>
+<div class="h-4 bg-surface-container rounded w-1/2"></div>
+</div>
+</details>
+<!-- Status Banner for System Health -->
+<div class="bg-surface-container-lowest rounded-xl p-space-xs flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-surface-tint text-[18px]">verified_user</span>
+<span>Index sync latency: <strong class="text-on-surface">14ms</strong> (Cloud-Edge DISHA v2)</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- NUTRITION RESULT PREVIEW MODAL / DIALOG (Integrated Modal Sheet) -->
+<div class="hidden fixed inset-0 z-50 flex items-center justify-center p-space-md bg-on-surface/40 backdrop-blur-sm" id="nutritionModal">
+<div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[921px]">
+<!-- Modal Header -->
+<div class="bg-surface-container-low px-space-lg py-space-md flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-lg bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">science</span>
+</div>
+<div>
+<h3 class="font-title-lg text-title-lg text-primary">Nutritional Biomarker Profile</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">ICMR-NIN IFCT 2024 · Ref Code: D018</span>
+</div>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container hover:bg-surface-container-high text-on-surface flex items-center justify-center transition-colors" onclick="document.getElementById('nutritionModal').classList.add('hidden')">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<!-- Modal Body (Scrollable) -->
+<div class="p-space-lg overflow-y-auto flex flex-col gap-space-md">
+<!-- Food Identification & Portion Selector -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm pb-space-sm border-b border-surface-variant">
+<div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Paneer (Fresh Cottage Cheese)</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Prepared from unhomogenized cow and buffalo milk curdling.</p>
+</div>
+<!-- Portion Selector -->
+<div class="flex items-center gap-space-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant font-medium">Serving:</span>
+<select class="bg-surface-container-low text-on-surface font-label-md text-label-md py-1.5 px-space-sm rounded-lg focus:outline-none">
+<option selected="">100 g Standard</option>
+<option>1 Katori (~120 g)</option>
+<option>1 Thin Slice (50 g)</option>
+<option>1 Small Cube (20 g)</option>
+</select>
+</div>
+</div>
+<!-- Macro Donut / Concentric Visualization + Telemetry -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-space-md items-center bg-surface-container-low/50 p-space-md rounded-2xl">
+<!-- SVG Energy Progress Ring -->
+<div class="sm:col-span-5 flex flex-col items-center justify-center">
+<div class="relative w-36 h-36 flex items-center justify-center">
+<svg class="w-full h-full transform -rotate-90" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="40" stroke="#dee8ff" stroke-width="8"></circle>
+<circle cx="50" cy="50" fill="none" r="40" stroke="#003629" stroke-dasharray="251.2" stroke-dashoffset="62.8" stroke-linecap="round" stroke-width="8"></circle>
+<circle cx="50" cy="50" fill="none" r="30" stroke="#dee8ff" stroke-width="6"></circle>
+<circle cx="50" cy="50" fill="none" r="30" stroke="#7e5700" stroke-dasharray="188.4" stroke-dashoffset="56.5" stroke-linecap="round" stroke-width="6"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">265</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant -mt-1">kcal</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-2">13.2% Daily Energy (2,000 kcal)</span>
+</div>
+<!-- Macro Distribution Bars -->
+<div class="sm:col-span-7 flex flex-col gap-space-xs">
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-1">
+<span class="text-primary font-semibold">Protein (High HBV)</span>
+<span class="text-on-surface font-medium">18.3 g (28% DV)</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 28%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-1">
+<span class="text-secondary font-semibold">Lipids / Total Fat</span>
+<span class="text-on-surface font-medium">20.8 g (27% DV)</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-secondary-container rounded-full" style="width: 27%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between font-label-md text-label-md mb-1">
+<span class="text-on-surface-variant font-semibold">Available Carbohydrates</span>
+<span class="text-on-surface font-medium">3.4 g (1% DV)</span>
+</div>
+<div class="w-full h-2 bg-surface-container rounded-full overflow-hidden">
+<div class="h-full bg-outline rounded-full" style="width: 2%;"></div>
+</div>
+</div>
+<div class="pt-space-2xs flex items-center justify-between text-on-surface-variant font-label-sm text-label-sm">
+<span>Amino Acid Score: <strong class="text-primary">PDCAAS 0.94</strong></span>
+<span>Glycemic Index: <strong class="text-surface-tint">0 (Very Low)</strong></span>
+</div>
+</div>
+</div>
+<!-- Micronutrient Mineral Assay -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-title-md text-title-md text-primary font-semibold">Clinical Micronutrient Assay (per 100g)</span>
+<div class="grid grid-cols-3 gap-space-xs">
+<div class="p-space-xs bg-surface-container-low rounded-xl flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Calcium (Ca)</span>
+<span class="font-title-md text-title-md text-primary font-bold">480 mg</span>
+<span class="font-label-sm text-label-sm text-surface-tint">48% RDA</span>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded-xl flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Phosphorus (P)</span>
+<span class="font-title-md text-title-md text-primary font-bold">280 mg</span>
+<span class="font-label-sm text-label-sm text-surface-tint">40% RDA</span>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded-xl flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Sodium (Na)</span>
+<span class="font-title-md text-title-md text-on-surface font-bold">22 mg</span>
+<span class="font-label-sm text-label-sm text-outline">Low Sodium</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Modal Footer -->
+<div class="bg-surface-container-low px-space-lg py-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm">
+<button class="w-full sm:w-auto px-space-md py-2 rounded-xl bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg transition-colors text-center" onclick="document.getElementById('nutritionModal').classList.add('hidden')">
+          Close Preview
+        </button>
+<div class="flex items-center gap-space-xs w-full sm:w-auto">
+<button class="flex-1 sm:flex-initial px-space-md py-2 rounded-xl bg-surface-container-lowest hover:bg-surface-container-high text-primary font-label-lg text-label-lg transition-colors">
+            View Full ICMR Sheet
+          </button>
+<button class="flex-1 sm:flex-initial px-space-lg py-2 rounded-xl bg-primary text-on-primary hover:bg-primary-container font-label-lg text-label-lg shadow-sm flex items-center justify-center gap-1 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+            + Add to Diary
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- KEYBOARD SHORTCUTS & TELEMETRY FOOTER -->
+<footer class="mt-space-2xl pt-space-md border-t border-surface-variant flex flex-col md:flex-row items-center justify-between gap-space-sm text-outline font-label-sm text-label-sm mb-space-xl">
+<div class="flex flex-wrap items-center gap-space-sm">
+<span class="flex items-center gap-1">
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono text-[11px] shadow-xs">⌘K</kbd> Open Search
+      </span>
+<span class="text-surface-variant">|</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono text-[11px] shadow-xs">Esc</kbd> Clear / Dismiss
+      </span>
+<span class="text-surface-variant">|</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono text-[11px] shadow-xs">↑</kbd>
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono text-[11px] shadow-xs">↓</kbd> Navigate
+      </span>
+<span class="text-surface-variant">|</span>
+<span class="flex items-center gap-1">
+<kbd class="px-1.5 py-0.5 rounded bg-surface-container text-on-surface font-mono text-[11px] shadow-xs">↵</kbd> Select Item
+      </span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-surface-tint text-[16px]">verified</span>
+<span>PoshanCare Global Clinical Index v2.4 · Encrypted DISHA Audit Ready</span>
+</div>
+</footer>
+<!-- Micro-interactions Script -->
+<script>
+    const searchInput = document.getElementById('globalSearchInput');
+    const clearBtn = document.getElementById('clearQueryBtn');
+    const flyout = document.getElementById('autocompleteFlyout');
+
+    if (clearBtn && searchInput) {
+      clearBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        searchInput.focus();
+        if (flyout) flyout.classList.add('hidden');
+      });
+
+      searchInput.addEventListener('focus', () => {
+        if (flyout && searchInput.value.length > 0) {
+          flyout.classList.remove('hidden');
+        }
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!searchInput.contains(e.target) && !flyout.contains(e.target)) {
+          flyout.classList.add('hidden');
+        }
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          if (flyout) flyout.classList.add('hidden');
+          const modal = document.getElementById('nutritionModal');
+          if (modal) modal.classList.add('hidden');
+        }
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          searchInput.focus();
+          searchInput.select();
+        }
+      });
+    }
+  </script>
+</div></main></div></body></html>
