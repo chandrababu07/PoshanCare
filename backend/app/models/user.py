@@ -13,6 +13,8 @@ if TYPE_CHECKING:
     from app.models.report import ClinicalReport
     from app.models.hydration import WaterLog
     from app.models.activity import ActivityLog
+    from app.models.goal import HealthGoal
+    from app.models.notification import HealthNotification
 
 
 class User(Base):
@@ -70,6 +72,12 @@ class User(Base):
     )
     activity_logs: Mapped[List["ActivityLog"]] = relationship(
         "ActivityLog", back_populates="user", cascade="all, delete-orphan"
+    )
+    health_goals: Mapped[List["HealthGoal"]] = relationship(
+        "HealthGoal", back_populates="user", cascade="all, delete-orphan"
+    )
+    notifications: Mapped[List["HealthNotification"]] = relationship(
+        "HealthNotification", back_populates="user", cascade="all, delete-orphan"
     )
 
 
