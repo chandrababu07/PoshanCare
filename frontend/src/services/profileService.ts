@@ -1,4 +1,4 @@
-import { OnboardingData } from '../context/OnboardingContext';
+import { ActivityLevel, OnboardingData, PrimaryGoal } from '../context/OnboardingContext';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 
@@ -71,8 +71,8 @@ export function mapBackendProfileToOnboardingData(
     weightLbs: weightLbs || 124.3,
     targetMass: targetMassKg,
 
-    activityLevel: (profile.activity_level as unknown as string) ?? 'Moderately Active',
-    primaryGoal: (profile.primary_goal as unknown as string) ?? 'eat_healthier',
+    activityLevel: (profile.activity_level as ActivityLevel) ?? 'Moderately Active',
+    primaryGoal: (profile.primary_goal as PrimaryGoal) ?? 'eat_healthier',
 
     dietType: profile.diet_type ?? 'vegetarian',
     foodPreferences: profile.food_preferences ?? ['South Indian', 'North Indian'],

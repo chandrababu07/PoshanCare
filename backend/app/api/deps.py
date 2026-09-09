@@ -64,3 +64,15 @@ async def get_current_user(
         )
 
     return user
+
+
+async def get_optional_current_user(
+    request: Request,
+    header_token: Optional[str] = Depends(oauth2_scheme),
+    db: AsyncSession = Depends(get_db),
+) -> Optional[User]:
+    """Dependency returning current authenticated user if logged in, or None if unauthenticated."""
+    try:
+        return await get_current_user(request=request, header_token=header_token, db=db)
+    except Exception:
+        return None

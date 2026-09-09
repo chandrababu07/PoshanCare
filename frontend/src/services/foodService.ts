@@ -13,9 +13,11 @@ export interface BackendFoodPortion {
 
 export interface BackendFoodItem {
   id: number;
+  user_id?: number | null;
   ifct_code?: string | null;
   name: string;
   alternate_name?: string | null;
+  description?: string | null;
   category: string;
   region: string;
   is_vegetarian: boolean;
@@ -27,6 +29,12 @@ export interface BackendFoodItem {
   carbs_g: number;
   fat_g: number;
   fiber_g: number;
+  sugar_g?: number;
+  sodium_mg?: number;
+  source?: string;
+  is_verified?: boolean;
+  is_custom?: boolean;
+  is_favorite?: boolean;
   calories_per_100g: number;
   portions: BackendFoodPortion[];
   created_at: string;
@@ -46,10 +54,30 @@ export interface FetchFoodsParams {
   category?: string;
   region?: string;
   is_vegetarian?: boolean;
+  is_custom_only?: boolean;
+  is_favorite_only?: boolean;
   page?: number;
   page_size?: number;
   sort_by?: string;
   sort_order?: 'asc' | 'desc';
+}
+
+export interface CreateCustomFoodPayload {
+  name: string;
+  alternate_name?: string;
+  description?: string;
+  category: string;
+  region: string;
+  is_vegetarian: boolean;
+  serving_size_name: string;
+  serving_size_g: number;
+  calories: number;
+  protein_g: number;
+  carbs_g: number;
+  fat_g: number;
+  fiber_g: number;
+  sugar_g?: number;
+  sodium_mg?: number;
 }
 
 /**
@@ -58,8 +86,10 @@ export interface FetchFoodsParams {
 export function mapBackendFoodToFrontend(item: BackendFoodItem): FoodItem {
   return {
     id: `food-${item.id}`,
+    rawId: item.id,
     name: item.name,
     alternateName: item.alternate_name || undefined,
+    description: item.description || undefined,
     category: item.category,
     region: item.region,
     servingSize: `${item.serving_size_name} (${Math.round(item.serving_size_g)}g)`,
@@ -69,9 +99,13 @@ export function mapBackendFoodToFrontend(item: BackendFoodItem): FoodItem {
     carbs: parseFloat(item.carbs_g.toFixed(1)),
     fat: parseFloat(item.fat_g.toFixed(1)),
     fiber: parseFloat(item.fiber_g.toFixed(1)),
+    sugar: item.sugar_g ? parseFloat(item.sugar_g.toFixed(1)) : 0,
+    sodium: item.sodium_mg ? parseFloat(item.sodium_mg.toFixed(1)) : 0,
     ifctCode: item.ifct_code || undefined,
     imageUrl: item.image_url || undefined,
     isVegetarian: item.is_vegetarian,
+    isCustom: Boolean(item.is_custom || item.user_id),
+    isFavorite: Boolean(item.is_favorite),
   };
 }
 
@@ -87,6 +121,8 @@ export async function fetchFoodsFromApi(
     if (params.category && params.category !== 'All') query.append('category', params.category);
     if (params.region && params.region !== 'All') query.append('region', params.region);
     if (params.is_vegetarian !== undefined) query.append('is_vegetarian', String(params.is_vegetarian));
+    if (params.is_custom_only) query.append('is_custom_only', 'true');
+    if (params.is_favorite_only) query.append('is_favorite_only', 'true');
     if (params.page) query.append('page', String(params.page));
     if (params.page_size) query.append('page_size', String(params.page_size));
     if (params.sort_by) query.append('sort_by', params.sort_by);
@@ -96,6 +132,7 @@ export async function fetchFoodsFromApi(
     const response = await fetch(url, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
     });
 
     if (!response.ok) {
@@ -133,6 +170,92 @@ export async function fetchFoodsFromApi(
       rawItems: [],
       total: filtered.length,
     };
+  }
+}
+
+/**
+ * Create custom food in API
+ */
+export async function createCustomFoodInApi(
+  payload: CreateCustomFoodPayload
+): Promise<FoodItem | null> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/foods`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const errJson = await response.json().catch(() => null);
+      const detailMsg = errJson?.detail || errJson?.error?.message || `HTTP ${response.status}`;
+      throw new Error(detailMsg);
+    }
+
+    const data = (await response.json()) as BackendFoodItem;
+    return mapBackendFoodToFrontend(data);
+  } catch (error) {
+    console.warn('Create custom food API error:', error);
+    throw error;
+  }
+}
+
+/**
+ * Fetch user's recent foods
+ */
+export async function fetchRecentFoodsFromApi(): Promise<FoodItem[]> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/foods/recent`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    if (!response.ok) return [];
+    const data = (await response.json()) as BackendFoodItem[];
+    return data.map(mapBackendFoodToFrontend);
+  } catch (error) {
+    console.warn('Recent foods API error:', error);
+    return [];
+  }
+}
+
+/**
+ * Fetch user's favorite foods
+ */
+export async function fetchFavoriteFoodsFromApi(): Promise<FoodItem[]> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/foods/favorites`, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    if (!response.ok) return [];
+    const data = (await response.json()) as BackendFoodItem[];
+    return data.map(mapBackendFoodToFrontend);
+  } catch (error) {
+    console.warn('Favorite foods API error:', error);
+    return [];
+  }
+}
+
+/**
+ * Toggle favorite food status in API
+ */
+export async function toggleFavoriteFoodInApi(
+  foodId: number,
+  isFavorite: boolean
+): Promise<boolean> {
+  try {
+    const response = await fetch(`${API_BASE_URL}/foods/${foodId}/favorite`, {
+      method: isFavorite ? 'POST' : 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+    });
+    return response.ok;
+  } catch (error) {
+    console.warn('Toggle favorite food API error:', error);
+    return false;
   }
 }
 

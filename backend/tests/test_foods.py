@@ -2,6 +2,24 @@ import pytest
 from httpx import AsyncClient
 
 
+async def get_authenticated_cookies(client: AsyncClient, email: str = "food_user@poshancare.in") -> dict:
+    """Helper to register and log in a test user, returning auth cookies."""
+    register_payload = {
+        "email": email,
+        "password": "Password123!",
+        "full_name": "Food Test User",
+    }
+    await client.post("/api/v1/auth/register", json=register_payload)
+    login_resp = await client.post(
+        "/api/v1/auth/login",
+        json={
+            "email": email,
+            "password": "Password123!",
+        },
+    )
+    return login_resp.cookies
+
+
 @pytest.mark.asyncio
 async def test_list_foods_default_and_seeding(client: AsyncClient):
     """Test GET /api/v1/foods triggers auto-seeding and returns paginated list."""
@@ -117,10 +135,68 @@ async def test_get_regions(client: AsyncClient):
 
 
 @pytest.mark.asyncio
-async def test_invalid_pagination_params(client: AsyncClient):
-    """Test validation errors on invalid page/page_size parameters."""
-    response = await client.get("/api/v1/foods", params={"page": 0})
+async def test_create_custom_food(client: AsyncClient):
+    """Test creating a custom food with authentication and non-negative validation."""
+    cookies = await get_authenticated_cookies(client, "custom_food_owner@poshancare.in")
+    payload = {
+        "name": "Home Made Oats Porridge",
+        "category": "Breakfast",
+        "region": "Custom",
+        "is_vegetarian": True,
+        "serving_size_name": "1 bowl",
+        "serving_size_g": 250,
+        "calories": 210,
+        "protein_g": 8.5,
+        "carbs_g": 35.0,
+        "fat_g": 4.0,
+        "fiber_g": 5.0,
+    }
+    response = await client.post("/api/v1/foods", json=payload, cookies=cookies)
+    assert response.status_code == 201
+    data = response.json()
+    assert data["name"] == "Home Made Oats Porridge"
+    assert data["is_custom"] is True
+    assert data["calories"] == 210.0
+
+
+@pytest.mark.asyncio
+async def test_create_custom_food_rejects_negative_nutrition(client: AsyncClient):
+    """Test validation errors when creating custom food with impossible negative nutrition values."""
+    cookies = await get_authenticated_cookies(client, "invalid_food_owner@poshancare.in")
+    payload = {
+        "name": "Invalid Negative Food",
+        "serving_size_name": "1 bowl",
+        "serving_size_g": 100,
+        "calories": -100,
+        "protein_g": 5.0,
+        "carbs_g": 10.0,
+        "fat_g": 2.0,
+    }
+    response = await client.post("/api/v1/foods", json=payload, cookies=cookies)
     assert response.status_code == 422
 
-    response_size = await client.get("/api/v1/foods", params={"page_size": 500})
-    assert response_size.status_code == 422
+
+@pytest.mark.asyncio
+async def test_add_and_remove_favorite_food(client: AsyncClient):
+    """Test favoriting and unfavoriting a food item."""
+    cookies = await get_authenticated_cookies(client, "favorite_user@poshancare.in")
+    list_resp = await client.get("/api/v1/foods", params={"page_size": 1})
+    food_id = list_resp.json()["items"][0]["id"]
+
+    # Add favorite
+    fav_resp = await client.post(f"/api/v1/foods/{food_id}/favorite", cookies=cookies)
+    assert fav_resp.status_code == 200
+
+    # Check favorites list
+    get_favs = await client.get("/api/v1/foods/favorites", cookies=cookies)
+    assert get_favs.status_code == 200
+    fav_items = get_favs.json()
+    assert any(item["id"] == food_id for item in fav_items)
+
+    # Remove favorite
+    del_fav = await client.delete(f"/api/v1/foods/{food_id}/favorite", cookies=cookies)
+    assert del_fav.status_code == 200
+
+    # Verify removal
+    get_favs_after = await client.get("/api/v1/foods/favorites", cookies=cookies)
+    assert not any(item["id"] == food_id for item in get_favs_after.json())

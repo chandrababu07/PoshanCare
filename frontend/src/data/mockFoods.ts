@@ -1,7 +1,9 @@
 export interface FoodItem {
   id: string;
+  rawId?: number;
   name: string;
   alternateName?: string;
+  description?: string;
   category: string;
   region: string;
   servingSize: string;
@@ -11,9 +13,13 @@ export interface FoodItem {
   carbs: number;
   fat: number;
   fiber: number;
+  sugar?: number;
+  sodium?: number;
   ifctCode?: string;
   imageUrl?: string;
   isVegetarian?: boolean;
+  isCustom?: boolean;
+  isFavorite?: boolean;
 }
 
 export const MOCK_FOOD_DATABASE: FoodItem[] = [

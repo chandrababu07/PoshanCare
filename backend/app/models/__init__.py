@@ -4,7 +4,7 @@ from app.models.health import HealthCheckRecord
 from app.models.user import User
 from app.models.session import UserSession
 from app.models.profile import UserProfile
-from app.models.food import Food, FoodPortion
+from app.models.food import Food, FoodPortion, UserFavoriteFood
 from app.models.diary import Meal, MealEntry
 from app.models.weight import WeightLog
 from app.models.recipe import Recipe, RecipeIngredient
@@ -18,6 +18,7 @@ __all__ = [
     "UserProfile",
     "Food",
     "FoodPortion",
+    "UserFavoriteFood",
     "Meal",
     "MealEntry",
     "WeightLog",
@@ -25,5 +26,3 @@ __all__ = [
     "RecipeIngredient",
     "ClinicalReport",
 ]
-
-

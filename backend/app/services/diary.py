@@ -253,19 +253,29 @@ async def get_daily_diary_service(
 async def create_diary_entry_service(
     db: AsyncSession, user_id: int, request: CreateDiaryEntryRequest
 ) -> MealEntryResponse:
-    """Create a new food entry for a user meal."""
-    meal_type = request.meal_type.lower().strip()
+    raw_meal_type = request.meal_type.lower().strip()
+    alias_map = {
+        "snack": "evening_snack",
+        "snacks": "evening_snack",
+        "evening_snack": "evening_snack",
+        "breakfast": "breakfast",
+        "lunch": "lunch",
+        "dinner": "dinner",
+        "other": "other",
+    }
+    meal_type = alias_map.get(raw_meal_type, raw_meal_type)
+
     if meal_type not in MEAL_SECTION_CONFIG:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f"Invalid meal_type '{request.meal_type}'. Allowed: {list(MEAL_SECTION_CONFIG.keys())}",
         )
 
-    # 1. Fetch & Validate Food
+    # 1. Fetch & Validate Food with ownership isolation
     food_stmt = select(Food).where(Food.id == request.food_id)
     food_res = await db.execute(food_stmt)
     food = food_res.scalar_one_or_none()
-    if not food:
+    if not food or (food.user_id is not None and food.user_id != user_id):
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"Food item with ID {request.food_id} not found.",
