@@ -11,6 +11,9 @@ from app.models.recipe import Recipe, RecipeIngredient
 from app.models.report import ClinicalReport
 from app.models.hydration import WaterLog
 from app.models.activity import ActivityLog
+from app.models.meal_plan import MealPlan, MealPlanItem
+from app.models.goal import HealthGoal
+from app.models.notification import HealthNotification
 
 __all__ = [
     "Base",
@@ -29,4 +32,8 @@ __all__ = [
     "ClinicalReport",
     "WaterLog",
     "ActivityLog",
+    "MealPlan",
+    "MealPlanItem",
+    "HealthGoal",
+    "HealthNotification",
 ]
