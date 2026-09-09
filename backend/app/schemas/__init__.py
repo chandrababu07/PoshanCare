@@ -29,6 +29,31 @@ from app.schemas.activity import (
     ActivityDailyResponse,
     ActivityHistoryResponse,
 )
+from app.schemas.meal_plan import (
+    MealPlanItemResponse,
+    MealGroupResponse,
+    MealPlanNutritionSummary,
+    MealPlanDataQuality,
+    MealPlanResponse,
+    MealRecommendationItem,
+    MealRecommendationResponse,
+    GenerateMealPlanRequest,
+    AddMealPlanItemRequest,
+)
+from app.schemas.goal import (
+    GoalCreateRequest,
+    GoalUpdateRequest,
+    GoalResponse,
+    GoalProgressResponse,
+    CoachingInsightResponse,
+    GoalDashboardResponse,
+)
+from app.schemas.notification import (
+    NotificationResponse,
+    NotificationListResponse,
+    UnreadCountResponse,
+    NotificationGenerateResponse,
+)
 
 __all__ = [
     "HealthResponse",
@@ -55,4 +80,23 @@ __all__ = [
     "ActivityLogResponse",
     "ActivityDailyResponse",
     "ActivityHistoryResponse",
+    "MealPlanItemResponse",
+    "MealGroupResponse",
+    "MealPlanNutritionSummary",
+    "MealPlanDataQuality",
+    "MealPlanResponse",
+    "MealRecommendationItem",
+    "MealRecommendationResponse",
+    "GenerateMealPlanRequest",
+    "AddMealPlanItemRequest",
+    "GoalCreateRequest",
+    "GoalUpdateRequest",
+    "GoalResponse",
+    "GoalProgressResponse",
+    "CoachingInsightResponse",
+    "GoalDashboardResponse",
+    "NotificationResponse",
+    "NotificationListResponse",
+    "UnreadCountResponse",
+    "NotificationGenerateResponse",
 ]
