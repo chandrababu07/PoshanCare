@@ -36,11 +36,11 @@ export interface BackendProfileResponse {
  */
 export function mapBackendProfileToOnboardingData(
   profile: BackendProfileResponse,
-  existingName: string = 'Rahul Sharma'
+  existingName: string = 'User'
 ): OnboardingData {
-  const heightCm = profile.height_cm || 163;
-  const weightKg = profile.weight_kg || 56.4;
-  const targetMassKg = profile.target_mass_kg || 58.0;
+  const heightCm = profile.height_cm ?? 163;
+  const weightKg = profile.weight_kg ?? 56.4;
+  const targetMassKg = profile.target_mass_kg ?? 58.0;
 
   // Convert metric to imperial for display support
   const totalInches = Math.round(heightCm / 2.54);
@@ -50,25 +50,26 @@ export function mapBackendProfileToOnboardingData(
 
   return {
     fullName: existingName,
-    age: profile.age || 34,
-    biologicalSex: profile.biological_sex || 'female',
-    unitSystem: profile.unit_system || 'metric',
+    age: profile.age ?? 34,
+    biologicalSex: profile.biological_sex ?? 'female',
+    unitSystem: profile.unit_system ?? 'metric',
     heightCm,
     weightKg,
     heightFt: heightFt || 5,
     heightIn: heightIn || 4,
     weightLbs: weightLbs || 124.3,
-    compositionIntent: profile.composition_intent || 'standard',
+    compositionIntent: profile.composition_intent ?? 'standard',
     targetMass: targetMassKg,
-    leanMassFocus: profile.lean_mass_focus || 'none',
-    primaryGoal: profile.primary_goal || 'maintain',
-    pace: profile.progression_pace || 'gradual',
-    activityLevel: profile.activity_level || 'Moderately Active',
-    routines: profile.routines || ['Strength Training', 'Cardio'],
-    frequency: profile.training_frequency || '3–4 days/week',
-    dailySteps: profile.daily_steps || 8000,
+    leanMassFocus: profile.lean_mass_focus ?? 'none',
+    primaryGoal: profile.primary_goal ?? 'maintain',
+    pace: profile.progression_pace ?? 'gradual',
+    activityLevel: profile.activity_level ?? 'Moderately Active',
+    routines: profile.routines ?? ['Strength Training', 'Cardio'],
+    frequency: profile.training_frequency ?? '3–4 days/week',
+    dailySteps: profile.daily_steps ?? 8000,
   };
 }
+
 
 /**
  * Convert Frontend OnboardingData to Backend Profile PATCH Payload
