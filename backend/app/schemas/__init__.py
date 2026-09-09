@@ -18,6 +18,17 @@ from app.schemas.diary import (
     MealSectionResponse,
     DailyDiaryResponse,
 )
+from app.schemas.hydration import (
+    CreateWaterLogRequest,
+    WaterLogResponse,
+    HydrationDailyResponse,
+)
+from app.schemas.activity import (
+    UpsertActivityLogRequest,
+    ActivityLogResponse,
+    ActivityDailyResponse,
+    ActivityHistoryResponse,
+)
 
 __all__ = [
     "HealthResponse",
@@ -37,4 +48,11 @@ __all__ = [
     "MealEntryResponse",
     "MealSectionResponse",
     "DailyDiaryResponse",
+    "CreateWaterLogRequest",
+    "WaterLogResponse",
+    "HydrationDailyResponse",
+    "UpsertActivityLogRequest",
+    "ActivityLogResponse",
+    "ActivityDailyResponse",
+    "ActivityHistoryResponse",
 ]

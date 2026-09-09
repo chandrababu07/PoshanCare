@@ -8,6 +8,7 @@ import {
   Calculator,
   PieChart,
   Scale,
+  Activity,
   BookOpen,
   FileText,
   Sparkles,
@@ -28,6 +29,7 @@ export const MobileNavigation: React.FC<MobileNavigationProps> = ({ isOpen, onCl
     { title: 'Calculator', path: '/app/calculator', icon: Calculator },
     { title: 'Nutrition Breakdown', path: '/app/nutrition', icon: PieChart },
     { title: 'Weight Tracking', path: '/app/weight', icon: Scale },
+    { title: 'Activity Telemetry', path: '/app/activity', icon: Activity },
     { title: 'Custom Recipes', path: '/app/recipes', icon: BookOpen },
     { title: 'Reports & Analytics', path: '/app/reports', icon: FileText },
   ];

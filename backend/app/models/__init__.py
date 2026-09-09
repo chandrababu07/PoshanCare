@@ -9,6 +9,8 @@ from app.models.diary import Meal, MealEntry
 from app.models.weight import WeightLog
 from app.models.recipe import Recipe, RecipeIngredient
 from app.models.report import ClinicalReport
+from app.models.hydration import WaterLog
+from app.models.activity import ActivityLog
 
 __all__ = [
     "Base",
@@ -25,4 +27,6 @@ __all__ = [
     "Recipe",
     "RecipeIngredient",
     "ClinicalReport",
+    "WaterLog",
+    "ActivityLog",
 ]

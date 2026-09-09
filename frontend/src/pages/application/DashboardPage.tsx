@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   PlusCircle,
   Activity,
+  Footprints,
   Zap,
   Droplets,
   GlassWater,
@@ -32,6 +33,9 @@ import { analyticsService, DashboardAnalyticsResponse } from '../../services/ana
 import { fetchDailyDiaryFromApi, mapBackendMealSectionToFrontend, BackendDailyDiaryResponse } from '../../services/diaryService';
 import { MealSection } from '../../data/mockDiary';
 import { fetchUserProfile, BackendProfileResponse } from '../../services/profileService';
+import { fetchNutritionIntelligence, NutritionIntelligenceResponse } from '../../services/nutritionIntelligenceService';
+import { fetchDailyHydration, addWaterLog, HydrationDailySummary } from '../../services/hydrationService';
+import { fetchDailyActivity, ActivityDailySummary } from '../../services/activityService';
 
 const maxOne = (val: number) => Math.max(1, val);
 
@@ -41,18 +45,22 @@ export const DashboardPage: React.FC = () => {
   const [loadingAnalytics, setLoadingAnalytics] = useState<boolean>(true);
   const [analyticsError, setAnalyticsError] = useState<boolean>(false);
 
+  const [intelligence, setIntelligence] = useState<NutritionIntelligenceResponse | null>(null);
+  const [loadingIntelligence, setLoadingIntelligence] = useState<boolean>(true);
+
+  const [hydrationSummary, setHydrationSummary] = useState<HydrationDailySummary | null>(null);
+  const [loadingHydration, setLoadingHydration] = useState<boolean>(true);
+
+  const [activitySummary, setActivitySummary] = useState<ActivityDailySummary | null>(null);
+  const [loadingActivity, setLoadingActivity] = useState<boolean>(true);
+
   const [userFullName, setUserFullName] = useState<string>('');
   const [profile, setProfile] = useState<BackendProfileResponse | null>(null);
-  const [userId, setUserId] = useState<number | null>(null);
 
   const [formattedDateStr, setFormattedDateStr] = useState<string>('');
   const [todayDateKey, setTodayDateKey] = useState<string>('');
   const [dashboardMeals, setDashboardMeals] = useState<MealSection[]>([]);
   const [todayDiary, setTodayDiary] = useState<BackendDailyDiaryResponse | null>(null);
-
-  // Per-user per-date persisted water tracking
-  const [waterMl, setWaterMl] = useState<number>(0);
-  const targetWaterMl = 2500;
 
   // Simple Mode Accessibility Toggle
   const [simpleMode, setSimpleMode] = useState<boolean>(() => {
@@ -120,16 +128,6 @@ export const DashboardPage: React.FC = () => {
       const user = await getCurrentUser();
       if (user) {
         setUserFullName(user.full_name || 'Friend');
-        setUserId(user.id);
-
-        // Load water from localStorage for this user and date
-        const storageKey = `poshancare_water_${user.id}_${yyyymmdd}`;
-        const savedWater = localStorage.getItem(storageKey);
-        if (savedWater !== null) {
-          setWaterMl(parseInt(savedWater, 10) || 0);
-        } else {
-          setWaterMl(0);
-        }
       }
     } catch {
       setUserFullName('Friend');
@@ -142,7 +140,29 @@ export const DashboardPage: React.FC = () => {
       console.warn('Profile load info:', e);
     }
 
-    // 2. Load Today's Diary Meals
+    // 2. Load Persisted Hydration
+    setLoadingHydration(true);
+    try {
+      const hyd = await fetchDailyHydration(yyyymmdd);
+      if (hyd) setHydrationSummary(hyd);
+    } catch (e) {
+      console.warn('Hydration load error:', e);
+    } finally {
+      setLoadingHydration(false);
+    }
+
+    // 3. Load Persisted Activity
+    setLoadingActivity(true);
+    try {
+      const act = await fetchDailyActivity(yyyymmdd);
+      if (act) setActivitySummary(act);
+    } catch (e) {
+      console.warn('Activity load error:', e);
+    } finally {
+      setLoadingActivity(false);
+    }
+
+    // 4. Load Today's Diary Meals
     try {
       const { data } = await fetchDailyDiaryFromApi(yyyymmdd);
       if (data) {
@@ -156,7 +176,18 @@ export const DashboardPage: React.FC = () => {
       setDashboardMeals([]);
     }
 
-    // 3. Load Longitudinal Analytics
+    // 5. Load Nutrition Intelligence
+    setLoadingIntelligence(true);
+    try {
+      const intelData = await fetchNutritionIntelligence(yyyymmdd);
+      if (intelData) setIntelligence(intelData);
+    } catch (e) {
+      console.warn('Intelligence load error:', e);
+    } finally {
+      setLoadingIntelligence(false);
+    }
+
+    // 6. Load Longitudinal Analytics
     try {
       const analyticsData = await analyticsService.getDashboardAnalytics(selectedPeriod);
       if (analyticsData) {
@@ -176,14 +207,16 @@ export const DashboardPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPeriod]);
 
-  const handleAddWater = (amount: number) => {
-    setWaterMl((prev) => {
-      const next = Math.min(targetWaterMl + 1500, prev + amount);
-      if (userId && todayDateKey) {
-        localStorage.setItem(`poshancare_water_${userId}_${todayDateKey}`, String(next));
-      }
-      return next;
-    });
+  const handleAddWater = async (amount: number) => {
+    if (!todayDateKey) return;
+    const res = await addWaterLog({ date: todayDateKey, amount_ml: amount });
+    if (res) {
+      const hyd = await fetchDailyHydration(todayDateKey);
+      if (hyd) setHydrationSummary(hyd);
+
+      const intelData = await fetchNutritionIntelligence(todayDateKey);
+      if (intelData) setIntelligence(intelData);
+    }
   };
 
   const getMealIcon = (iconName: string) => {
@@ -240,7 +273,6 @@ export const DashboardPage: React.FC = () => {
   const targetFat = todayDiary ? Math.round(todayDiary.target_fat) : (analytics?.macros.fat.target || 65);
 
   const hasLoggedMealsToday = dashboardMeals.some((m) => m.items && m.items.length > 0);
-  const waterPct = Math.min(100, Math.round((waterMl / targetWaterMl) * 100));
 
   return (
     <div className={`space-y-8 ${simpleMode ? 'text-lg space-y-10 font-sans' : ''}`}>
@@ -735,66 +767,227 @@ export const DashboardPage: React.FC = () => {
                 <h2 className="text-base font-bold text-slate-900 dark:text-white">Daily Hydration</h2>
               </div>
               <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950 text-blue-700 dark:text-blue-300">
-                {waterPct}% Goal
+                {Math.min(100, Math.round(((hydrationSummary?.total_water_ml || 0) / (hydrationSummary?.target_water_ml || 2500)) * 100))}% Goal
               </span>
             </div>
 
-            <div className="flex items-baseline justify-between">
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-slate-900 dark:text-white">{waterMl}</span>
-                <span className="text-xs text-slate-500">/ {targetWaterMl} ml</span>
-              </div>
-              <span className="text-xs text-slate-500">Goal: ~10 glasses</span>
-            </div>
+            {loadingHydration ? (
+              <div className="text-xs text-slate-400 p-2">Loading hydration telemetry...</div>
+            ) : (
+              <>
+                <div className="flex items-baseline justify-between">
+                  <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-bold text-slate-900 dark:text-white">
+                      {hydrationSummary?.total_water_ml || 0}
+                    </span>
+                    <span className="text-xs text-slate-500">/ {hydrationSummary?.target_water_ml || 2500} ml</span>
+                  </div>
+                  <span className="text-xs text-slate-500">Goal: ~10 glasses</span>
+                </div>
 
-            <div className="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
-              <div className="bg-blue-500 h-full rounded-full transition-all duration-300" style={{ width: `${waterPct}%` }} />
-            </div>
+                <div className="w-full bg-slate-100 dark:bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                  <div
+                    className="bg-blue-500 h-full rounded-full transition-all duration-300"
+                    style={{
+                      width: `${Math.min(100, Math.round(((hydrationSummary?.total_water_ml || 0) / (hydrationSummary?.target_water_ml || 2500)) * 100))}%`,
+                    }}
+                  />
+                </div>
 
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              <button
-                type="button"
-                onClick={() => handleAddWater(250)}
-                className="py-2 px-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-all flex items-center justify-center gap-1.5 min-h-[44px] cursor-pointer"
-              >
-                <GlassWater className="w-4 h-4 text-blue-500" />
-                <span>+ 250 ml</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => handleAddWater(500)}
-                className="py-2 px-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-all flex items-center justify-center gap-1.5 min-h-[44px] cursor-pointer"
-              >
-                <GlassWater className="w-4 h-4 text-blue-500" />
-                <span>+ 500 ml</span>
-              </button>
-            </div>
+                <div className="grid grid-cols-3 gap-2 pt-1">
+                  <button
+                    type="button"
+                    onClick={() => handleAddWater(250)}
+                    className="py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-all flex items-center justify-center gap-1 min-h-[44px] cursor-pointer"
+                  >
+                    <GlassWater className="w-4 h-4 text-blue-500" />
+                    <span>+ 250 ml</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleAddWater(350)}
+                    className="py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-all flex items-center justify-center gap-1 min-h-[44px] cursor-pointer"
+                  >
+                    <GlassWater className="w-4 h-4 text-blue-500" />
+                    <span>+ 350 ml</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleAddWater(500)}
+                    className="py-2 px-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 hover:bg-slate-100 dark:hover:bg-slate-800 text-xs text-slate-700 dark:text-slate-300 transition-all flex items-center justify-center gap-1 min-h-[44px] cursor-pointer"
+                  >
+                    <GlassWater className="w-4 h-4 text-blue-500" />
+                    <span>+ 500 ml</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
 
-          {/* 7. PERSONALIZED CLINICAL INSIGHTS */}
+          {/* 6.5. DAILY ACTIVITY & MOVEMENT */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              <h2 className="text-base font-bold text-slate-900 dark:text-white">Personalized Insights</h2>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Activity className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h2 className="text-base font-bold text-slate-900 dark:text-white">Daily Activity</h2>
+              </div>
+              <Link
+                to="/app/activity"
+                className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 flex items-center gap-1"
+              >
+                <span>{activitySummary?.has_activity_data ? 'Log / Edit' : '+ Log'}</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
 
-            {loadingAnalytics ? (
-              <div className="text-xs text-slate-400">Loading insights...</div>
-            ) : !analytics?.insights || analytics.insights.length === 0 ? (
-              <p className="text-xs text-slate-500 leading-relaxed">
-                Your personalized insights will appear as you build your daily nutrition history.
-              </p>
+            {loadingActivity ? (
+              <div className="text-xs text-slate-400 p-2">Loading activity telemetry...</div>
+            ) : !activitySummary?.has_activity_data || !activitySummary?.log ? (
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-300 dark:border-slate-700 flex flex-col gap-2.5 items-start">
+                <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                  Activity hasn't been logged today.
+                </span>
+                <Link
+                  to="/app/activity"
+                  className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition-all flex items-center gap-1 min-h-[44px] cursor-pointer"
+                >
+                  <PlusCircle className="w-3.5 h-3.5" />
+                  <span>Log Activity</span>
+                </Link>
+              </div>
             ) : (
               <div className="flex flex-col gap-3">
-                {analytics.insights.map((insight, idx) => (
-                  <div key={idx} className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5 text-xs">
-                    {getInsightIcon(insight.priority)}
-                    <div className="flex flex-col gap-0.5">
-                      <span className="font-bold text-slate-900 dark:text-white">{insight.title}</span>
-                      <p className="text-slate-600 dark:text-slate-400 leading-relaxed">{insight.description}</p>
-                    </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col">
+                    <span className="text-[11px] text-slate-500 font-semibold uppercase flex items-center gap-1">
+                      <Footprints className="w-3.5 h-3.5 text-emerald-500" /> Steps
+                    </span>
+                    <span className="text-xl font-extrabold text-slate-900 dark:text-white mt-1">
+                      {activitySummary.log.steps ? activitySummary.log.steps.toLocaleString() : 'Not logged'}
+                    </span>
                   </div>
-                ))}
+
+                  <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col">
+                    <span className="text-[11px] text-slate-500 font-semibold uppercase flex items-center gap-1">
+                      <Activity className="w-3.5 h-3.5 text-amber-500" /> Active Mins
+                    </span>
+                    <span className="text-xl font-extrabold text-slate-900 dark:text-white mt-1">
+                      {activitySummary.log.active_minutes ? `${activitySummary.log.active_minutes} m` : 'Not logged'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400 px-1">
+                  <span>Level: <strong className="text-slate-700 dark:text-slate-200 font-semibold">{activitySummary.log.activity_level}</strong></span>
+                  {activitySummary.log.exercise_minutes ? (
+                    <span>Exercise: <strong className="text-slate-700 dark:text-slate-200 font-semibold">{activitySummary.log.exercise_minutes} min</strong></span>
+                  ) : null}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* 7. PERSONALIZED NUTRITION INTELLIGENCE & SMART RECOMMENDATIONS */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h2 className="text-base font-bold text-slate-900 dark:text-white">Nutrition Intelligence</h2>
+              </div>
+              {intelligence?.has_sufficient_data && (
+                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                  Real Telemetry Active
+                </span>
+              )}
+            </div>
+
+            {loadingIntelligence ? (
+              <div className="text-xs text-slate-400 p-4 text-center">Analyzing personalized telemetry...</div>
+            ) : !intelligence?.has_sufficient_data ? (
+              <div className="p-5 rounded-2xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-200/60 dark:border-amber-800/40 flex flex-col gap-3">
+                <div className="flex items-center gap-2 text-amber-900 dark:text-amber-200">
+                  <Info className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0" />
+                  <span className="font-bold text-xs">Insufficient Telemetry Data</span>
+                </div>
+                <p className="text-xs text-amber-800 dark:text-amber-300 leading-relaxed">
+                  {intelligence?.insufficient_data_reason || 'Log a few meals to unlock personalized nutrition insights.'}
+                </p>
+                <Link
+                  to="/app/diary"
+                  className="mt-1 self-start px-3.5 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition-all shadow-xs flex items-center gap-1 cursor-pointer"
+                >
+                  <PlusCircle className="w-3.5 h-3.5" />
+                  <span>Log Today's Meal</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-4">
+                {/* Rule-Based Persona Insights */}
+                {intelligence.insights.length > 0 && (
+                  <div className="flex flex-col gap-2.5">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Explainable Insights</span>
+                    {intelligence.insights.map((insight, idx) => (
+                      <div key={idx} className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex items-start gap-3 text-xs">
+                        {getInsightIcon(insight.severity)}
+                        <div className="flex flex-col gap-1">
+                          <span className="font-bold text-slate-900 dark:text-white">{insight.title}</span>
+                          <p className="text-slate-700 dark:text-slate-300 leading-relaxed">{insight.message}</p>
+                          <span className="text-[11px] text-slate-500 italic mt-0.5">Why: {insight.reason}</span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Smart DB Food Recommendations */}
+                {intelligence.recommendations.length > 0 && (
+                  <div className="flex flex-col gap-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Smart Database Recommendations</span>
+                    {intelligence.recommendations.map((rec, rIdx) => (
+                      <div key={rIdx} className="flex flex-col gap-2.5">
+                        <div className="flex flex-col">
+                          <span className="font-bold text-xs text-slate-900 dark:text-white">{rec.title}</span>
+                          <p className="text-[11px] text-slate-500">{rec.message}</p>
+                        </div>
+
+                        <div className="flex flex-col gap-2">
+                          {rec.foods.map((foodItem) => (
+                            <div
+                              key={foodItem.food_id}
+                              className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 text-xs hover:border-emerald-500/50 transition-all"
+                            >
+                              <div className="flex flex-col gap-0.5 min-w-0">
+                                <div className="flex items-center gap-2">
+                                  <span className="font-bold text-slate-900 dark:text-white truncate">{foodItem.food_name}</span>
+                                  <span className={`px-1.5 py-0.2 rounded text-[10px] font-medium shrink-0 ${foodItem.is_vegetarian ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300' : 'bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300'}`}>
+                                    {foodItem.is_vegetarian ? 'Veg' : 'Non-Veg'}
+                                  </span>
+                                </div>
+                                <span className="text-[11px] text-slate-500">{foodItem.calories} kcal • {foodItem.protein_g}g protein</span>
+                                <span className="text-[10px] text-emerald-600 dark:text-emerald-400">{foodItem.reason}</span>
+                              </div>
+
+                              <div className="flex items-center gap-1.5 shrink-0">
+                                <Link
+                                  to={`/app/foods`}
+                                  className="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 dark:bg-slate-700 dark:hover:bg-slate-600 text-[11px] font-semibold text-slate-800 dark:text-slate-200 transition-colors"
+                                >
+                                  View Food
+                                </Link>
+                                <Link
+                                  to={`/app/diary`}
+                                  className="px-2.5 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-semibold transition-colors"
+                                >
+                                  Log Food
+                                </Link>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             )}
           </div>

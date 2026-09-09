@@ -8,6 +8,8 @@ from app.models.diary import Meal
 from app.models.profile import UserProfile
 from app.models.user import User
 from app.models.weight import WeightLog
+from app.models.hydration import WaterLog
+from app.models.activity import ActivityLog
 from app.schemas.analytics import (
     CalorieAnalytics,
     ClinicalInsightItem,
@@ -493,6 +495,30 @@ async def get_dashboard_analytics_service(
                     )
                 )
 
+    # Hydration Telemetry Analysis
+    hyd_stmt = select(WaterLog).where(WaterLog.user_id == current_user.id, WaterLog.date >= current_start)
+    hyd_res = await db.execute(hyd_stmt)
+    hyd_logs = list(hyd_res.scalars().all())
+
+    hyd_days_dict: Dict[datetime.date, int] = {}
+    for h in hyd_logs:
+        h_d = h.date.date()
+        hyd_days_dict[h_d] = hyd_days_dict.get(h_d, 0) + h.amount_ml
+
+    has_hydration_data = len(hyd_days_dict) > 0
+    hydration_logged_days = len(hyd_days_dict)
+    avg_daily_water_ml = round(sum(hyd_days_dict.values()) / hydration_logged_days, 1) if has_hydration_data else None
+
+    # Activity Telemetry Analysis
+    act_stmt = select(ActivityLog).where(ActivityLog.user_id == current_user.id, ActivityLog.date >= current_start)
+    act_res = await db.execute(act_stmt)
+    act_logs = list(act_res.scalars().all())
+
+    has_activity_data = len(act_logs) > 0
+    activity_logged_days = len(act_logs)
+    steps_list = [a.steps for a in act_logs if a.steps is not None]
+    avg_daily_steps = round(sum(steps_list) / len(steps_list), 1) if steps_list else None
+
     # Overview Metrics
     overview = OverviewMetrics(
         current_weight=curr_wt,
@@ -507,7 +533,13 @@ async def get_dashboard_analytics_service(
         days_in_period=days_count,
         has_weight_data=has_weight_data,
         has_diary_data=has_diary_data,
+        has_activity_data=has_activity_data,
+        has_hydration_data=has_hydration_data,
         logged_days_count=logged_days_count,
+        activity_logged_days=activity_logged_days,
+        hydration_logged_days=hydration_logged_days,
+        avg_daily_water_ml=avg_daily_water_ml,
+        avg_daily_steps=avg_daily_steps,
         overview=overview,
         weight=weight_analytics,
         calories=calorie_analytics,

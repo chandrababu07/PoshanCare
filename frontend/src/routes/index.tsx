@@ -44,6 +44,7 @@ const NutritionPage = lazy(() => import('../pages/application/NutritionPage'));
 const WeightPage = lazy(() => import('../pages/application/WeightPage'));
 const RecipesPage = lazy(() => import('../pages/application/RecipesPage'));
 const ReportsPage = lazy(() => import('../pages/application/ReportsPage'));
+const ActivityTrackingPage = lazy(() => import('../pages/application/ActivityTrackingPage'));
 
 // Shared / Settings Pages
 const ProfileSettingsPage = lazy(() => import('../pages/shared/ProfileSettingsPage'));
@@ -92,6 +93,7 @@ export const AppRoutes: React.FC = () => {
             <Route path="/app/calculator" element={<CalculatorPage />} />
             <Route path="/app/nutrition" element={<NutritionPage />} />
             <Route path="/app/weight" element={<WeightPage />} />
+            <Route path="/app/activity" element={<ActivityTrackingPage />} />
             <Route path="/app/recipes" element={<RecipesPage />} />
             <Route path="/app/reports" element={<ReportsPage />} />
 

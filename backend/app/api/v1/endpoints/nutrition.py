@@ -11,11 +11,13 @@ from app.schemas.nutrition import (
     NutritionTargetsResponse,
     StatelessCalculateRequest,
 )
+from app.schemas.nutrition_intelligence import NutritionIntelligenceResponse
 from app.services.nutrition import (
     calculate_stateless_targets,
     calculate_user_nutrition_targets,
     get_daily_nutrition_summary,
 )
+from app.services.nutrition_intelligence import get_nutrition_intelligence_service
 
 router = APIRouter(prefix="/nutrition", tags=["nutrition"])
 
@@ -46,6 +48,21 @@ async def get_nutrition_summary(
     return await get_daily_nutrition_summary(db=db, user_id=current_user.id, date_str=date)
 
 
+@router.get("/intelligence", response_model=NutritionIntelligenceResponse, status_code=status.HTTP_200_OK)
+async def get_nutrition_intelligence(
+    date: Optional[str] = Query(None, description="Target date YYYY-MM-DD (defaults to today)"),
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """
+    Retrieve personalized nutrition intelligence, rule-based insights, and safe food recommendations for authenticated user.
+    """
+    if not date:
+        date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+
+    return await get_nutrition_intelligence_service(db=db, current_user=current_user, date_str=date)
+
+
 @router.post("/calculate", response_model=NutritionTargetsResponse, status_code=status.HTTP_200_OK)
 async def calculate_custom_nutrition(
     request: StatelessCalculateRequest,
@@ -54,3 +71,4 @@ async def calculate_custom_nutrition(
     Stateless nutrition calculation preview for custom biometrics and goals.
     """
     return calculate_stateless_targets(request)
+

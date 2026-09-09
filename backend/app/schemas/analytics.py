@@ -93,7 +93,13 @@ class DashboardAnalyticsResponse(BaseModel):
     days_in_period: int
     has_weight_data: bool = True
     has_diary_data: bool = True
+    has_activity_data: bool = False
+    has_hydration_data: bool = False
     logged_days_count: int = 0
+    activity_logged_days: int = 0
+    hydration_logged_days: int = 0
+    avg_daily_water_ml: Optional[float] = None
+    avg_daily_steps: Optional[float] = None
     overview: OverviewMetrics
     weight: WeightAnalytics
     calories: CalorieAnalytics

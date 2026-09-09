@@ -11,6 +11,8 @@ if TYPE_CHECKING:
     from app.models.weight import WeightLog
     from app.models.recipe import Recipe
     from app.models.report import ClinicalReport
+    from app.models.hydration import WaterLog
+    from app.models.activity import ActivityLog
 
 
 class User(Base):
@@ -62,6 +64,12 @@ class User(Base):
     )
     reports: Mapped[List["ClinicalReport"]] = relationship(
         "ClinicalReport", back_populates="user", cascade="all, delete-orphan"
+    )
+    water_logs: Mapped[List["WaterLog"]] = relationship(
+        "WaterLog", back_populates="user", cascade="all, delete-orphan"
+    )
+    activity_logs: Mapped[List["ActivityLog"]] = relationship(
+        "ActivityLog", back_populates="user", cascade="all, delete-orphan"
     )
 
 
