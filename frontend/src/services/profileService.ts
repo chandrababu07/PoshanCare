@@ -71,8 +71,8 @@ export function mapBackendProfileToOnboardingData(
     weightLbs: weightLbs || 124.3,
     targetMass: targetMassKg,
 
-    activityLevel: (profile.activity_level as any) ?? 'Moderately Active',
-    primaryGoal: (profile.primary_goal as any) ?? 'eat_healthier',
+    activityLevel: (profile.activity_level as unknown as string) ?? 'Moderately Active',
+    primaryGoal: (profile.primary_goal as unknown as string) ?? 'eat_healthier',
 
     dietType: profile.diet_type ?? 'vegetarian',
     foodPreferences: profile.food_preferences ?? ['South Indian', 'North Indian'],

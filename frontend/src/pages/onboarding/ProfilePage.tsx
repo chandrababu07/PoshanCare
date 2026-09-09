@@ -249,7 +249,7 @@ export const ProfilePage: React.FC = () => {
                   <button
                     key={lang.code}
                     type="button"
-                    onClick={() => setPreferredLanguage(lang.code as any)}
+                    onClick={() => setPreferredLanguage(lang.code as 'en' | 'te' | 'hi')}
                     className={`p-3 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center gap-1 ${
                       preferredLanguage === lang.code
                         ? 'border-primary bg-primary-container/10 font-bold text-primary shadow-xs'

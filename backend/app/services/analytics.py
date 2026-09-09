@@ -126,10 +126,9 @@ async def get_dashboard_analytics_service(
     w_prev_res = await db.execute(w_prev_stmt)
     prev_weight_logs = list(w_prev_res.scalars().all())
 
-    # Fallback weights if no logs exist
-    baseline_wt = profile.current_mass_kg if (profile and profile.current_mass_kg) else 68.0
+    has_weight_data = len(curr_weight_logs) > 0
 
-    if curr_weight_logs:
+    if has_weight_data:
         start_wt = curr_weight_logs[0].weight_kg
         curr_wt = curr_weight_logs[-1].weight_kg
         w_values = [w.weight_kg for w in curr_weight_logs]
@@ -140,21 +139,22 @@ async def get_dashboard_analytics_service(
         # 7-entry trailing moving average
         ma_window = w_values[-7:] if len(w_values) >= 7 else w_values
         ma_7d = round(sum(ma_window) / len(ma_window), 1)
+        total_wt_change = round(curr_wt - start_wt, 1)
+        wt_change_pct = round((total_wt_change / max(1.0, start_wt)) * 100.0, 1)
+        weeks_span = max(1.0, days_count / 7.0)
+        weekly_velocity = round(total_wt_change / weeks_span, 2)
+        wt_trend_dir = calculate_trend_direction(w_values)
     else:
-        start_wt = baseline_wt
-        curr_wt = baseline_wt
-        avg_wt = baseline_wt
-        min_wt = baseline_wt
-        max_wt = baseline_wt
-        ma_7d = baseline_wt
-        w_values = [baseline_wt]
-
-    total_wt_change = round(curr_wt - start_wt, 1)
-    wt_change_pct = round((total_wt_change / max(1.0, start_wt)) * 100.0, 1)
-
-    weeks_span = max(1.0, days_count / 7.0)
-    weekly_velocity = round(total_wt_change / weeks_span, 2)
-    wt_trend_dir = calculate_trend_direction(w_values)
+        start_wt = 0.0
+        curr_wt = 0.0
+        avg_wt = 0.0
+        min_wt = 0.0
+        max_wt = 0.0
+        ma_7d = 0.0
+        total_wt_change = 0.0
+        wt_change_pct = 0.0
+        weekly_velocity = 0.0
+        wt_trend_dir = "stable"
 
     weight_analytics = WeightAnalytics(
         start_weight=start_wt,
@@ -207,6 +207,7 @@ async def get_dashboard_analytics_service(
             daily_fiber_curr[m_d] = daily_fiber_curr.get(m_d, 0.0) + e.fiber_g
 
     logged_days_count = len(daily_cals_curr)
+    has_diary_data = logged_days_count > 0
 
     # Calculate calorie adherence stats (90%-110% tolerance range)
     low_bound = target_calories * 0.90
@@ -226,9 +227,14 @@ async def get_dashboard_analytics_service(
         else:
             days_above += 1
 
-    avg_daily_cals = round(total_cals_sum / max(1, logged_days_count), 1) if logged_days_count > 0 else target_calories
-    cal_diff = round(avg_daily_cals - target_calories, 1)
-    cal_adherence_pct = round((days_meeting / max(1, days_count)) * 100.0, 1) if days_count > 0 else 0.0
+    if has_diary_data:
+        avg_daily_cals = round(total_cals_sum / logged_days_count, 1)
+        cal_diff = round(avg_daily_cals - target_calories, 1)
+        cal_adherence_pct = round((days_meeting / days_count) * 100.0, 1) if days_count > 0 else 0.0
+    else:
+        avg_daily_cals = 0.0
+        cal_diff = 0.0
+        cal_adherence_pct = 0.0
 
     calorie_analytics = CalorieAnalytics(
         target_calories=target_calories,
@@ -242,12 +248,26 @@ async def get_dashboard_analytics_service(
     )
 
     # 4. Macro Analytics
-    avg_p = round(sum(daily_protein_curr.values()) / max(1, logged_days_count), 1) if logged_days_count > 0 else target_protein
-    avg_c = round(sum(daily_carbs_curr.values()) / max(1, logged_days_count), 1) if logged_days_count > 0 else target_carbs
-    avg_f = round(sum(daily_fat_curr.values()) / max(1, logged_days_count), 1) if logged_days_count > 0 else target_fat
-    avg_fib = round(sum(daily_fiber_curr.values()) / max(1, logged_days_count), 1) if logged_days_count > 0 else target_fiber
+    if has_diary_data:
+        avg_p = round(sum(daily_protein_curr.values()) / logged_days_count, 1)
+        avg_c = round(sum(daily_carbs_curr.values()) / logged_days_count, 1)
+        avg_f = round(sum(daily_fat_curr.values()) / logged_days_count, 1)
+        avg_fib = round(sum(daily_fiber_curr.values()) / logged_days_count, 1)
+    else:
+        avg_p = 0.0
+        avg_c = 0.0
+        avg_f = 0.0
+        avg_fib = 0.0
 
     def build_macro_item(target: float, avg_val: float, val_list: List[float]) -> MacroItemAnalytics:
+        if not has_diary_data:
+            return MacroItemAnalytics(
+                target=target,
+                avg_intake=0.0,
+                pct_of_target=0.0,
+                adherence_pct=0.0,
+                trend="stable",
+            )
         pct_target = round((avg_val / max(1.0, target)) * 100.0, 1)
         adh_pct = round(min(100.0, pct_target), 1)
         trend = calculate_trend_direction(val_list) if val_list else "stable"
@@ -267,20 +287,25 @@ async def get_dashboard_analytics_service(
     )
 
     # 5. Deterministic Nutrition Consistency Score
-    # score = round(0.35 * logging_consistency + 0.30 * calorie_adherence + 0.20 * protein_adherence + 0.15 * fiber_adherence)
-    logging_consistency_pct = round((logged_days_count / days_count) * 100.0, 1)
-    p_adh_pct = min(100.0, (avg_p / max(1.0, target_protein)) * 100.0)
-    fib_adh_pct = min(100.0, (avg_fib / max(1.0, target_fiber)) * 100.0)
+    if has_diary_data:
+        logging_consistency_pct = round((logged_days_count / days_count) * 100.0, 1)
+        p_adh_pct = min(100.0, (avg_p / max(1.0, target_protein)) * 100.0)
+        fib_adh_pct = min(100.0, (avg_fib / max(1.0, target_fiber)) * 100.0)
 
-    consistency_score_val = int(
-        round(
-            0.35 * logging_consistency_pct
-            + 0.30 * cal_adherence_pct
-            + 0.20 * p_adh_pct
-            + 0.15 * fib_adh_pct
+        consistency_score_val = int(
+            round(
+                0.35 * logging_consistency_pct
+                + 0.30 * cal_adherence_pct
+                + 0.20 * p_adh_pct
+                + 0.15 * fib_adh_pct
+            )
         )
-    )
-    consistency_score_val = max(0, min(100, consistency_score_val))
+        consistency_score_val = max(0, min(100, consistency_score_val))
+    else:
+        logging_consistency_pct = 0.0
+        p_adh_pct = 0.0
+        fib_adh_pct = 0.0
+        consistency_score_val = 0
 
     consistency_score_components = ConsistencyScoreComponents(
         score=consistency_score_val,
@@ -292,7 +317,7 @@ async def get_dashboard_analytics_service(
 
     # 6. Goal Progress Analytics
     target_wt_val = profile.target_mass_kg if (profile and profile.target_mass_kg) else None
-    if target_wt_val is not None:
+    if target_wt_val is not None and has_weight_data:
         needed_change = abs(target_wt_val - start_wt)
         achieved_change = abs(curr_wt - start_wt)
         if needed_change > 0:
@@ -321,8 +346,8 @@ async def get_dashboard_analytics_service(
         goal_progress = None
 
     # 7. Previous Period Comparisons
-    prev_w_values = [w.weight_kg for w in prev_weight_logs] if prev_weight_logs else [start_wt]
-    prev_avg_wt = sum(prev_w_values) / len(prev_w_values)
+    prev_w_values = [w.weight_kg for w in prev_weight_logs] if prev_weight_logs else []
+    prev_avg_wt = sum(prev_w_values) / len(prev_w_values) if prev_w_values else 0.0
 
     daily_cals_prev: Dict[datetime.date, float] = {}
     daily_p_prev: Dict[datetime.date, float] = {}
@@ -333,8 +358,8 @@ async def get_dashboard_analytics_service(
             daily_p_prev[m_d] = daily_p_prev.get(m_d, 0.0) + e.protein_g
 
     prev_logged_days = len(daily_cals_prev)
-    prev_avg_cals = sum(daily_cals_prev.values()) / max(1, prev_logged_days) if prev_logged_days > 0 else target_calories
-    prev_avg_p = sum(daily_p_prev.values()) / max(1, prev_logged_days) if prev_logged_days > 0 else target_protein
+    prev_avg_cals = sum(daily_cals_prev.values()) / max(1, prev_logged_days) if prev_logged_days > 0 else 0.0
+    prev_avg_p = sum(daily_p_prev.values()) / max(1, prev_logged_days) if prev_logged_days > 0 else 0.0
     prev_logging_pct = (prev_logged_days / days_count) * 100.0
 
     comparisons = {
@@ -347,113 +372,126 @@ async def get_dashboard_analytics_service(
     # 8. Observational Rule-Based Clinical Insight Engine
     insights: List[ClinicalInsightItem] = []
 
-    # Insight 1: Calorie Adherence Observation
-    if avg_daily_cals > high_bound:
-        insights.append(
-            ClinicalInsightItem(
-                category="nutrition",
-                priority="warning",
-                title="Calorie Intake Above Target",
-                description=f"Average daily intake ({avg_daily_cals} kcal) exceeds configured target range ({target_calories} kcal).",
-                metric=MetricValueUnit(value=avg_daily_cals, unit="kcal"),
-            )
-        )
-    elif avg_daily_cals < low_bound:
-        insights.append(
-            ClinicalInsightItem(
-                category="nutrition",
-                priority="info",
-                title="Calorie Deficit Observation",
-                description=f"Average daily intake ({avg_daily_cals} kcal) is below configured target ({target_calories} kcal).",
-                metric=MetricValueUnit(value=avg_daily_cals, unit="kcal"),
-            )
-        )
-    else:
-        insights.append(
-            ClinicalInsightItem(
-                category="nutrition",
-                priority="success",
-                title="Caloric Adherence Target Met",
-                description=f"Average caloric intake ({avg_daily_cals} kcal) remains within 90-110% of target.",
-                metric=MetricValueUnit(value=cal_adherence_pct, unit="%"),
-            )
-        )
-
-    # Insight 2: Protein Intake Velocity
-    if p_adh_pct >= 90.0:
-        insights.append(
-            ClinicalInsightItem(
-                category="nutrition",
-                priority="success",
-                title="Optimal Protein Velocity",
-                description=f"Protein intake ({avg_p}g/day) consistently meets prescribed clinical target ({target_protein}g/day).",
-                metric=MetricValueUnit(value=avg_p, unit="g/day"),
-            )
-        )
-    else:
-        insights.append(
-            ClinicalInsightItem(
-                category="nutrition",
-                priority="info",
-                title="Sub-optimal Protein Intake",
-                description=f"Average daily protein ({avg_p}g) is below target ({target_protein}g). Consider lean protein options.",
-                metric=MetricValueUnit(value=avg_p, unit="g/day"),
-            )
-        )
-
-    # Insight 3: Weight Trajectory Observation
-    if wt_trend_dir == "increasing":
-        insights.append(
-            ClinicalInsightItem(
-                category="weight",
-                priority="info",
-                title="Weight Trajectory Trend",
-                description=f"Recorded body weight shows an upward trajectory (+{weekly_velocity} kg/wk velocity).",
-                metric=MetricValueUnit(value=weekly_velocity, unit="kg/wk"),
-            )
-        )
-    elif wt_trend_dir == "decreasing":
-        insights.append(
-            ClinicalInsightItem(
-                category="weight",
-                priority="info",
-                title="Weight Trajectory Trend",
-                description=f"Recorded body weight shows a downward trajectory ({weekly_velocity} kg/wk velocity).",
-                metric=MetricValueUnit(value=weekly_velocity, unit="kg/wk"),
-            )
-        )
-    else:
-        insights.append(
-            ClinicalInsightItem(
-                category="weight",
-                priority="success",
-                title="Stable Mass Trajectory",
-                description="Body weight trend appears stable over the selected analysis window.",
-                metric=MetricValueUnit(value=curr_wt, unit="kg"),
-            )
-        )
-
-    # Insight 4: Logging Consistency
-    if logging_consistency_pct >= 70.0:
+    if not has_diary_data and not has_weight_data:
         insights.append(
             ClinicalInsightItem(
                 category="consistency",
-                priority="success",
-                title="High Telemetry Logging Consistency",
-                description=f"Food diary logged on {logged_days_count} of {days_count} days ({logging_consistency_pct}% consistency).",
-                metric=MetricValueUnit(value=logging_consistency_pct, unit="%"),
+                priority="info",
+                title="Welcome to PoshanCare",
+                description="Start logging your daily meals and weight to unlock personalized nutrition insights and adherence trends.",
             )
         )
     else:
-        insights.append(
-            ClinicalInsightItem(
-                category="consistency",
-                priority="warning",
-                title="Logging Telemetry Gap",
-                description=f"Food diary logged on {logged_days_count} of {days_count} days. Consistent logging improves accuracy.",
-                metric=MetricValueUnit(value=logging_consistency_pct, unit="%"),
-            )
-        )
+        # Insight 1: Calorie Adherence Observation if diary data exists
+        if has_diary_data:
+            if avg_daily_cals > high_bound:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="nutrition",
+                        priority="warning",
+                        title="Calorie Intake Above Target",
+                        description=f"Average daily intake ({avg_daily_cals} kcal) exceeds configured target range ({target_calories} kcal).",
+                        metric=MetricValueUnit(value=avg_daily_cals, unit="kcal"),
+                    )
+                )
+            elif avg_daily_cals < low_bound:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="nutrition",
+                        priority="info",
+                        title="Calorie Deficit Observation",
+                        description=f"Average daily intake ({avg_daily_cals} kcal) is below configured target ({target_calories} kcal).",
+                        metric=MetricValueUnit(value=avg_daily_cals, unit="kcal"),
+                    )
+                )
+            else:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="nutrition",
+                        priority="success",
+                        title="Caloric Adherence Target Met",
+                        description=f"Average caloric intake ({avg_daily_cals} kcal) remains within 90-110% of target.",
+                        metric=MetricValueUnit(value=cal_adherence_pct, unit="%"),
+                    )
+                )
+
+            # Insight 2: Protein Intake Velocity
+            if p_adh_pct >= 90.0:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="nutrition",
+                        priority="success",
+                        title="Optimal Protein Velocity",
+                        description=f"Protein intake ({avg_p}g/day) consistently meets prescribed clinical target ({target_protein}g/day).",
+                        metric=MetricValueUnit(value=avg_p, unit="g/day"),
+                    )
+                )
+            else:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="nutrition",
+                        priority="info",
+                        title="Sub-optimal Protein Intake",
+                        description=f"Average daily protein ({avg_p}g) is below target ({target_protein}g). Consider lean protein options.",
+                        metric=MetricValueUnit(value=avg_p, unit="g/day"),
+                    )
+                )
+
+        # Insight 3: Weight Trajectory Observation if weight data exists
+        if has_weight_data:
+            if wt_trend_dir == "increasing":
+                insights.append(
+                    ClinicalInsightItem(
+                        category="weight",
+                        priority="info",
+                        title="Weight Trajectory Trend",
+                        description=f"Recorded body weight shows an upward trajectory (+{weekly_velocity} kg/wk velocity).",
+                        metric=MetricValueUnit(value=weekly_velocity, unit="kg/wk"),
+                    )
+                )
+            elif wt_trend_dir == "decreasing":
+                insights.append(
+                    ClinicalInsightItem(
+                        category="weight",
+                        priority="info",
+                        title="Weight Trajectory Trend",
+                        description=f"Recorded body weight shows a downward trajectory ({weekly_velocity} kg/wk velocity).",
+                        metric=MetricValueUnit(value=weekly_velocity, unit="kg/wk"),
+                    )
+                )
+            else:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="weight",
+                        priority="success",
+                        title="Stable Mass Trajectory",
+                        description="Body weight trend appears stable over the selected analysis window.",
+                        metric=MetricValueUnit(value=curr_wt, unit="kg"),
+                    )
+                )
+
+        # Insight 4: Logging Consistency
+        if has_diary_data:
+            if logging_consistency_pct >= 70.0:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="consistency",
+                        priority="success",
+                        title="High Telemetry Logging Consistency",
+                        description=f"Food diary logged on {logged_days_count} of {days_count} days ({logging_consistency_pct}% consistency).",
+                        metric=MetricValueUnit(value=logging_consistency_pct, unit="%"),
+                    )
+                )
+            else:
+                insights.append(
+                    ClinicalInsightItem(
+                        category="consistency",
+                        priority="warning",
+                        title="Logging Telemetry Gap",
+                        description=f"Food diary logged on {logged_days_count} of {days_count} days. Consistent logging improves accuracy.",
+                        metric=MetricValueUnit(value=logging_consistency_pct, unit="%"),
+                    )
+                )
 
     # Overview Metrics
     overview = OverviewMetrics(
@@ -467,6 +505,9 @@ async def get_dashboard_analytics_service(
     return DashboardAnalyticsResponse(
         period=period_str,
         days_in_period=days_count,
+        has_weight_data=has_weight_data,
+        has_diary_data=has_diary_data,
+        logged_days_count=logged_days_count,
         overview=overview,
         weight=weight_analytics,
         calories=calorie_analytics,

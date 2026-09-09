@@ -91,6 +91,9 @@ class GoalProgressAnalytics(BaseModel):
 class DashboardAnalyticsResponse(BaseModel):
     period: str
     days_in_period: int
+    has_weight_data: bool = True
+    has_diary_data: bool = True
+    logged_days_count: int = 0
     overview: OverviewMetrics
     weight: WeightAnalytics
     calories: CalorieAnalytics
