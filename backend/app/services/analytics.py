@@ -16,14 +16,21 @@ from app.schemas.analytics import (
     ComparisonItem,
     ConsistencyScoreComponents,
     DashboardAnalyticsResponse,
+    DataAvailability,
+    DayTrendPoint,
     GoalProgressAnalytics,
+    HealthOverviewResponse,
     MacroItemAnalytics,
     MacronutrientAnalytics,
     MetricValueUnit,
     OverviewMetrics,
+    PersonaAdaptation,
+    TodayHealthSummary,
     WeightAnalytics,
+    WeeklyTrendAnalytics,
 )
 from app.services.nutrition import calculate_user_nutrition_targets
+from app.services.nutrition_intelligence import get_nutrition_intelligence_service
 
 
 def parse_period(period: str) -> int:
@@ -549,3 +556,268 @@ async def get_dashboard_analytics_service(
         comparisons=comparisons,
         insights=insights,
     )
+
+
+def build_persona_adaptation(profile_type: Optional[str]) -> PersonaAdaptation:
+    pt = (profile_type or "adult").lower().strip()
+    if pt == "child":
+        return PersonaAdaptation(
+            profile_type="child",
+            headline="Growth, Energy & Active Play Dashboard",
+            subtext="Focus on wholesome nutrition, energy for learning & play, and healthy daily hydration.",
+            focus_areas=["Growth Support", "Active Play", "Wholesome Meals", "Daily Water Intake"],
+        )
+    elif pt == "teen":
+        return PersonaAdaptation(
+            profile_type="teen",
+            headline="Teen Energy & Balanced Nutrition Overview",
+            subtext="Fuel your growing body with balanced nutrition, steady hydration, and positive movement routines.",
+            focus_areas=["Balanced Nutrition", "Growth & Stamina", "Hydration Habits", "Active Lifestyle"],
+        )
+    elif pt == "older_adult":
+        return PersonaAdaptation(
+            profile_type="older_adult",
+            headline="Senior & Elder Wellness Dashboard",
+            subtext="Simple, readable daily overview prioritizing muscle-supportive protein, regular hydration, and mobility.",
+            focus_areas=["Protein Intake", "Daily Hydration", "Gentle Movement", "Bone & Muscle Support"],
+        )
+    elif pt == "family":
+        return PersonaAdaptation(
+            profile_type="family",
+            headline="Family Household Health Overview",
+            subtext="Comprehensive household nutrition summary supporting healthy habits for all family members.",
+            focus_areas=["Balanced Family Meals", "Hydration Routine", "Shared Active Habits", "Nourishment"],
+        )
+    else:
+        return PersonaAdaptation(
+            profile_type="adult",
+            headline="Personalized Health & Nutrition Overview",
+            subtext="Real-time telemetry tracking your daily energy, macros, hydration, activity, and weight trends.",
+            focus_areas=["Nutrition Targets", "Hydration Progress", "Daily Activity", "Longitudinal Trends"],
+        )
+
+
+async def get_health_overview_service(
+    db: AsyncSession, current_user: User, period_str: str = "7d"
+) -> HealthOverviewResponse:
+    """Unified health overview aggregating nutrition, hydration, activity, weight, and intelligence data."""
+    days_count = parse_period(period_str)
+    now_utc = datetime.now(timezone.utc)
+    today_start = now_utc.replace(hour=0, minute=0, second=0, microsecond=0)
+    current_start = (today_start - timedelta(days=days_count - 1))
+    today_str = today_start.strftime("%Y-%m-%d")
+
+    # 1. Profile & Nutrition Targets
+    prof_stmt = select(UserProfile).where(UserProfile.user_id == current_user.id)
+    prof_res = await db.execute(prof_stmt)
+    profile = prof_res.scalar_one_or_none()
+    profile_type = profile.profile_type if profile else "adult"
+    persona = build_persona_adaptation(profile_type)
+
+    try:
+        targets = await calculate_user_nutrition_targets(db, current_user.id)
+        target_calories = targets.target_calories
+        target_protein = targets.target_protein
+        target_carbs = targets.target_carbs
+        target_fat = targets.target_fat
+    except Exception:
+        target_calories = 2000.0
+        target_protein = 80.0
+        target_carbs = 250.0
+        target_fat = 65.0
+
+    target_water_ml = 2500
+
+    # 2. Fetch Period Telemetry Data (Single Window Batch Queries)
+    meals_stmt = (
+        select(Meal)
+        .where(Meal.user_id == current_user.id, Meal.consumed_at >= current_start)
+        .order_by(Meal.consumed_at.asc())
+    )
+    meals_res = await db.execute(meals_stmt)
+    period_meals = list(meals_res.scalars().all())
+
+    water_stmt = (
+        select(WaterLog)
+        .where(WaterLog.user_id == current_user.id, WaterLog.date >= current_start)
+        .order_by(WaterLog.date.asc())
+    )
+    water_res = await db.execute(water_stmt)
+    period_water = list(water_res.scalars().all())
+
+    act_stmt = (
+        select(ActivityLog)
+        .where(ActivityLog.user_id == current_user.id, ActivityLog.date >= current_start)
+        .order_by(ActivityLog.date.asc())
+    )
+    act_res = await db.execute(act_stmt)
+    period_act = list(act_res.scalars().all())
+
+    w_stmt = (
+        select(WeightLog)
+        .where(WeightLog.user_id == current_user.id)
+        .order_by(WeightLog.date.asc())
+    )
+    w_res = await db.execute(w_stmt)
+    all_weight_logs = list(w_res.scalars().all())
+
+    latest_weight = all_weight_logs[-1].weight_kg if all_weight_logs else None
+
+    # Group period data by date YYYY-MM-DD
+    daily_meals_dict: Dict[str, Tuple[float, float]] = {}
+    today_cals = 0.0
+    today_p = 0.0
+    today_c = 0.0
+    today_f = 0.0
+    has_nutrition_today = False
+
+    for m in period_meals:
+        d_str = m.consumed_at.strftime("%Y-%m-%d")
+        for e in m.entries:
+            cals, p_g, c_g, f_g = e.calories, e.protein_g, e.carbs_g, e.fat_g
+            prev_c, prev_p = daily_meals_dict.get(d_str, (0.0, 0.0))
+            daily_meals_dict[d_str] = (prev_c + cals, prev_p + p_g)
+            if d_str == today_str:
+                has_nutrition_today = True
+                today_cals += cals
+                today_p += p_g
+                today_c += c_g
+                today_f += f_g
+
+    daily_water_dict: Dict[str, int] = {}
+    today_water_ml = 0
+    has_hydration_today = False
+
+    for w in period_water:
+        d_str = w.date.strftime("%Y-%m-%d")
+        daily_water_dict[d_str] = daily_water_dict.get(d_str, 0) + w.amount_ml
+        if d_str == today_str:
+            has_hydration_today = True
+            today_water_ml += w.amount_ml
+
+    daily_act_dict: Dict[str, ActivityLog] = {}
+    today_activity = None
+    has_activity_today = False
+
+    for a in period_act:
+        d_str = a.date.strftime("%Y-%m-%d")
+        daily_act_dict[d_str] = a
+        if d_str == today_str:
+            has_activity_today = True
+            today_activity = a
+
+    daily_weight_dict: Dict[str, float] = {}
+    for w in all_weight_logs:
+        d_str = w.date.strftime("%Y-%m-%d")
+        daily_weight_dict[d_str] = w.weight_kg
+
+    # 3. Today Summary
+    hydration_pct = round(min(100.0, (today_water_ml / target_water_ml) * 100.0), 1)
+    rem_water_ml = max(0, target_water_ml - today_water_ml)
+
+    today_summary = TodayHealthSummary(
+        date=today_str,
+        calories=round(today_cals, 1),
+        target_calories=round(target_calories, 1),
+        protein_g=round(today_p, 1),
+        target_protein_g=round(target_protein, 1),
+        carbs_g=round(today_c, 1),
+        target_carbs_g=round(target_carbs, 1),
+        fat_g=round(today_f, 1),
+        target_fat_g=round(target_fat, 1),
+        water_ml=today_water_ml,
+        target_water_ml=target_water_ml,
+        hydration_pct=hydration_pct,
+        remaining_water_ml=rem_water_ml,
+        steps=today_activity.steps if today_activity else None,
+        active_minutes=today_activity.active_minutes if today_activity else None,
+        exercise_minutes=today_activity.exercise_minutes if today_activity else None,
+        activity_level=today_activity.activity_level if today_activity else None,
+        current_weight_kg=latest_weight,
+    )
+
+    # 4. Weekly Trend Points
+    trend_days: List[DayTrendPoint] = []
+    cals_list: List[float] = []
+    water_list: List[int] = []
+    steps_list: List[int] = []
+    active_mins_list: List[int] = []
+
+    for i in range(days_count):
+        d_obj = current_start + timedelta(days=i)
+        d_str = d_obj.strftime("%Y-%m-%d")
+
+        has_meal = d_str in daily_meals_dict
+        cals_val, p_val = daily_meals_dict[d_str] if has_meal else (None, None)
+        if cals_val is not None:
+            cals_list.append(cals_val)
+
+        has_water = d_str in daily_water_dict
+        water_val = daily_water_dict[d_str] if has_water else None
+        if water_val is not None:
+            water_list.append(water_val)
+
+        has_act = d_str in daily_act_dict
+        act_obj = daily_act_dict.get(d_str)
+        st_val = act_obj.steps if (act_obj and act_obj.steps is not None) else None
+        act_mins_val = act_obj.active_minutes if (act_obj and act_obj.active_minutes is not None) else None
+        if st_val is not None:
+            steps_list.append(st_val)
+        if act_mins_val is not None:
+            active_mins_list.append(act_mins_val)
+
+        has_wt = d_str in daily_weight_dict
+        wt_val = daily_weight_dict.get(d_str)
+
+        trend_days.append(
+            DayTrendPoint(
+                date=d_str,
+                has_meal_log=has_meal,
+                calories=round(cals_val, 1) if cals_val is not None else None,
+                protein_g=round(p_val, 1) if p_val is not None else None,
+                has_water_log=has_water,
+                water_ml=water_val,
+                has_activity_log=has_act,
+                steps=st_val,
+                active_minutes=act_mins_val,
+                has_weight_log=has_wt,
+                weight_kg=wt_val,
+            )
+        )
+
+    avg_cals = round(sum(cals_list) / len(cals_list), 1) if cals_list else None
+    avg_water = round(sum(water_list) / len(water_list), 1) if water_list else None
+    avg_steps = round(sum(steps_list) / len(steps_list), 1) if steps_list else None
+    avg_act_mins = round(sum(active_mins_list) / len(active_mins_list), 1) if active_mins_list else None
+
+    weekly_trends = WeeklyTrendAnalytics(
+        days=trend_days,
+        avg_daily_calories=avg_cals,
+        avg_daily_water_ml=avg_water,
+        avg_daily_steps=avg_steps,
+        avg_daily_active_mins=avg_act_mins,
+    )
+
+    # 5. Data Availability Flags
+    has_weekly = len(cals_list) > 0 or len(water_list) > 0 or len(steps_list) > 0
+    data_avail = DataAvailability(
+        has_nutrition_today=has_nutrition_today,
+        has_hydration_today=has_hydration_today,
+        has_activity_today=has_activity_today,
+        has_weight_data=latest_weight is not None,
+        has_weekly_data=has_weekly,
+    )
+
+    # 6. Nutrition Intelligence Integration
+    intel_response = await get_nutrition_intelligence_service(db, current_user, today_str)
+
+    return HealthOverviewResponse(
+        period=period_str,
+        days_in_period=days_count,
+        data_availability=data_avail,
+        today=today_summary,
+        weekly_trends=weekly_trends,
+        intelligence=intel_response,
+        persona=persona,
+    )
+

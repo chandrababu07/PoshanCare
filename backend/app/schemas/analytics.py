@@ -2,6 +2,8 @@ from datetime import datetime
 from typing import Dict, List, Optional
 from pydantic import BaseModel, ConfigDict, Field
 
+from app.schemas.nutrition_intelligence import NutritionIntelligenceResponse
+
 
 class MetricValueUnit(BaseModel):
     value: float
@@ -110,3 +112,74 @@ class DashboardAnalyticsResponse(BaseModel):
     insights: List[ClinicalInsightItem]
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class TodayHealthSummary(BaseModel):
+    date: str
+    calories: float = 0.0
+    target_calories: float = 2000.0
+    protein_g: float = 0.0
+    target_protein_g: float = 80.0
+    carbs_g: float = 0.0
+    target_carbs_g: float = 250.0
+    fat_g: float = 0.0
+    target_fat_g: float = 65.0
+    water_ml: int = 0
+    target_water_ml: int = 2500
+    hydration_pct: float = 0.0
+    remaining_water_ml: int = 2500
+    steps: Optional[int] = None
+    active_minutes: Optional[int] = None
+    exercise_minutes: Optional[int] = None
+    activity_level: Optional[str] = None
+    current_weight_kg: Optional[float] = None
+
+
+class DayTrendPoint(BaseModel):
+    date: str
+    has_meal_log: bool = False
+    calories: Optional[float] = None
+    protein_g: Optional[float] = None
+    has_water_log: bool = False
+    water_ml: Optional[int] = None
+    has_activity_log: bool = False
+    steps: Optional[int] = None
+    active_minutes: Optional[int] = None
+    has_weight_log: bool = False
+    weight_kg: Optional[float] = None
+
+
+class WeeklyTrendAnalytics(BaseModel):
+    days: List[DayTrendPoint] = []
+    avg_daily_calories: Optional[float] = None
+    avg_daily_water_ml: Optional[float] = None
+    avg_daily_steps: Optional[float] = None
+    avg_daily_active_mins: Optional[float] = None
+
+
+class DataAvailability(BaseModel):
+    has_nutrition_today: bool = False
+    has_hydration_today: bool = False
+    has_activity_today: bool = False
+    has_weight_data: bool = False
+    has_weekly_data: bool = False
+
+
+class PersonaAdaptation(BaseModel):
+    profile_type: str
+    headline: str
+    subtext: str
+    focus_areas: List[str] = []
+
+
+class HealthOverviewResponse(BaseModel):
+    period: str
+    days_in_period: int
+    data_availability: DataAvailability
+    today: TodayHealthSummary
+    weekly_trends: WeeklyTrendAnalytics
+    intelligence: NutritionIntelligenceResponse
+    persona: PersonaAdaptation
+
+    model_config = ConfigDict(from_attributes=True)
+

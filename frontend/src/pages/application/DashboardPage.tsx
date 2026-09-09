@@ -36,14 +36,18 @@ import { fetchUserProfile, BackendProfileResponse } from '../../services/profile
 import { fetchNutritionIntelligence, NutritionIntelligenceResponse } from '../../services/nutritionIntelligenceService';
 import { fetchDailyHydration, addWaterLog, HydrationDailySummary } from '../../services/hydrationService';
 import { fetchDailyActivity, ActivityDailySummary } from '../../services/activityService';
+import { fetchHealthOverview, HealthOverviewResponse } from '../../services/healthOverviewService';
 
 const maxOne = (val: number) => Math.max(1, val);
 
 export const DashboardPage: React.FC = () => {
-  const [selectedPeriod, setSelectedPeriod] = useState<string>('30d');
+  const [selectedPeriod, setSelectedPeriod] = useState<string>('7d');
   const [analytics, setAnalytics] = useState<DashboardAnalyticsResponse | null>(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState<boolean>(true);
   const [analyticsError, setAnalyticsError] = useState<boolean>(false);
+
+  const [healthOverview, setHealthOverview] = useState<HealthOverviewResponse | null>(null);
+  const [loadingHealthOverview, setLoadingHealthOverview] = useState<boolean>(true);
 
   const [intelligence, setIntelligence] = useState<NutritionIntelligenceResponse | null>(null);
   const [loadingIntelligence, setLoadingIntelligence] = useState<boolean>(true);
@@ -187,18 +191,22 @@ export const DashboardPage: React.FC = () => {
       setLoadingIntelligence(false);
     }
 
-    // 6. Load Longitudinal Analytics
+    // 6. Load Longitudinal Analytics & Health Overview
+    setLoadingHealthOverview(true);
     try {
-      const analyticsData = await analyticsService.getDashboardAnalytics(selectedPeriod);
-      if (analyticsData) {
-        setAnalytics(analyticsData);
-      } else {
-        setAnalyticsError(true);
-      }
+      const [analyticsData, overviewData] = await Promise.all([
+        analyticsService.getDashboardAnalytics(selectedPeriod),
+        fetchHealthOverview(selectedPeriod),
+      ]);
+
+      if (analyticsData) setAnalytics(analyticsData);
+      if (overviewData) setHealthOverview(overviewData);
+      if (!analyticsData && !overviewData) setAnalyticsError(true);
     } catch {
       setAnalyticsError(true);
     } finally {
       setLoadingAnalytics(false);
+      setLoadingHealthOverview(false);
     }
   };
 
@@ -211,11 +219,14 @@ export const DashboardPage: React.FC = () => {
     if (!todayDateKey) return;
     const res = await addWaterLog({ date: todayDateKey, amount_ml: amount });
     if (res) {
-      const hyd = await fetchDailyHydration(todayDateKey);
+      const [hyd, intelData, overviewData] = await Promise.all([
+        fetchDailyHydration(todayDateKey),
+        fetchNutritionIntelligence(todayDateKey),
+        fetchHealthOverview(selectedPeriod),
+      ]);
       if (hyd) setHydrationSummary(hyd);
-
-      const intelData = await fetchNutritionIntelligence(todayDateKey);
       if (intelData) setIntelligence(intelData);
+      if (overviewData) setHealthOverview(overviewData);
     }
   };
 
@@ -311,12 +322,25 @@ export const DashboardPage: React.FC = () => {
             {getGreetingTime()}, {userFullName || 'Friend'} 👋
           </h1>
           <p className="text-sm text-slate-600 dark:text-slate-300">
-            {profile?.profile_type === 'child'
-              ? 'Welcome to your daily health & wholesome energy dashboard!'
-              : profile?.profile_type === 'older_adult'
-              ? 'Here is your simple daily nutrition and wellness summary.'
-              : 'Your personalized nutrition intelligence & daily health overview.'}
+            {healthOverview?.persona?.headline ||
+              (profile?.profile_type === 'child'
+                ? 'Growth, Energy & Active Play Dashboard'
+                : profile?.profile_type === 'older_adult'
+                ? 'Senior & Elder Wellness Dashboard'
+                : 'Personalized Health & Nutrition Overview')}
           </p>
+          {healthOverview?.persona?.focus_areas && healthOverview.persona.focus_areas.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 mt-1">
+              {healthOverview.persona.focus_areas.map((area, idx) => (
+                <span
+                  key={idx}
+                  className="px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-[11px] font-medium"
+                >
+                  {area}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Header Controls: Simple Mode Toggle & Time Period Selector */}
@@ -714,6 +738,112 @@ export const DashboardPage: React.FC = () => {
               </div>
             )}
           </div>
+
+          {/* 5. WEEKLY HEALTH & TELEMETRY TRENDS */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">
+                  Weekly Health &amp; Telemetry Trends ({selectedPeriod})
+                </h2>
+              </div>
+              <span className="text-xs text-slate-500 font-medium">
+                {healthOverview?.weekly_trends.days.length || 0} Days Tracked
+              </span>
+            </div>
+
+            {loadingHealthOverview ? (
+              <div className="p-8 text-center text-slate-400 text-sm">Loading health trends...</div>
+            ) : !healthOverview?.data_availability.has_weekly_data ? (
+              <div className="p-8 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-300 dark:border-slate-700 text-center flex flex-col items-center gap-3">
+                <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 flex items-center justify-center">
+                  <Activity className="w-6 h-6" />
+                </div>
+                <div className="flex flex-col gap-1 max-w-sm">
+                  <h3 className="font-bold text-slate-900 dark:text-white text-base">No weekly trend telemetry yet</h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Log your daily meals, water, or steps to generate longitudinal activity and nutrition trends.
+                  </p>
+                </div>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-6">
+                {/* 4 Summary Metric Averages */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col">
+                    <span className="text-[11px] text-slate-500 font-semibold uppercase">Avg Daily Energy</span>
+                    <span className="text-lg font-extrabold text-slate-900 dark:text-white mt-0.5">
+                      {healthOverview.weekly_trends.avg_daily_calories ? `${healthOverview.weekly_trends.avg_daily_calories} kcal` : 'No log'}
+                    </span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col">
+                    <span className="text-[11px] text-slate-500 font-semibold uppercase">Avg Daily Water</span>
+                    <span className="text-lg font-extrabold text-slate-900 dark:text-white mt-0.5">
+                      {healthOverview.weekly_trends.avg_daily_water_ml ? `${healthOverview.weekly_trends.avg_daily_water_ml} ml` : 'No log'}
+                    </span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col">
+                    <span className="text-[11px] text-slate-500 font-semibold uppercase">Avg Daily Steps</span>
+                    <span className="text-lg font-extrabold text-slate-900 dark:text-white mt-0.5">
+                      {healthOverview.weekly_trends.avg_daily_steps ? `${healthOverview.weekly_trends.avg_daily_steps.toLocaleString()}` : 'No log'}
+                    </span>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col">
+                    <span className="text-[11px] text-slate-500 font-semibold uppercase">Avg Active Mins</span>
+                    <span className="text-lg font-extrabold text-slate-900 dark:text-white mt-0.5">
+                      {healthOverview.weekly_trends.avg_daily_active_mins ? `${healthOverview.weekly_trends.avg_daily_active_mins} min` : 'No log'}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Day-by-Day Time Series Cards */}
+                <div className="flex flex-col gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-400">Daily Telemetry History</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-7 gap-2">
+                    {healthOverview.weekly_trends.days.slice(-7).map((d) => (
+                      <div
+                        key={d.date}
+                        className={`p-3 rounded-2xl border flex flex-col justify-between gap-2 text-xs transition-all ${
+                          d.has_meal_log || d.has_water_log || d.has_activity_log || d.has_weight_log
+                            ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/40'
+                            : 'bg-slate-50 dark:bg-slate-800/30 border-slate-200 dark:border-slate-800'
+                        }`}
+                      >
+                        <span className="font-bold text-slate-700 dark:text-slate-300 text-[11px]">
+                          {new Date(d.date).toLocaleDateString('en-US', { weekday: 'short', month: 'numeric', day: 'numeric' })}
+                        </span>
+
+                        <div className="flex flex-col gap-1 text-[11px]">
+                          <div>
+                            <span className="text-slate-400">Meals: </span>
+                            <span className="font-semibold text-slate-900 dark:text-white">
+                              {d.calories !== null && d.calories !== undefined ? `${d.calories} kcal` : '—'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-slate-400">Water: </span>
+                            <span className="font-semibold text-blue-600 dark:text-blue-400">
+                              {d.water_ml !== null && d.water_ml !== undefined ? `${d.water_ml} ml` : '—'}
+                            </span>
+                          </div>
+                          <div>
+                            <span className="text-slate-400">Steps: </span>
+                            <span className="font-semibold text-amber-600 dark:text-amber-400">
+                              {d.steps !== null && d.steps !== undefined ? d.steps : '—'}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right Column (4 cols) */}
@@ -845,7 +975,7 @@ export const DashboardPage: React.FC = () => {
             ) : !activitySummary?.has_activity_data || !activitySummary?.log ? (
               <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-300 dark:border-slate-700 flex flex-col gap-2.5 items-start">
                 <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
-                  Activity hasn't been logged today.
+                  Start tracking your activity.
                 </span>
                 <Link
                   to="/app/activity"
