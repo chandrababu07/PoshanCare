@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles, AlertCircle } from 'lucide-react';
 import { Button, Input, Card, Badge } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
+import { fetchUserProfile } from '../../services/profileService';
 
 export const SignInPage: React.FC = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,13 +33,20 @@ export const SignInPage: React.FC = () => {
     try {
       await login({ email, password });
       setViewState('default');
-      navigate('/app');
+      const profile = await fetchUserProfile();
+      const fromPath = (location.state as { from?: { pathname: string } })?.from?.pathname;
+      if (profile?.onboarding_completed) {
+        navigate(fromPath || '/app');
+      } else {
+        navigate('/onboarding');
+      }
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Unable to authenticate. Please review your email and password credentials.';
       setViewState('error');
       setErrorMessage(message);
     }
   };
+
 
   return (
     <div className="space-y-6">

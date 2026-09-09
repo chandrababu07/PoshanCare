@@ -1,10 +1,12 @@
 import React, { Suspense, lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
-// Layouts
+// Layouts & Guards
 import AppLayout from '../components/layout/AppLayout';
 import AuthLayout from '../components/layout/AuthLayout';
 import OnboardingLayout from '../components/layout/OnboardingLayout';
+import ProtectedRoute from '../components/auth/ProtectedRoute';
+import OnboardingRoute from '../components/auth/OnboardingRoute';
 
 // Suspense Fallback Loader
 const PageLoading: React.FC = () => (
@@ -30,31 +32,15 @@ const GoalsPage = lazy(() => import('../pages/onboarding/GoalsPage'));
 const ActivityPage = lazy(() => import('../pages/onboarding/ActivityPage'));
 const ReviewPage = lazy(() => import('../pages/onboarding/ReviewPage'));
 
-// Application Pages (Named Exports)
-const DashboardPage = lazy(() =>
-  import('../pages/application/DashboardPage').then((m) => ({ default: m.DashboardPage }))
-);
-const DiaryPage = lazy(() =>
-  import('../pages/application/DiaryPage').then((m) => ({ default: m.DiaryPage }))
-);
-const FoodsPage = lazy(() =>
-  import('../pages/application/FoodsPage').then((m) => ({ default: m.FoodsPage }))
-);
-const CalculatorPage = lazy(() =>
-  import('../pages/application/CalculatorPage').then((m) => ({ default: m.CalculatorPage }))
-);
-const NutritionPage = lazy(() =>
-  import('../pages/application/NutritionPage').then((m) => ({ default: m.NutritionPage }))
-);
-const WeightPage = lazy(() =>
-  import('../pages/application/WeightPage').then((m) => ({ default: m.WeightPage }))
-);
-const RecipesPage = lazy(() =>
-  import('../pages/application/RecipesPage').then((m) => ({ default: m.RecipesPage }))
-);
-const ReportsPage = lazy(() =>
-  import('../pages/application/ReportsPage').then((m) => ({ default: m.ReportsPage }))
-);
+// Application Pages
+const DashboardPage = lazy(() => import('../pages/application/DashboardPage'));
+const DiaryPage = lazy(() => import('../pages/application/DiaryPage'));
+const FoodsPage = lazy(() => import('../pages/application/FoodsPage'));
+const CalculatorPage = lazy(() => import('../pages/application/CalculatorPage'));
+const NutritionPage = lazy(() => import('../pages/application/NutritionPage'));
+const WeightPage = lazy(() => import('../pages/application/WeightPage'));
+const RecipesPage = lazy(() => import('../pages/application/RecipesPage'));
+const ReportsPage = lazy(() => import('../pages/application/ReportsPage'));
 
 // Shared / Settings Pages
 const ProfileSettingsPage = lazy(() => import('../pages/shared/ProfileSettingsPage'));
@@ -68,10 +54,10 @@ export const AppRoutes: React.FC = () => {
   return (
     <Suspense fallback={<PageLoading />}>
       <Routes>
-        {/* Landing Page */}
+        {/* Public Landing Page */}
         <Route path="/" element={<LandingPage />} />
 
-        {/* Authentication Routes */}
+        {/* Public Authentication Routes */}
         <Route element={<AuthLayout />}>
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/signup" element={<SignUpPage />} />
@@ -79,33 +65,37 @@ export const AppRoutes: React.FC = () => {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
         </Route>
 
-        {/* Onboarding Routes */}
-        <Route element={<OnboardingLayout />}>
-          <Route path="/onboarding" element={<OnboardingStartPage />} />
-          <Route path="/onboarding/profile" element={<ProfilePage />} />
-          <Route path="/onboarding/body-metrics" element={<BodyMetricsPage />} />
-          <Route path="/onboarding/goals" element={<GoalsPage />} />
-          <Route path="/onboarding/activity" element={<ActivityPage />} />
-          <Route path="/onboarding/review" element={<ReviewPage />} />
+        {/* Protected Onboarding Routes */}
+        <Route element={<OnboardingRoute />}>
+          <Route element={<OnboardingLayout />}>
+            <Route path="/onboarding" element={<OnboardingStartPage />} />
+            <Route path="/onboarding/profile" element={<ProfilePage />} />
+            <Route path="/onboarding/body-metrics" element={<BodyMetricsPage />} />
+            <Route path="/onboarding/goals" element={<GoalsPage />} />
+            <Route path="/onboarding/activity" element={<ActivityPage />} />
+            <Route path="/onboarding/review" element={<ReviewPage />} />
+          </Route>
         </Route>
 
-        {/* Main Application Routes */}
-        <Route element={<AppLayout />}>
-          <Route path="/app" element={<DashboardPage />} />
-          <Route path="/app/diary" element={<DiaryPage />} />
-          <Route path="/app/foods" element={<FoodsPage />} />
-          <Route path="/app/calculator" element={<CalculatorPage />} />
-          <Route path="/app/nutrition" element={<NutritionPage />} />
-          <Route path="/app/weight" element={<WeightPage />} />
-          <Route path="/app/recipes" element={<RecipesPage />} />
-          <Route path="/app/reports" element={<ReportsPage />} />
+        {/* Protected Main Application Routes */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/app" element={<DashboardPage />} />
+            <Route path="/app/diary" element={<DiaryPage />} />
+            <Route path="/app/foods" element={<FoodsPage />} />
+            <Route path="/app/calculator" element={<CalculatorPage />} />
+            <Route path="/app/nutrition" element={<NutritionPage />} />
+            <Route path="/app/weight" element={<WeightPage />} />
+            <Route path="/app/recipes" element={<RecipesPage />} />
+            <Route path="/app/reports" element={<ReportsPage />} />
 
-          {/* Shared / Profile / Settings Routes */}
-          <Route path="/profile" element={<ProfileSettingsPage />} />
-          <Route path="/notifications" element={<NotificationsPage />} />
-          <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/help" element={<HelpPage />} />
-          <Route path="/search" element={<SearchPage />} />
+            {/* Shared / Profile / Settings Routes */}
+            <Route path="/profile" element={<ProfileSettingsPage />} />
+            <Route path="/notifications" element={<NotificationsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/help" element={<HelpPage />} />
+            <Route path="/search" element={<SearchPage />} />
+          </Route>
         </Route>
 
         {/* Catch-all 404 Route */}
@@ -116,4 +106,3 @@ export const AppRoutes: React.FC = () => {
 };
 
 export default AppRoutes;
-
