@@ -664,7 +664,7 @@ async def get_health_overview_service(
     latest_weight = all_weight_logs[-1].weight_kg if all_weight_logs else None
 
     # Group period data by date YYYY-MM-DD
-    daily_meals_dict: Dict[str, Tuple[float, float]] = {}
+    daily_meals_dict: Dict[str, Tuple[float, float, float, float]] = {}  # date -> (cals, p, c, f)
     today_cals = 0.0
     today_p = 0.0
     today_c = 0.0
@@ -675,8 +675,8 @@ async def get_health_overview_service(
         d_str = m.consumed_at.strftime("%Y-%m-%d")
         for e in m.entries:
             cals, p_g, c_g, f_g = e.calories, e.protein_g, e.carbs_g, e.fat_g
-            prev_c, prev_p = daily_meals_dict.get(d_str, (0.0, 0.0))
-            daily_meals_dict[d_str] = (prev_c + cals, prev_p + p_g)
+            prev_cals, prev_p, prev_c, prev_f = daily_meals_dict.get(d_str, (0.0, 0.0, 0.0, 0.0))
+            daily_meals_dict[d_str] = (prev_cals + cals, prev_p + p_g, prev_c + c_g, prev_f + f_g)
             if d_str == today_str:
                 has_nutrition_today = True
                 today_cals += cals
@@ -748,12 +748,13 @@ async def get_health_overview_service(
         d_str = d_obj.strftime("%Y-%m-%d")
 
         has_meal = d_str in daily_meals_dict
-        cals_val, p_val = daily_meals_dict[d_str] if has_meal else (None, None)
+        cals_val, p_val, c_val, f_val = daily_meals_dict[d_str] if has_meal else (None, None, None, None)
         if cals_val is not None:
             cals_list.append(cals_val)
 
         has_water = d_str in daily_water_dict
         water_val = daily_water_dict[d_str] if has_water else None
+        h_pct = round(min(100.0, (water_val / target_water_ml) * 100.0), 1) if water_val is not None else None
         if water_val is not None:
             water_list.append(water_val)
 
@@ -761,6 +762,7 @@ async def get_health_overview_service(
         act_obj = daily_act_dict.get(d_str)
         st_val = act_obj.steps if (act_obj and act_obj.steps is not None) else None
         act_mins_val = act_obj.active_minutes if (act_obj and act_obj.active_minutes is not None) else None
+        ex_mins_val = act_obj.exercise_minutes if (act_obj and act_obj.exercise_minutes is not None) else None
         if st_val is not None:
             steps_list.append(st_val)
         if act_mins_val is not None:
@@ -775,11 +777,15 @@ async def get_health_overview_service(
                 has_meal_log=has_meal,
                 calories=round(cals_val, 1) if cals_val is not None else None,
                 protein_g=round(p_val, 1) if p_val is not None else None,
+                carbs_g=round(c_val, 1) if c_val is not None else None,
+                fat_g=round(f_val, 1) if f_val is not None else None,
                 has_water_log=has_water,
                 water_ml=water_val,
+                hydration_pct=h_pct,
                 has_activity_log=has_act,
                 steps=st_val,
                 active_minutes=act_mins_val,
+                exercise_minutes=ex_mins_val,
                 has_weight_log=has_wt,
                 weight_kg=wt_val,
             )

@@ -8,23 +8,27 @@ import {
   FileSpreadsheet,
   Printer,
   CheckCircle2,
+  Droplets,
+  Activity,
 } from 'lucide-react';
-import { MOCK_REPORT_METRICS } from '../../data/mockReports';
 import { reportService, ClinicalReportMetrics } from '../../services/reportService';
 
 export const ReportsPage: React.FC = () => {
   const [reportType, setReportType] = useState('7day');
   const [attachLetterhead, setAttachLetterhead] = useState(true);
   const [anonymize, setAnonymize] = useState(false);
-  const [metrics, setMetrics] = useState<ClinicalReportMetrics>(MOCK_REPORT_METRICS as ClinicalReportMetrics);
+  const [metrics, setMetrics] = useState<ClinicalReportMetrics | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
 
   useEffect(() => {
     let isMounted = true;
+    setIsLoading(true);
     reportService.getReportMetrics(reportType, anonymize, attachLetterhead).then((data) => {
-      if (isMounted && data) {
+      if (isMounted) {
         setMetrics(data);
+        setIsLoading(false);
       }
     });
     return () => {
@@ -207,177 +211,227 @@ export const ReportsPage: React.FC = () => {
 
           {/* Clinical Document Sheet */}
           <div className="bg-surface-container-lowest shadow-md rounded-b-xl p-8 space-y-6">
-            {/* Document Letterhead */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-surface-container gap-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold text-title-md shadow-sm">
-                  PC
+            {!metrics || isLoading ? (
+              <div className="py-16 text-center text-on-surface-variant">
+                <div className="animate-spin w-8 h-8 border-2 border-primary border-t-transparent rounded-full mx-auto mb-4" />
+                <p className="font-body-md text-body-md font-medium">Loading Clinical Dossier...</p>
+              </div>
+            ) : (
+              <>
+                {/* Document Letterhead */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-surface-container gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-bold text-title-md shadow-sm">
+                      PC
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2">
+                        <span className="font-title-md text-title-md text-primary tracking-tight font-semibold">PoshanCare</span>
+                        <span className="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px] font-semibold">
+                          CLINICAL DOC
+                        </span>
+                      </div>
+                      <span className="font-body-sm text-body-sm text-on-surface-variant">Metabolic Telemetry & Nutritional Audit Service</span>
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:items-end text-body-sm">
+                    <span className="font-mono text-label-sm text-primary font-semibold">{metrics.documentId}</span>
+                    <span className="text-on-surface-variant font-body-sm text-body-sm">{metrics.issueDate}</span>
+                  </div>
                 </div>
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2">
-                    <span className="font-title-md text-title-md text-primary tracking-tight font-semibold">PoshanCare</span>
-                    <span className="px-1.5 py-0.5 rounded bg-surface-container text-on-surface-variant text-[10px] font-semibold">
-                      CLINICAL DOC
+
+                {/* Patient Identity Stripe */}
+                <div className="bg-surface-container-low rounded-lg p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
+                  <div>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Patient</span>
+                    <span className="font-title-md text-title-md text-on-surface font-semibold">
+                      {metrics.patientName}
                     </span>
                   </div>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant">Metabolic Telemetry & Nutritional Audit Service</span>
-                </div>
-              </div>
-              <div className="flex flex-col sm:items-end text-body-sm">
-                <span className="font-mono text-label-sm text-primary font-semibold">{metrics.documentId}</span>
-                <span className="text-on-surface-variant font-body-sm text-body-sm">{metrics.issueDate}</span>
-              </div>
-            </div>
-
-            {/* Patient Identity Stripe */}
-            <div className="bg-surface-container-low rounded-lg p-4 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Patient</span>
-                <span className="font-title-md text-title-md text-on-surface font-semibold">
-                  {metrics.patientName}
-                </span>
-              </div>
-              <div>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Demographics</span>
-                <span className="font-body-md text-body-md text-on-surface">{metrics.demographics}</span>
-              </div>
-              <div>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Body Mass</span>
-                <span className="font-body-md text-body-md text-on-surface font-semibold">
-                  {metrics.bodyMass} <span className="text-primary text-[11px]">({metrics.massDelta})</span>
-                </span>
-              </div>
-              <div>
-                <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Clinical Target</span>
-                <span className="font-body-md text-body-md text-secondary font-semibold">{metrics.targetMass}</span>
-              </div>
-            </div>
-
-            {/* High-Level Executive Scorecard Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-              <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
-                <span className="font-label-sm text-label-sm text-on-surface-variant">7-Day Caloric Avg</span>
-                <div className="flex items-baseline gap-1 mt-1">
-                  <span className="font-numeric-metric text-numeric-metric text-on-surface font-bold">
-                    {metrics.avg7DayCalories.toLocaleString()}
-                  </span>
-                  <span className="text-body-sm text-on-surface-variant font-label-sm">kcal</span>
-                </div>
-                <span className="text-[11px] font-semibold text-primary mt-1">{metrics.caloricAdherencePct}% adherence</span>
-              </div>
-
-              <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
-                <span className="font-label-sm text-label-sm text-on-surface-variant">Protein Velocity</span>
-                <div className="flex items-baseline gap-1 mt-1">
-                  <span className="font-numeric-metric text-numeric-metric text-secondary font-bold">
-                    {metrics.proteinVelocity}
-                  </span>
-                  <span className="text-body-sm text-on-surface-variant font-label-sm">g/day</span>
-                </div>
-                <span className="text-[11px] text-on-surface-variant mt-1">Target: {metrics.targetProtein}g ({metrics.proteinPct}%)</span>
-              </div>
-
-              <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
-                <span className="font-label-sm text-label-sm text-on-surface-variant">Electrolyte Index</span>
-                <div className="flex items-baseline gap-1 mt-1">
-                  <span className="font-numeric-metric text-[18px] text-primary font-bold">Normal</span>
-                </div>
-                <span className="text-[11px] text-primary mt-1">{metrics.electrolyteStatus}</span>
-              </div>
-
-              <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
-                <span className="font-label-sm text-label-sm text-on-surface-variant">Micronutrient Suff.</span>
-                <div className="flex items-baseline gap-1 mt-1">
-                  <span className="font-numeric-metric text-numeric-metric text-on-surface font-bold">
-                    {metrics.micronutrientSufficiency}%
-                  </span>
-                </div>
-                <span className="text-[11px] text-primary mt-1">{metrics.rdasMet}</span>
-              </div>
-            </div>
-
-            {/* Weekly Caloric Intake Bar Chart */}
-            <div className="p-4 rounded-lg bg-surface-container-low/40">
-              <div className="flex items-center justify-between mb-3">
-                <span className="font-label-md text-label-md text-on-surface font-semibold">
-                  Weekly Caloric Intake vs ICMR Target (kcal/day)
-                </span>
-                <div className="flex items-center gap-3 text-label-sm font-label-sm">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-3 h-3 rounded-sm bg-primary-container"></span>
-                    <span className="text-on-surface-variant">Intake</span>
+                  <div>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Demographics</span>
+                    <span className="font-body-md text-body-md text-on-surface">{metrics.demographics}</span>
                   </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-3 h-0.5 bg-secondary-container"></span>
-                    <span className="text-on-surface-variant">Target ({metrics.icmrTargetLine})</span>
+                  <div>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Body Mass</span>
+                    <span className="font-body-md text-body-md text-on-surface font-semibold">
+                      {metrics.bodyMass} <span className="text-primary text-[11px]">({metrics.massDelta})</span>
+                    </span>
+                  </div>
+                  <div>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider block">Clinical Target</span>
+                    <span className="font-body-md text-body-md text-secondary font-semibold">{metrics.targetMass}</span>
                   </div>
                 </div>
-              </div>
 
-              {/* Inline Bar Chart */}
-              <div className="w-full h-36">
-                <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 540 140">
-                  <line stroke="#d8e3fb" strokeDasharray="2 2" strokeWidth="1" x1="40" x2="520" y1="20" y2="20" />
-                  <line stroke="#d8e3fb" strokeDasharray="2 2" strokeWidth="1" x1="40" x2="520" y1="60" y2="60" />
-                  <line stroke="#d8e3fb" strokeDasharray="2 2" strokeWidth="1" x1="40" x2="520" y1="100" y2="100" />
-                  <text fill="#6f7973" fontSize="9" textAnchor="end" x="30" y="24">3000</text>
-                  <text fill="#6f7973" fontSize="9" textAnchor="end" x="30" y="64">2600</text>
-                  <text fill="#6f7973" fontSize="9" textAnchor="end" x="30" y="104">2000</text>
-                  <line stroke="#fe932c" strokeDasharray="4 2" strokeWidth="1.5" x1="40" x2="520" y1="60" y2="60" />
+                {/* High-Level Executive Scorecard Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
+                    <span className="font-label-sm text-label-sm text-on-surface-variant">Caloric Average</span>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="font-numeric-metric text-numeric-metric text-on-surface font-bold">
+                        {metrics.avg7DayCalories.toLocaleString()}
+                      </span>
+                      <span className="text-body-sm text-on-surface-variant font-label-sm">kcal</span>
+                    </div>
+                    <span className="text-[11px] font-semibold text-primary mt-1">{metrics.caloricAdherencePct}% adherence</span>
+                  </div>
 
-                  {metrics.weeklyCalorieHistory.map((item, index) => {
-                    const x = 58 + index * 68;
-                    const height = Math.round((item.value / 3000) * 80);
-                    const y = 120 - height;
-                    return (
-                      <g key={item.day}>
-                        <rect fill="#065f46" fillOpacity="0.85" height={height} rx="3" width="34" x={x} y={y} />
-                        <text fill="#6f7973" fontSize="9" textAnchor="middle" x={x + 17} y="132">{item.day}</text>
-                        <text fill="#111c2d" fontSize="8" textAnchor="middle" x={x + 17} y={y - 5}>{item.label}</text>
-                      </g>
-                    );
-                  })}
-                </svg>
-              </div>
-            </div>
+                  <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
+                    <span className="font-label-sm text-label-sm text-on-surface-variant">Protein Velocity</span>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="font-numeric-metric text-numeric-metric text-secondary font-bold">
+                        {metrics.proteinVelocity}
+                      </span>
+                      <span className="text-body-sm text-on-surface-variant font-label-sm">g/day</span>
+                    </div>
+                    <span className="text-[11px] text-on-surface-variant mt-1">Target: {metrics.targetProtein}g ({metrics.proteinPct}%)</span>
+                  </div>
 
-            {/* Clinical Notes Block */}
-            <div className="p-4 rounded-lg bg-surface-container-low">
-              <div className="flex items-center gap-2 mb-2 text-primary font-semibold font-label-md text-label-md">
-                <FileSpreadsheet className="w-4 h-4 text-primary" />
-                <span>Clinician Summary & Physician Observations</span>
-              </div>
-              <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-                Patient displays stable lean mass accretion velocity under prescribed {metrics.icmrTargetLine.toLocaleString()} kcal protocol. Electrolyte balance and fiber indices are optimal.
-              </p>
-              {attachLetterhead && (
-                <div className="mt-3 pt-3 border-t border-surface-container flex items-center justify-between text-[11px] text-on-surface-variant">
-                  <span>Signed by Dr. Sunita Raman (MCI License #2011/04/0981)</span>
-                  <span className="text-primary font-medium">Digital Verification Passed</span>
+                  <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
+                    <span className="font-label-sm text-label-sm text-on-surface-variant">Electrolyte Index</span>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="font-numeric-metric text-[18px] text-primary font-bold">Normal</span>
+                    </div>
+                    <span className="text-[11px] text-primary mt-1">{metrics.electrolyteStatus}</span>
+                  </div>
+
+                  <div className="p-3.5 rounded-lg bg-surface-container-low/80 flex flex-col">
+                    <span className="font-label-sm text-label-sm text-on-surface-variant">Micronutrient Suff.</span>
+                    <div className="flex items-baseline gap-1 mt-1">
+                      <span className="font-numeric-metric text-numeric-metric text-on-surface font-bold">
+                        {metrics.micronutrientSufficiency}%
+                      </span>
+                    </div>
+                    <span className="text-[11px] text-primary mt-1">{metrics.rdasMet}</span>
+                  </div>
                 </div>
-              )}
-            </div>
 
-            {/* Export Action Bar */}
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-surface-container">
-              <button
-                type="button"
-                onClick={handlePrint}
-                className="px-4 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors flex items-center gap-1.5"
-              >
-                <Printer className="w-4 h-4" />
-                <span>Print Document</span>
-              </button>
-              <button
-                type="button"
-                onClick={handleGenerateDossier}
-                disabled={isGenerating}
-                className="px-5 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md font-medium shadow-sm transition-colors flex items-center gap-1.5 disabled:opacity-50"
-              >
-                <Download className="w-4 h-4" />
-                <span>{isGenerating ? 'Generating...' : 'Download Medical PDF'}</span>
-              </button>
-            </div>
+                {/* Longitudinal Telemetry Summaries: Hydration & Activity */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div className="p-4 rounded-lg bg-surface-container-low/60 border border-surface-container flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-info-container/20 text-info flex items-center justify-center shrink-0">
+                        <Droplets className="w-5 h-5 text-blue-600" />
+                      </div>
+                      <div>
+                        <span className="font-label-md text-label-md text-on-surface font-semibold block">Hydration Telemetry</span>
+                        <span className="font-body-sm text-body-sm text-on-surface-variant">
+                          Logged: {metrics.hydrationSummary?.totalMl ?? 0} ml ({metrics.hydrationSummary?.loggedDays ?? 0} days)
+                        </span>
+                      </div>
+                    </div>
+                    <span className="font-title-md text-title-md font-bold text-blue-600">
+                      {metrics.hydrationSummary?.completionPct ?? 0}%
+                    </span>
+                  </div>
+
+                  <div className="p-4 rounded-lg bg-surface-container-low/60 border border-surface-container flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-9 h-9 rounded-lg bg-secondary-container/20 text-secondary flex items-center justify-center shrink-0">
+                        <Activity className="w-5 h-5 text-emerald-600" />
+                      </div>
+                      <div>
+                        <span className="font-label-md text-label-md text-on-surface font-semibold block">Activity Telemetry</span>
+                        <span className="font-body-sm text-body-sm text-on-surface-variant">
+                          {metrics.activitySummary?.totalMinutes ?? 0} mins active ({metrics.activitySummary?.totalSteps ?? 0} steps)
+                        </span>
+                      </div>
+                    </div>
+                    <span className="font-title-md text-title-md font-bold text-emerald-600">
+                      {metrics.activitySummary?.activeDays ?? 0} active days
+                    </span>
+                  </div>
+                </div>
+
+                {/* Weekly Caloric Intake Bar Chart */}
+                <div className="p-4 rounded-lg bg-surface-container-low/40">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-label-md text-label-md text-on-surface font-semibold">
+                      Caloric Intake vs ICMR Target (kcal/day)
+                    </span>
+                    <div className="flex items-center gap-3 text-label-sm font-label-sm">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-sm bg-primary-container"></span>
+                        <span className="text-on-surface-variant">Intake</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-0.5 bg-secondary-container"></span>
+                        <span className="text-on-surface-variant">Target ({metrics.icmrTargetLine})</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Inline Bar Chart */}
+                  <div className="w-full h-36">
+                    <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 540 140">
+                      <line stroke="#d8e3fb" strokeDasharray="2 2" strokeWidth="1" x1="40" x2="520" y1="20" y2="20" />
+                      <line stroke="#d8e3fb" strokeDasharray="2 2" strokeWidth="1" x1="40" x2="520" y1="60" y2="60" />
+                      <line stroke="#d8e3fb" strokeDasharray="2 2" strokeWidth="1" x1="40" x2="520" y1="100" y2="100" />
+                      <text fill="#6f7973" fontSize="9" textAnchor="end" x="30" y="24">3000</text>
+                      <text fill="#6f7973" fontSize="9" textAnchor="end" x="30" y="64">2600</text>
+                      <text fill="#6f7973" fontSize="9" textAnchor="end" x="30" y="104">2000</text>
+                      <line stroke="#fe932c" strokeDasharray="4 2" strokeWidth="1.5" x1="40" x2="520" y1="60" y2="60" />
+
+                      {metrics.weeklyCalorieHistory.map((item, index) => {
+                        const count = metrics.weeklyCalorieHistory.length || 1;
+                        const spacing = 480 / count;
+                        const x = 45 + index * spacing;
+                        const height = Math.round((item.value / 3000) * 80);
+                        const y = 120 - height;
+                        return (
+                          <g key={`${item.day}-${index}`}>
+                            <rect fill="#065f46" fillOpacity="0.85" height={Math.max(2, height)} rx="3" width={Math.min(34, spacing - 10)} x={x} y={y} />
+                            <text fill="#6f7973" fontSize="9" textAnchor="middle" x={x + Math.min(34, spacing - 10) / 2} y="132">{item.day}</text>
+                            <text fill="#111c2d" fontSize="8" textAnchor="middle" x={x + Math.min(34, spacing - 10) / 2} y={Math.max(15, y - 5)}>{item.label}</text>
+                          </g>
+                        );
+                      })}
+                    </svg>
+                  </div>
+                </div>
+
+                {/* Clinical Notes Block */}
+                <div className="p-4 rounded-lg bg-surface-container-low">
+                  <div className="flex items-center gap-2 mb-2 text-primary font-semibold font-label-md text-label-md">
+                    <FileSpreadsheet className="w-4 h-4 text-primary" />
+                    <span>Clinician Summary & Physician Observations</span>
+                  </div>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                    {metrics.profileType === 'child' || metrics.profileType === 'teen'
+                      ? `Pediatric profile displays balanced nutritional energy intake under ICMR growth protocols. Hydration and physical activity levels support healthy development.`
+                      : `Patient displays stable metabolic adherence under prescribed ${metrics.icmrTargetLine.toLocaleString()} kcal protocol. Hydration balance and fiber indices are optimal.`}
+                  </p>
+                  {attachLetterhead && (
+                    <div className="mt-3 pt-3 border-t border-surface-container flex items-center justify-between text-[11px] text-on-surface-variant">
+                      <span>Signed by Dr. Sunita Raman (MCI License #2011/04/0981)</span>
+                      <span className="text-primary font-medium">Digital Verification Passed</span>
+                    </div>
+                  )}
+                </div>
+
+                {/* Export Action Bar */}
+                <div className="flex items-center justify-end gap-3 pt-4 border-t border-surface-container">
+                  <button
+                    type="button"
+                    onClick={handlePrint}
+                    className="px-4 py-2 rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high font-label-md text-label-md transition-colors flex items-center gap-1.5"
+                  >
+                    <Printer className="w-4 h-4" />
+                    <span>Print Document</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleGenerateDossier}
+                    disabled={isGenerating}
+                    className="px-5 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container font-label-md text-label-md font-medium shadow-sm transition-colors flex items-center gap-1.5 disabled:opacity-50"
+                  >
+                    <Download className="w-4 h-4" />
+                    <span>{isGenerating ? 'Generating...' : 'Download Medical PDF'}</span>
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

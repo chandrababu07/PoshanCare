@@ -1,11 +1,23 @@
-import { MOCK_REPORT_METRICS } from '../data/mockReports';
-
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 
 export interface WeeklyCalorieHistoryItem {
   day: string;
   value: number;
   label: string;
+}
+
+export interface HydrationSummaryItem {
+  totalMl: number;
+  targetMl: number;
+  loggedDays: number;
+  completionPct: number;
+}
+
+export interface ActivitySummaryItem {
+  totalMinutes: number;
+  totalSteps: number;
+  loggedDays: number;
+  activeDays: number;
 }
 
 export interface ClinicalReportMetrics {
@@ -26,6 +38,11 @@ export interface ClinicalReportMetrics {
   rdasMet: string;
   weeklyCalorieHistory: WeeklyCalorieHistoryItem[];
   icmrTargetLine: number;
+  hydrationSummary?: HydrationSummaryItem;
+  activitySummary?: ActivitySummaryItem;
+  profileType?: string;
+  loggedDays?: number;
+  hasRealData?: boolean;
 }
 
 export interface ClinicalReportSummary {
@@ -43,10 +60,42 @@ export interface ClinicalReportSummary {
   created_at: string;
 }
 
+const EMPTY_REPORT_METRICS: ClinicalReportMetrics = {
+  documentId: "REP-00000000",
+  issueDate: new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" }),
+  patientName: "User",
+  demographics: "N/A",
+  bodyMass: "-- kg",
+  massDelta: "-- kg",
+  targetMass: "-- kg",
+  avg7DayCalories: 0,
+  caloricAdherencePct: 0,
+  proteinVelocity: 0,
+  targetProtein: 0,
+  proteinPct: 0,
+  electrolyteStatus: "No data",
+  micronutrientSufficiency: 0,
+  rdasMet: "0/0 RDAs met",
+  weeklyCalorieHistory: [
+    { day: "Mon", value: 0, label: "0" },
+    { day: "Tue", value: 0, label: "0" },
+    { day: "Wed", value: 0, label: "0" },
+    { day: "Thu", value: 0, label: "0" },
+    { day: "Fri", value: 0, label: "0" },
+    { day: "Sat", value: 0, label: "0" },
+    { day: "Sun", value: 0, label: "0" },
+  ],
+  icmrTargetLine: 2000,
+  hydrationSummary: { totalMl: 0, targetMl: 2500, loggedDays: 0, completionPct: 0 },
+  activitySummary: { totalMinutes: 0, totalSteps: 0, loggedDays: 0, activeDays: 0 },
+  profileType: "adult",
+  loggedDays: 0,
+  hasRealData: false,
+};
 
 export const reportService = {
   /**
-   * Fetch live clinical report metrics for dossier preview with fallback to mock data
+   * Fetch live clinical report metrics for dossier preview
    */
   getReportMetrics: async (
     reportType: string = '7day',
@@ -70,12 +119,9 @@ export const reportService = {
         const data = (await response.json()) as ClinicalReportMetrics;
         return data;
       }
-      if (import.meta.env.DEV) {
-        return MOCK_REPORT_METRICS as ClinicalReportMetrics;
-      }
-      return MOCK_REPORT_METRICS as ClinicalReportMetrics;
+      return EMPTY_REPORT_METRICS;
     } catch {
-      return MOCK_REPORT_METRICS as ClinicalReportMetrics;
+      return EMPTY_REPORT_METRICS;
     }
   },
 

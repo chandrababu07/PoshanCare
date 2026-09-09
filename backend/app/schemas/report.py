@@ -27,6 +27,11 @@ class ClinicalReportMetricsResponse(BaseModel):
     rdasMet: str
     weeklyCalorieHistory: List[WeeklyCalorieItem]
     icmrTargetLine: int
+    hydrationSummary: str = "0 ml"
+    activitySummary: str = "0 mins"
+    profileType: str = "adult"
+    loggedDays: int = 0
+    hasRealData: bool = False
 
     model_config = ConfigDict(from_attributes=True)
 

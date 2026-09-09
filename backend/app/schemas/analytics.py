@@ -140,11 +140,15 @@ class DayTrendPoint(BaseModel):
     has_meal_log: bool = False
     calories: Optional[float] = None
     protein_g: Optional[float] = None
+    carbs_g: Optional[float] = None
+    fat_g: Optional[float] = None
     has_water_log: bool = False
     water_ml: Optional[int] = None
+    hydration_pct: Optional[float] = None
     has_activity_log: bool = False
     steps: Optional[int] = None
     active_minutes: Optional[int] = None
+    exercise_minutes: Optional[int] = None
     has_weight_log: bool = False
     weight_kg: Optional[float] = None
 

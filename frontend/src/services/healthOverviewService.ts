@@ -28,11 +28,15 @@ export interface DayTrendPoint {
   has_meal_log: boolean;
   calories?: number | null;
   protein_g?: number | null;
+  carbs_g?: number | null;
+  fat_g?: number | null;
   has_water_log: boolean;
   water_ml?: number | null;
+  hydration_pct?: number | null;
   has_activity_log: boolean;
   steps?: number | null;
   active_minutes?: number | null;
+  exercise_minutes?: number | null;
   has_weight_log: boolean;
   weight_kg?: number | null;
 }
