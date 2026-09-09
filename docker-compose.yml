@@ -1,0 +1,53 @@
+services:
+  # PostgreSQL Production Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: poshancare_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-poshancare}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-poshancare_prod_secret}
+      POSTGRES_DB: ${POSTGRES_DB:-poshancare_db}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-poshancare} -d ${POSTGRES_DB:-poshancare_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # FastAPI Backend Service
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: poshancare_backend
+    restart: always
+    environment:
+      ENVIRONMENT: production
+      DEBUG: "false"
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-poshancare}:${POSTGRES_PASSWORD:-poshancare_prod_secret}@postgres:5432/${POSTGRES_DB:-poshancare_db}
+      SECRET_KEY: ${SECRET_KEY:-poshancare_production_super_secret_key_32_chars_min}
+      CORS_ORIGINS: "http://localhost,https://${DOMAIN_NAME:-poshancare.com}"
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Frontend Nginx Production Web Server
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: poshancare_frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
