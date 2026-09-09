@@ -4,6 +4,7 @@ import { LoginPayload, RegisterPayload, User } from '../types/auth';
 import {
   getCurrentUser,
   loginUser,
+  loginWithGoogle,
   logoutUser,
   refreshAuthSession,
   registerUser,
@@ -15,6 +16,7 @@ interface AuthContextType {
   isLoading: boolean;
   login: (credentials: LoginPayload) => Promise<void>;
   register: (payload: RegisterPayload) => Promise<void>;
+  loginGoogle: (idToken: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -77,6 +79,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
   };
 
+  const handleLoginGoogle = async (idToken: string) => {
+    setIsLoading(true);
+    try {
+      const res = await loginWithGoogle(idToken);
+      setUser(res.user);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleLogout = async () => {
     setIsLoading(true);
     try {
@@ -95,6 +107,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         isLoading,
         login: handleLogin,
         register: handleRegister,
+        loginGoogle: handleLoginGoogle,
         logout: handleLogout,
       }}
     >

@@ -94,6 +94,28 @@ export async function refreshAuthSession(): Promise<AuthResponse | null> {
 }
 
 /**
+ * Authenticate with backend using Google OAuth ID Token
+ */
+export async function loginWithGoogle(idToken: string): Promise<AuthResponse> {
+  const response = await fetch(`${API_BASE_URL}/auth/google`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ id_token: idToken }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    const errorMsg = data?.error?.message || 'Google authentication failed.';
+    throw new Error(errorMsg);
+  }
+
+  return data as AuthResponse;
+}
+
+/**
  * Log out user & invalidate server refresh session
  */
 export async function logoutUser(): Promise<void> {

@@ -9,12 +9,12 @@ import {
   Activity,
   Utensils,
   Rocket,
-  Egg,
-  Wheat,
   Sparkles,
   Loader2,
   ArrowRight,
-  ShieldAlert,
+  Clock,
+  HeartPulse,
+  Smile,
 } from 'lucide-react';
 import { useOnboarding } from '../../context/OnboardingContext';
 import { completeOnboardingSession } from '../../services/profileService';
@@ -25,7 +25,7 @@ export const ReviewPage: React.FC = () => {
 
   const [simState, setSimState] = useState<'review' | 'success'>('review');
   const [isCompleting, setIsCompleting] = useState(false);
-  const [completionStepText, setCompletionStepText] = useState('Completing Setup...');
+  const [completionStepText, setCompletionStepText] = useState('Saving your preferences...');
 
   const getBMI = () => {
     if (!data.heightCm || !data.weightKg) return '21.2';
@@ -33,90 +33,90 @@ export const ReviewPage: React.FC = () => {
     return (data.weightKg / (hM * hM)).toFixed(1);
   };
 
+  const getPersonaLabel = () => {
+    switch (data.profileType) {
+      case 'child':
+        return 'Child (Age 5-12)';
+      case 'teen':
+        return 'Teen (Age 13-17)';
+      case 'adult':
+        return 'Adult (Age 18-59)';
+      case 'older_adult':
+        return 'Senior / Elder (Age 60+)';
+      case 'family':
+        return 'Family Household';
+      default:
+        return 'Adult';
+    }
+  };
+
   const getGoalTitle = () => {
     switch (data.primaryGoal) {
-      case 'muscle':
-        return 'Build Muscle';
-      case 'maintain':
-        return 'Maintain Weight & Metabolic Stability';
       case 'improve':
-        return 'Improve Nutrition';
+      case 'eat_healthier':
+        return 'Eat Healthier & Feel Better';
+      case 'maintain':
+        return 'Maintain Weight & Steady Energy';
       case 'fat-loss':
-        return 'Lose Fat';
+      case 'manage_weight':
+        return 'Manage Weight Sustainably';
+      case 'muscle':
+      case 'build_strength':
+        return 'Build Strength & Lean Muscle';
+      case 'fitness':
+        return 'Improve Fitness & Stamina';
+      case 'wellness':
+        return 'Support Overall Vitality';
+      case 'daily-nutrition':
+      case 'daily_nutrition':
+        return 'Improve Daily Nutrition Habits';
+      case 'family-nutrition':
+      case 'family_nutrition':
+        return 'Family & Elder Wholesome Support';
       default:
-        return 'Maintain Weight & Metabolic Stability';
+        return 'Eat Healthier & Feel Better';
     }
   };
 
   const handleCompleteSequence = async () => {
     setIsCompleting(true);
-    setCompletionStepText('Calculating starting targets...');
+    setCompletionStepText('Calibrating your daily targets...');
 
     try {
       await completeOnboardingSession();
     } catch (err) {
-      console.warn('Backend completion warning (continuing with UI sequence):', err);
+      console.warn('Backend completion warning:', err);
     }
 
     setTimeout(() => {
       setCompletionStepText('Preparing your PoshanCare workspace...');
-    }, 1100);
+    }, 900);
 
     setTimeout(() => {
       setIsCompleting(false);
       setSimState('success');
-    }, 2200);
+    }, 1800);
   };
 
   return (
     <div className="w-full max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-12 py-8 flex flex-col gap-8">
-      {/* Top Header & Interactive Switcher */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div className="flex flex-col gap-1">
+      {/* Top Header */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
+        <div className="flex flex-col gap-1 max-w-2xl">
           <div className="flex items-center gap-2">
-            <span className="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold tracking-wider uppercase">
-              Step 6 of 6
+            <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-300 font-medium text-xs tracking-wider uppercase">
+              Step 10 of 10
             </span>
-            <span className="inline-flex items-center gap-1 font-label-sm text-label-sm text-surface-tint font-medium">
-              <CheckCircle2 className="w-4 h-4" /> 100% Evaluation Complete
+            <span className="inline-flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 font-medium">
+              <CheckCircle2 className="w-4 h-4" /> 100% Ready to Start
             </span>
           </div>
-          <h1 className="font-display-lg text-headline-lg text-primary tracking-tight font-bold">
-            You're all set.
+          <h1 className="text-2xl sm:text-3xl text-slate-900 dark:text-white font-bold tracking-tight">
+            You're all set, {data.fullName || 'friend'}! 🎉
           </h1>
-          <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl">
-            Review your clinical nutritional baseline before entering your PoshanCare intelligence
-            workspace.
+          <p className="text-base text-slate-600 dark:text-slate-300 leading-relaxed">
+            Please take a quick moment to review your personalized setup. You can easily adjust any section before entering your PoshanCare dashboard.
           </p>
-        </div>
-
-        {/* State Preview Toggle */}
-        <div className="flex items-center gap-2 p-1.5 rounded-xl bg-surface-container-low shadow-xs border border-surface-container shrink-0">
-          <span className="font-label-sm text-label-sm text-on-surface-variant px-2 font-medium">
-            Preview Mode:
-          </span>
-          <button
-            type="button"
-            onClick={() => setSimState('review')}
-            className={`px-3 py-1.5 rounded-lg font-label-sm text-label-sm transition-all cursor-pointer ${
-              simState === 'review'
-                ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
-                : 'text-on-surface-variant hover:text-primary font-medium'
-            }`}
-          >
-            Review Screen
-          </button>
-          <button
-            type="button"
-            onClick={() => setSimState('success')}
-            className={`px-3 py-1.5 rounded-lg font-label-sm text-label-sm transition-all cursor-pointer ${
-              simState === 'success'
-                ? 'bg-surface-container-lowest text-primary shadow-xs font-semibold'
-                : 'text-on-surface-variant hover:text-primary font-medium'
-            }`}
-          >
-            Success Overlay
-          </button>
         </div>
       </div>
 
@@ -127,310 +127,278 @@ export const ReviewPage: React.FC = () => {
           <div className="lg:col-span-7 flex flex-col gap-4">
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-primary" />
-                <span className="font-title-md text-title-md text-primary tracking-tight font-semibold">
-                  Profile &amp; Clinical Summary
+                <CheckCircle2 className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span className="text-lg font-bold text-slate-900 dark:text-white">
+                  Your Profile Overview
                 </span>
               </div>
-              <span className="font-label-sm text-label-sm text-on-surface-variant">
-                Click edit to modify prior parameters
-              </span>
             </div>
 
-            {/* Card 1: Profile */}
-            <div className="group relative p-6 rounded-xl bg-surface-container-lowest shadow-xs hover:shadow-sm transition-shadow border border-surface-container-low">
+            {/* Card 1: Persona & Basic Info */}
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary border border-surface-container">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                     <User className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
-                      01 • Personal Profile
+                    <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                      01 • Persona &amp; Basic Info
                     </span>
-                    <span className="font-title-md text-title-md text-on-surface font-semibold">
-                      {data.fullName}
+                    <span className="text-base font-bold text-slate-900 dark:text-white">
+                      {data.fullName || 'User'} ({getPersonaLabel()})
                     </span>
                   </div>
                 </div>
                 <Link
                   to="/onboarding/profile"
-                  className="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-surface-tint transition-colors px-2.5 py-1 rounded-md bg-surface-container-low hover:bg-surface-container font-semibold"
+                  className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold"
                 >
                   <Edit className="w-3.5 h-3.5" /> Edit
                 </Link>
               </div>
-              <div className="mt-3 pl-13 flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container">
-                  {data.age} Years Old
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                  {data.age ? `${data.age} Years Old` : 'Age set'}
                 </span>
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container capitalize">
-                  {data.biologicalSex} (Biological Baseline)
+                <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 capitalize">
+                  Country: {data.country || 'India'} ({data.region || 'South India'})
                 </span>
-                <span className="px-2.5 py-1 rounded-full bg-tertiary-fixed/30 text-tertiary font-label-md text-label-md font-semibold">
-                  Standard Hydration Index
+                <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                  Language: {data.preferredLanguage || 'English'}
                 </span>
               </div>
             </div>
 
             {/* Card 2: Body Metrics */}
-            <div className="group relative p-6 rounded-xl bg-surface-container-lowest shadow-xs hover:shadow-sm transition-shadow border border-surface-container-low">
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary border border-surface-container">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                     <Ruler className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
                       02 • Body Metrics
                     </span>
-                    <span className="font-title-md text-title-md text-on-surface font-semibold">
+                    <span className="text-base font-bold text-slate-900 dark:text-white">
                       {data.heightCm} cm • {data.weightKg} kg
                     </span>
                   </div>
                 </div>
                 <Link
                   to="/onboarding/body-metrics"
-                  className="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-surface-tint transition-colors px-2.5 py-1 rounded-md bg-surface-container-low hover:bg-surface-container font-semibold"
+                  className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold"
                 >
                   <Edit className="w-3.5 h-3.5" /> Edit
                 </Link>
               </div>
-              <div className="mt-3 pl-13 flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container">
-                  BMI: {getBMI()} kg/m² (Optimal)
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                  Estimated BMI: {getBMI()} kg/m²
                 </span>
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container capitalize">
-                  {data.unitSystem} Mode
-                </span>
-                <span className="px-2.5 py-1 rounded-full bg-tertiary-fixed/40 text-tertiary font-label-md text-label-md font-semibold">
-                  Verified Target Range
+                <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 capitalize">
+                  Units: {data.unitSystem === 'metric' ? 'Metric (cm/kg)' : 'Imperial (ft-in/lbs)'}
                 </span>
               </div>
             </div>
 
-            {/* Card 3: Clinical Goal */}
-            <div className="group relative p-6 rounded-xl bg-surface-container-lowest shadow-xs hover:shadow-sm transition-shadow border border-surface-container-low">
+            {/* Card 3: Activity Level */}
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary border border-surface-container">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                    <Activity className="w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                      03 • Daily Activity Profile
+                    </span>
+                    <span className="text-base font-bold text-slate-900 dark:text-white capitalize">
+                      {data.activityLevel ? data.activityLevel.replace('_', ' ') : 'Moderately Active'} • ~{(data.dailySteps || 7500).toLocaleString()} steps/day
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  to="/onboarding/activity"
+                  className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold"
+                >
+                  <Edit className="w-3.5 h-3.5" /> Edit
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 4: Primary Goal */}
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                     <Flag className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
-                      03 • Clinical Primary Goal
+                    <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                      04 • Primary Wellness Focus
                     </span>
-                    <span className="font-title-md text-title-md text-on-surface font-semibold">
+                    <span className="text-base font-bold text-slate-900 dark:text-white">
                       {getGoalTitle()}
                     </span>
                   </div>
                 </div>
                 <Link
                   to="/onboarding/goals"
-                  className="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-surface-tint transition-colors px-2.5 py-1 rounded-md bg-surface-container-low hover:bg-surface-container font-semibold"
+                  className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold"
                 >
                   <Edit className="w-3.5 h-3.5" /> Edit
                 </Link>
               </div>
-              <div className="mt-3 pl-13 flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container capitalize">
-                  {data.pace} progression curve
-                </span>
-                <span className="px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md font-semibold">
-                  Postprandial Glycemic Control
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 capitalize font-medium">
+                  {data.pace} Progression Pace
                 </span>
               </div>
             </div>
 
-            {/* Card 4: Activity Level */}
-            <div className="group relative p-6 rounded-xl bg-surface-container-lowest shadow-xs hover:shadow-sm transition-shadow border border-surface-container-low">
+            {/* Card 5: Diet Preferences & Avoidances */}
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary border border-surface-container">
-                    <Activity className="w-5 h-5" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
-                      04 • Activity Profile
-                    </span>
-                    <span className="font-title-md text-title-md text-on-surface font-semibold">
-                      {data.activityLevel} ({data.frequency})
-                    </span>
-                  </div>
-                </div>
-                <Link
-                  to="/onboarding/activity"
-                  className="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-surface-tint transition-colors px-2.5 py-1 rounded-md bg-surface-container-low hover:bg-surface-container font-semibold"
-                >
-                  <Edit className="w-3.5 h-3.5" /> Edit
-                </Link>
-              </div>
-              <div className="mt-3 pl-13 flex flex-wrap items-center gap-2">
-                {data.routines.map((r) => (
-                  <span
-                    key={r}
-                    className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container"
-                  >
-                    {r}
-                  </span>
-                ))}
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container">
-                  {data.dailySteps.toLocaleString()} steps/day
-                </span>
-              </div>
-            </div>
-
-            {/* Card 5: Dietary Patterns */}
-            <div className="group relative p-6 rounded-xl bg-surface-container-lowest shadow-xs hover:shadow-sm transition-shadow border border-surface-container-low">
-              <div className="flex items-start justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-surface-container-low flex items-center justify-center text-primary border border-surface-container">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
                     <Utensils className="w-5 h-5" />
                   </div>
                   <div className="flex flex-col">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">
-                      05 • Dietary &amp; Regional Patterns
+                    <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                      05 • Dietary Style &amp; Avoidances
                     </span>
-                    <span className="font-title-md text-title-md text-on-surface font-semibold">
-                      South Indian &amp; North Indian • Lacto-Vegetarian
+                    <span className="text-base font-bold text-slate-900 dark:text-white capitalize">
+                      {data.dietType?.replace('_', ' ') || 'Vegetarian'}
                     </span>
                   </div>
                 </div>
                 <Link
-                  to="/onboarding/activity"
-                  className="inline-flex items-center gap-1 font-label-md text-label-md text-primary hover:text-surface-tint transition-colors px-2.5 py-1 rounded-md bg-surface-container-low hover:bg-surface-container font-semibold"
+                  to="/onboarding/diet-preferences"
+                  className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold"
                 >
                   <Edit className="w-3.5 h-3.5" /> Edit
                 </Link>
               </div>
-              <div className="mt-3 pl-13 flex flex-wrap items-center gap-2">
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container">
-                  Tamil Nadu / Kerala staple grains
-                </span>
-                <span className="px-2.5 py-1 rounded-full bg-surface-container-low text-on-surface-variant font-label-md text-label-md border border-surface-container">
-                  Lentil &amp; Dal prioritization
-                </span>
-                <span className="px-2.5 py-1 rounded-full bg-error-container text-on-error-container font-label-md text-label-md inline-flex items-center gap-1 font-semibold">
-                  <ShieldAlert className="w-3.5 h-3.5" /> Avoids: Peanuts (Severe)
-                </span>
+              <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
+                {data.foodPreferences && data.foodPreferences.map((pref) => (
+                  <span key={pref} className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    {pref}
+                  </span>
+                ))}
+                {data.foodAvoidances && data.foodAvoidances.length > 0 && (
+                  <span className="px-2.5 py-1 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 font-medium">
+                    Avoids: {data.foodAvoidances.join(', ')}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            {/* Card 6: Meal Habits & Schedule */}
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                    <Clock className="w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                      06 • Meal Habits &amp; Timing
+                    </span>
+                    <span className="text-base font-bold text-slate-900 dark:text-white">
+                      {data.mealFrequency || 3} Meals / day
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  to="/onboarding/meal-habits"
+                  className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold"
+                >
+                  <Edit className="w-3.5 h-3.5" /> Edit
+                </Link>
+              </div>
+            </div>
+
+            {/* Card 7: Health Considerations */}
+            <div className="p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-3">
+              <div className="flex items-start justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/50 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+                    <HeartPulse className="w-5 h-5" />
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="text-xs text-slate-500 dark:text-slate-400 uppercase tracking-wider font-semibold">
+                      07 • Health Considerations
+                    </span>
+                    <span className="text-base font-bold text-slate-900 dark:text-white">
+                      {data.healthConditions?.join(', ') || 'General Wellness'}
+                    </span>
+                  </div>
+                </div>
+                <Link
+                  to="/onboarding/health-context"
+                  className="inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 px-3 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 font-semibold"
+                >
+                  <Edit className="w-3.5 h-3.5" /> Edit
+                </Link>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Starting Baseline Preview */}
+          {/* Right Column: Starting Plan Summary Card */}
           <div className="lg:col-span-5 flex flex-col gap-4 lg:sticky lg:top-28">
-            <div className="p-6 sm:p-8 rounded-2xl bg-surface-container-lowest shadow-md flex flex-col gap-6 relative overflow-hidden border border-surface-container-low">
+            <div className="p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 shadow-md flex flex-col gap-6 relative overflow-hidden border border-slate-200 dark:border-slate-800">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Activity className="w-5 h-5 text-primary" />
-                  <span className="font-title-lg text-title-lg text-primary font-bold">
-                    Your Starting Baseline
+                  <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                  <span className="text-lg font-bold text-slate-900 dark:text-white">
+                    Your Tailored Plan
                   </span>
                 </div>
-                <span className="px-2.5 py-1 rounded-full bg-tertiary-fixed/50 text-on-tertiary-fixed font-label-sm text-label-sm font-semibold uppercase">
-                  Calibrated
+                <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-xs font-semibold uppercase">
+                  Ready
                 </span>
               </div>
 
               {/* Energy Target */}
-              <div className="p-4 rounded-xl bg-surface-container-low flex flex-col gap-1 border border-surface-container">
-                <div className="flex items-center justify-between">
-                  <span className="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider font-semibold">
-                    Starting Daily Target
-                  </span>
-                  <span className="px-2 py-0.5 rounded bg-surface-container-lowest text-primary font-label-sm text-label-sm font-semibold shadow-xs">
-                    BMR 1,520 kcal × 1.41 PAL
-                  </span>
-                </div>
+              <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex flex-col gap-1 border border-slate-200 dark:border-slate-800">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Estimated Daily Energy Target
+                </span>
                 <div className="flex items-baseline gap-2">
-                  <span className="font-display-lg text-display-lg text-primary font-bold">
-                    2,150
+                  <span className="text-3xl font-bold text-emerald-600 dark:text-emerald-400">
+                    2,050
                   </span>
-                  <span className="font-title-md text-title-md text-on-surface-variant">
+                  <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">
                     kcal / day
                   </span>
                 </div>
-                <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                  Calculated via Mifflin-St Jeor equation customized with your activity baseline.
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  Balanced to support your primary goal without extreme deficits.
                 </p>
               </div>
 
-              {/* Protein & Fiber Grid */}
+              {/* Macro & Fiber Summary */}
               <div className="grid grid-cols-2 gap-3">
-                <div className="p-4 rounded-xl bg-surface-container-low flex flex-col justify-between border border-surface-container">
-                  <div className="flex items-center justify-between text-on-surface-variant">
-                    <span className="font-label-sm text-label-sm uppercase tracking-wider font-semibold">
-                      Protein Target
-                    </span>
-                    <Egg className="w-4.5 h-4.5 text-primary" />
-                  </div>
-                  <div className="mt-2">
-                    <span className="font-headline-lg text-headline-lg text-primary font-semibold">
-                      90
-                    </span>
-                    <span className="font-label-md text-label-md text-on-surface-variant ml-1">
-                      g / day
-                    </span>
-                  </div>
-                  <span className="font-body-sm text-body-sm text-surface-tint mt-1 font-medium">
-                    ~1.60 g/kg (Preservation)
-                  </span>
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex flex-col border border-slate-200 dark:border-slate-800">
+                  <span className="text-xs font-semibold text-slate-500 uppercase">Protein</span>
+                  <span className="text-xl font-bold text-slate-900 dark:text-white mt-1">85g / day</span>
+                  <span className="text-xs text-slate-500 mt-0.5">Wholesome sources</span>
                 </div>
-
-                <div className="p-4 rounded-xl bg-surface-container-low flex flex-col justify-between border border-surface-container">
-                  <div className="flex items-center justify-between text-on-surface-variant">
-                    <span className="font-label-sm text-label-sm uppercase tracking-wider font-semibold">
-                      Dietary Fiber
-                    </span>
-                    <Wheat className="w-4.5 h-4.5 text-primary" />
-                  </div>
-                  <div className="mt-2">
-                    <span className="font-headline-lg text-headline-lg text-primary font-semibold">
-                      32
-                    </span>
-                    <span className="font-label-md text-label-md text-on-surface-variant ml-1">
-                      g / day
-                    </span>
-                  </div>
-                  <span className="font-body-sm text-body-sm text-surface-tint mt-1 font-medium">
-                    Cardiometabolic baseline
-                  </span>
+                <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 flex flex-col border border-slate-200 dark:border-slate-800">
+                  <span className="text-xs font-semibold text-slate-500 uppercase">Dietary Fiber</span>
+                  <span className="text-xl font-bold text-slate-900 dark:text-white mt-1">30g / day</span>
+                  <span className="text-xs text-slate-500 mt-0.5">Digestion &amp; Satiety</span>
                 </div>
               </div>
 
-              {/* Macro Bar */}
-              <div className="flex flex-col gap-2 pt-1">
-                <div className="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
-                  <span>Macronutrient Composition</span>
-                  <span className="font-semibold text-primary">50% C • 20% P • 30% F</span>
-                </div>
-                <div className="w-full h-3 rounded-full overflow-hidden flex bg-surface-container-high">
-                  <div className="bg-secondary h-full" style={{ width: '50%' }} />
-                  <div className="bg-primary-container h-full" style={{ width: '20%' }} />
-                  <div className="bg-surface-tint h-full" style={{ width: '30%' }} />
-                </div>
-                <div className="flex items-center justify-between font-body-sm text-body-sm text-on-surface-variant mt-1">
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-secondary" />
-                    <span>Carbs (268g)</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-primary-container" />
-                    <span>Protein (90g)</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full bg-surface-tint" />
-                    <span>Fats (71g)</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Complete Setup CTA */}
+              {/* Complete Setup CTA Button */}
               <button
                 type="button"
                 disabled={isCompleting}
                 onClick={handleCompleteSequence}
-                className="w-full py-3.5 px-6 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer font-semibold disabled:opacity-80"
+                className="w-full py-4 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-base transition-all flex items-center justify-center gap-2 shadow-md cursor-pointer font-bold disabled:opacity-80"
               >
                 {isCompleting ? (
                   <>
@@ -440,7 +408,7 @@ export const ReviewPage: React.FC = () => {
                 ) : (
                   <>
                     <Rocket className="w-5 h-5" />
-                    <span>Complete Setup &amp; Enter Workspace</span>
+                    <span>Complete Setup &amp; Start</span>
                   </>
                 )}
               </button>
@@ -449,102 +417,39 @@ export const ReviewPage: React.FC = () => {
         </div>
       )}
 
-      {/* ========================================== */}
-      {/* SUCCESS OVERLAY MODAL                       */}
-      {/* ========================================== */}
+      {/* Celebration / Final Modal */}
       {simState === 'success' && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-inverse-surface/40 backdrop-blur-xs transition-all duration-300">
-          <div className="w-full max-w-2xl bg-surface-container-lowest rounded-2xl shadow-2xl p-6 sm:p-10 flex flex-col gap-6 relative overflow-hidden border border-surface-container-high">
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center text-on-primary shadow-md shrink-0">
-                <CheckCircle2 className="w-8 h-8" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-label-md text-label-md text-surface-tint uppercase tracking-widest font-semibold">
-                  Evaluation Finalized
-                </span>
-                <h2 className="font-headline-lg text-headline-lg text-primary tracking-tight font-bold">
-                  Your PoshanCare profile is ready.
-                </h2>
-              </div>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm transition-all duration-300">
+          <div className="w-full max-w-xl bg-white dark:bg-slate-900 rounded-3xl shadow-2xl p-6 sm:p-10 flex flex-col gap-6 relative border border-slate-200 dark:border-slate-800 text-center">
+            <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto shadow-md">
+              <CheckCircle2 className="w-10 h-10" />
             </div>
 
-            <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-              Your personalized clinical nutrition workspace has been generated based on{' '}
-              <strong className="text-on-surface font-semibold">{data.fullName}'s</strong> metabolic
-              profile, regional dietary habits, and activity patterns.
-            </p>
-
-            {/* Dynamic Badges */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              <div className="p-4 rounded-xl bg-surface-container-low flex flex-col border border-surface-container">
-                <span className="font-label-sm text-label-sm text-on-surface-variant">
-                  Daily Energy Budget
-                </span>
-                <span className="font-headline-sm text-headline-sm text-primary mt-1 font-bold">
-                  2,150 kcal
-                </span>
-                <span className="font-body-sm text-body-sm text-surface-tint mt-0.5 font-medium">
-                  Optimal Maintenance
-                </span>
-              </div>
-
-              <div className="p-4 rounded-xl bg-surface-container-low flex flex-col border border-surface-container">
-                <span className="font-label-sm text-label-sm text-on-surface-variant">
-                  Calibrated Macro Split
-                </span>
-                <span className="font-headline-sm text-headline-sm text-primary mt-1 font-bold">
-                  50C / 20P / 30F
-                </span>
-                <span className="font-body-sm text-body-sm text-surface-tint mt-0.5 font-medium">
-                  90g High-quality protein
-                </span>
-              </div>
-
-              <div className="p-4 rounded-xl bg-surface-container-low flex flex-col border border-surface-container">
-                <span className="font-label-sm text-label-sm text-on-surface-variant">
-                  Indian Culinary Matrix
-                </span>
-                <span className="font-headline-sm text-headline-sm text-primary mt-1 font-bold">
-                  12,000+ Items
-                </span>
-                <span className="font-body-sm text-body-sm text-surface-tint mt-0.5 font-medium">
-                  Peanut allergens filtered
-                </span>
-              </div>
+            <div className="flex flex-col gap-2">
+              <span className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
+                Welcome to PoshanCare
+              </span>
+              <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Your Nutrition Journey Begins Now! 🌟
+              </h2>
+              <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed mt-1">
+                Your personalized nutrition plan has been saved. We're excited to support your health and daily wellness journey every step of the way.
+              </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-surface-container-low flex items-center gap-3 border border-surface-container">
-              <Sparkles className="w-6 h-6 text-primary shrink-0" />
-              <div className="flex flex-col">
-                <span className="font-title-md text-title-md text-primary font-semibold">
-                  Continuous Dynamic Calibration
-                </span>
-                <span className="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                  Your daily glycemic responsiveness, subjective satiety ratings, and weekly weight
-                  trends will continuously fine-tune these baselines.
-                </span>
-              </div>
+            <div className="p-4 bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-900 dark:text-emerald-200 flex items-center justify-center gap-2">
+              <Smile className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+              <span>You can update your goals or dietary preferences anytime from your profile settings!</span>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-surface-container-low">
-              <button
-                type="button"
-                onClick={() => setSimState('review')}
-                className="px-4 py-3 rounded-xl font-label-md text-label-md text-on-surface-variant hover:bg-surface-container transition-colors cursor-pointer font-medium"
-              >
-                Back to Review
-              </button>
-
-              <button
-                type="button"
-                onClick={() => navigate('/signin')}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-xl bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer"
-              >
-                <span>Go to PoshanCare Sign In</span>
-                <ArrowRight className="w-4.5 h-4.5" />
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={() => navigate('/app')}
+              className="w-full py-4 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+            >
+              <span>Go to My Dashboard</span>
+              <ArrowRight className="w-5 h-5" />
+            </button>
           </div>
         </div>
       )}

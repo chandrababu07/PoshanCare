@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, Sparkles, AlertCircle } from 'lucide-react';
 import { Button, Input, Card, Badge } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
@@ -8,12 +9,42 @@ import { fetchUserProfile } from '../../services/profileService';
 export const SignInPage: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login } = useAuth();
+  const { login, loginGoogle } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [viewState, setViewState] = useState<'default' | 'error' | 'loading'>('default');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
+    if (!credentialResponse.credential) {
+      setViewState('error');
+      setErrorMessage('Google authentication token missing.');
+      return;
+    }
+    setViewState('loading');
+    setErrorMessage('');
+    try {
+      await loginGoogle(credentialResponse.credential);
+      setViewState('default');
+      const profile = await fetchUserProfile();
+      const fromPath = (location.state as { from?: { pathname: string } })?.from?.pathname;
+      if (profile?.onboarding_completed) {
+        navigate(fromPath || '/app');
+      } else {
+        navigate('/onboarding');
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Google authentication failed.';
+      setViewState('error');
+      setErrorMessage(message);
+    }
+  };
+
+  const handleGoogleError = () => {
+    setViewState('error');
+    setErrorMessage('Google sign-in popup was closed or cancelled.');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,6 +172,28 @@ export const SignInPage: React.FC = () => {
                 </div>
               </div>
             )}
+
+            {/* Google OAuth Section */}
+            <div className="mb-6 space-y-3">
+              <div className="flex justify-center w-full">
+                <GoogleLogin
+                  onSuccess={handleGoogleSuccess}
+                  onError={handleGoogleError}
+                  theme="outline"
+                  size="large"
+                  text="signin_with"
+                  shape="rectangular"
+                  width="100%"
+                />
+              </div>
+              <div className="relative flex items-center justify-center my-4">
+                <div className="border-t border-surface-container-high w-full"></div>
+                <span className="bg-surface-container-lowest px-3 text-label-sm font-label-sm text-outline uppercase tracking-wider font-semibold shrink-0">
+                  Or sign in with email
+                </span>
+                <div className="border-t border-surface-container-high w-full"></div>
+              </div>
+            </div>
 
             {/* Form */}
             <form className="space-y-4" onSubmit={handleSubmit} noValidate>

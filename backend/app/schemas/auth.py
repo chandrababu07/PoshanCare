@@ -64,8 +64,18 @@ class UserResponse(BaseModel):
     full_name: str
     is_active: bool
     is_verified: bool
+    auth_provider: str = Field(default="email")
     created_at: datetime
 
+
+class GoogleAuthPayload(BaseModel):
+    """Payload for Google OAuth 2.0 authentication."""
+
+    id_token: str = Field(
+        ...,
+        description="Signed Google OAuth 2.0 ID token issued by Google Identity Services.",
+        json_schema_extra={"example": "eyJhbGciOiJSUzI1NiIs..."},
+    )
 
 
 class AuthResponse(BaseModel):

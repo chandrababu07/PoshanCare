@@ -190,3 +190,73 @@ async def revoke_refresh_token_session(
         if session_record:
             session_record.is_revoked = True
             await db.commit()
+
+
+async def get_user_by_google_sub(db: AsyncSession, google_sub: str) -> Optional[User]:
+    """Retrieve user record by Google subject ID (sub)."""
+    result = await db.execute(select(User).where(User.google_sub == google_sub))
+    return result.scalar_one_or_none()
+
+
+async def authenticate_or_create_google_user(
+    db: AsyncSession,
+    google_sub: str,
+    email: str,
+    full_name: str,
+) -> User:
+    """Authenticate user with Google credentials.
+
+    1. If user matches google_sub -> return user.
+    2. If user matches email -> link google_sub to user, update auth_provider to 'hybrid', mark is_verified=True.
+    3. If user doesn't exist -> create new user with google_sub, auth_provider='google', is_verified=True.
+    """
+    # 1. Check by google_sub
+    user = await get_user_by_google_sub(db, google_sub)
+    if user:
+        if not user.is_active:
+            raise PoshanCareException(
+                message="User account is inactive or disabled.",
+                code="USER_INACTIVE",
+                status_code=401,
+            )
+        if full_name and (not user.full_name or user.full_name == "User"):
+            user.full_name = full_name
+            await db.commit()
+            await db.refresh(user)
+        return user
+
+    # 2. Check by email for account linking
+    user = await get_user_by_email(db, email)
+    if user:
+        if not user.is_active:
+            raise PoshanCareException(
+                message="User account is inactive or disabled.",
+                code="USER_INACTIVE",
+                status_code=401,
+            )
+        user.google_sub = google_sub
+        user.is_verified = True
+        if user.auth_provider == "email":
+            user.auth_provider = "hybrid"
+        await db.commit()
+        await db.refresh(user)
+        logger.info(f"Linked Google account {google_sub} to existing email {email} (id={user.id})")
+        return user
+
+    # 3. Create new user for Google login
+    display_name = full_name.strip() if full_name and full_name.strip() else email.split("@")[0].capitalize()
+    user = User(
+        email=email.lower(),
+        google_sub=google_sub,
+        full_name=display_name,
+        password_hash=None,
+        is_active=True,
+        is_verified=True,
+        auth_provider="google",
+    )
+    db.add(user)
+    await db.commit()
+    await db.refresh(user)
+    logger.info(f"Created new Google OAuth user account: id={user.id}, email={user.email}")
+    return user
+

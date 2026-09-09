@@ -43,18 +43,17 @@ async def get_or_create_user_profile(
 def is_profile_ready_for_completion(profile: UserProfile) -> Tuple[bool, list[str]]:
     """Check if all required onboarding fields are present for completion."""
     missing = []
-    if profile.age is None or profile.age < 1:
-        missing.append("age")
+    # Age or DOB check
+    if (profile.age is None or profile.age < 1) and not profile.date_of_birth:
+        missing.append("age_or_dob")
     if not profile.biological_sex:
         missing.append("biological_sex")
-    if profile.height_cm is None or profile.height_cm < 50.0:
+    if profile.height_cm is None or profile.height_cm < 30.0:
         missing.append("height_cm")
-    if profile.weight_kg is None or profile.weight_kg < 20.0:
+    if profile.weight_kg is None or profile.weight_kg < 5.0:
         missing.append("weight_kg")
     if not profile.primary_goal:
         missing.append("primary_goal")
-    if not profile.progression_pace:
-        missing.append("progression_pace")
     if not profile.activity_level:
         missing.append("activity_level")
 
@@ -65,20 +64,26 @@ def compute_onboarding_status(profile: UserProfile) -> OnboardingStatusResponse:
     """Compute explicit onboarding status and next navigation step."""
     is_ready, _ = is_profile_ready_for_completion(profile)
 
-    if profile.onboarding_completed or profile.onboarding_step >= 6:
+    if profile.onboarding_completed or profile.onboarding_step >= 11:
         next_step = "/app"
-    elif profile.onboarding_step == 0:
-        next_step = "/onboarding"
     elif profile.onboarding_step == 1:
         next_step = "/onboarding/profile"
     elif profile.onboarding_step == 2:
         next_step = "/onboarding/body-metrics"
     elif profile.onboarding_step == 3:
-        next_step = "/onboarding/goals"
-    elif profile.onboarding_step == 4:
         next_step = "/onboarding/activity"
-    else:  # Step 5
+    elif profile.onboarding_step == 4:
+        next_step = "/onboarding/goals"
+    elif profile.onboarding_step == 5:
+        next_step = "/onboarding/diet-preferences"
+    elif profile.onboarding_step == 6:
+        next_step = "/onboarding/meal-habits"
+    elif profile.onboarding_step == 7:
+        next_step = "/onboarding/health-context"
+    elif profile.onboarding_step >= 8:
         next_step = "/onboarding/review"
+    else:
+        next_step = "/onboarding"
 
     return OnboardingStatusResponse(
         onboarding_completed=profile.onboarding_completed,
@@ -120,7 +125,7 @@ async def complete_user_onboarding(
         )
 
     profile.onboarding_completed = True
-    profile.onboarding_step = 6
+    profile.onboarding_step = 11
     await db.commit()
     await db.refresh(profile)
     logger.info(f"Onboarding marked COMPLETED for user_id={user_id}")

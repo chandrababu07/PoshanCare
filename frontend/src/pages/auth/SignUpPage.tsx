@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { Mail, Lock, User, Eye, EyeOff, ArrowRight, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { Button, Input, Card, Badge } from '../../components/ui';
 import { useAuth } from '../../context/AuthContext';
+import { fetchUserProfile } from '../../services/profileService';
 
 export const SignUpPage: React.FC = () => {
   const navigate = useNavigate();
-  const { register } = useAuth();
+  const { register, loginGoogle } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -15,6 +17,33 @@ export const SignUpPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [viewState, setViewState] = useState<'default' | 'errors' | 'success'>('default');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const handleGoogleSuccess = async (credentialResponse: CredentialResponse) => {
+    if (!credentialResponse.credential) {
+      setViewState('errors');
+      setErrorMessage('Google authentication token missing.');
+      return;
+    }
+    setErrorMessage('');
+    try {
+      await loginGoogle(credentialResponse.credential);
+      const profile = await fetchUserProfile();
+      if (profile?.onboarding_completed) {
+        navigate('/app');
+      } else {
+        navigate('/onboarding');
+      }
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Google sign-up failed.';
+      setErrorMessage(message);
+      setViewState('errors');
+    }
+  };
+
+  const handleGoogleError = () => {
+    setViewState('errors');
+    setErrorMessage('Google sign-in popup was closed or cancelled.');
+  };
 
   // Password strength score 0 to 4
   const getPasswordStrength = (pass: string) => {
@@ -144,6 +173,28 @@ export const SignUpPage: React.FC = () => {
                   <span>{errorMessage}</span>
                 </div>
               )}
+
+              {/* Google OAuth Section */}
+              <div className="space-y-3">
+                <div className="flex justify-center w-full">
+                  <GoogleLogin
+                    onSuccess={handleGoogleSuccess}
+                    onError={handleGoogleError}
+                    theme="outline"
+                    size="large"
+                    text="signup_with"
+                    shape="rectangular"
+                    width="100%"
+                  />
+                </div>
+                <div className="relative flex items-center justify-center my-4">
+                  <div className="border-t border-surface-container-high w-full"></div>
+                  <span className="bg-surface-container-lowest px-3 text-label-sm font-label-sm text-outline uppercase tracking-wider font-semibold shrink-0">
+                    Or register with email
+                  </span>
+                  <div className="border-t border-surface-container-high w-full"></div>
+                </div>
+              </div>
 
               {/* Form */}
               <form className="space-y-4" onSubmit={handleSubmit} noValidate>

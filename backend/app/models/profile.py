@@ -27,11 +27,32 @@ class UserProfile(Base):
         Boolean, default=False, nullable=False
     )
 
-    # Identity / Demographic Profile
+    # Identity / Demographic Profile & Persona
+    profile_type: Mapped[Optional[str]] = mapped_column(
+        String(50), default="adult", nullable=True
+    )  # 'child' | 'teen' | 'adult' | 'older_adult' | 'family'
+    date_of_birth: Mapped[Optional[str]] = mapped_column(String(20), nullable=True)
+    country: Mapped[Optional[str]] = mapped_column(
+        String(100), default="India", nullable=True
+    )
+    region: Mapped[Optional[str]] = mapped_column(String(100), nullable=True)
+    preferred_language: Mapped[Optional[str]] = mapped_column(
+        String(20), default="en", nullable=True
+    )  # 'en' | 'te' | 'hi'
     age: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     biological_sex: Mapped[Optional[str]] = mapped_column(
         String(20), default="female", nullable=True
     )  # 'female' | 'male' | 'unspecified'
+
+    # Food & Meal Preferences
+    diet_type: Mapped[Optional[str]] = mapped_column(
+        String(50), default="vegetarian", nullable=True
+    )  # 'vegetarian' | 'eggetarian' | 'non_vegetarian' | 'vegan' | 'other'
+    food_preferences: Mapped[Optional[List[str]]] = mapped_column(JSON, nullable=True)
+    food_avoidances: Mapped[Optional[List[str]]] = mapped_column(JSON, nullable=True)
+    meal_frequency: Mapped[Optional[str]] = mapped_column(String(50), nullable=True)
+    meal_timings: Mapped[Optional[dict]] = mapped_column(JSON, nullable=True)
+    health_conditions: Mapped[Optional[List[str]]] = mapped_column(JSON, nullable=True)
 
     # Body Metrics (Canonical metric storage in centimeters & kilograms)
     unit_system: Mapped[Optional[str]] = mapped_column(

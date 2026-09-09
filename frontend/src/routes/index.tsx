@@ -28,8 +28,11 @@ const ResetPasswordPage = lazy(() => import('../pages/auth/ResetPasswordPage'));
 const OnboardingStartPage = lazy(() => import('../pages/onboarding/OnboardingStartPage'));
 const ProfilePage = lazy(() => import('../pages/onboarding/ProfilePage'));
 const BodyMetricsPage = lazy(() => import('../pages/onboarding/BodyMetricsPage'));
-const GoalsPage = lazy(() => import('../pages/onboarding/GoalsPage'));
 const ActivityPage = lazy(() => import('../pages/onboarding/ActivityPage'));
+const GoalsPage = lazy(() => import('../pages/onboarding/GoalsPage'));
+const DietPreferencesPage = lazy(() => import('../pages/onboarding/DietPreferencesPage'));
+const MealHabitsPage = lazy(() => import('../pages/onboarding/MealHabitsPage'));
+const HealthContextPage = lazy(() => import('../pages/onboarding/HealthContextPage'));
 const ReviewPage = lazy(() => import('../pages/onboarding/ReviewPage'));
 
 // Application Pages
@@ -71,8 +74,11 @@ export const AppRoutes: React.FC = () => {
             <Route path="/onboarding" element={<OnboardingStartPage />} />
             <Route path="/onboarding/profile" element={<ProfilePage />} />
             <Route path="/onboarding/body-metrics" element={<BodyMetricsPage />} />
-            <Route path="/onboarding/goals" element={<GoalsPage />} />
             <Route path="/onboarding/activity" element={<ActivityPage />} />
+            <Route path="/onboarding/goals" element={<GoalsPage />} />
+            <Route path="/onboarding/diet-preferences" element={<DietPreferencesPage />} />
+            <Route path="/onboarding/meal-habits" element={<MealHabitsPage />} />
+            <Route path="/onboarding/health-context" element={<HealthContextPage />} />
             <Route path="/onboarding/review" element={<ReviewPage />} />
           </Route>
         </Route>

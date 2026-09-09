@@ -33,10 +33,12 @@ export const BodyMetricsPage: React.FC = () => {
   const [weightLbs, setWeightLbs] = useState(data.weightLbs);
 
   const [compositionIntent, setCompositionIntent] = useState<CompositionIntent>(
-    data.compositionIntent
+    (data.compositionIntent as CompositionIntent) || 'maintain'
   );
-  const [targetMass, setTargetMass] = useState(data.targetMass);
-  const [leanMassFocus, setLeanMassFocus] = useState<LeanMassFocus>(data.leanMassFocus);
+  const [targetMass, setTargetMass] = useState(data.targetMass || 58.0);
+  const [leanMassFocus, setLeanMassFocus] = useState<LeanMassFocus>(
+    (data.leanMassFocus as LeanMassFocus) || 'moderate'
+  );
 
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -118,14 +120,15 @@ export const BodyMetricsPage: React.FC = () => {
         compositionIntent,
         targetMass,
         leanMassFocus,
+        currentStep: 4,
       },
-      2
+      4
     );
 
     setTimeout(() => {
       setIsSubmitting(false);
-      navigate('/onboarding/goals');
-    }, 600);
+      navigate('/onboarding/activity');
+    }, 500);
   };
 
   return (
@@ -137,10 +140,10 @@ export const BodyMetricsPage: React.FC = () => {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <span className="px-2.5 py-1 rounded-full bg-surface-container-high text-primary font-label-sm text-label-sm font-semibold tracking-wider uppercase">
-                Phase 01 • Anthropometry
+                Step 3 of 9
               </span>
               <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
-                Step 3 of 6 (50% Complete)
+                Height &amp; Weight Metrics
               </span>
             </div>
             <h1 className="font-display-lg text-headline-lg text-primary tracking-tight font-bold mt-1">

@@ -4,6 +4,7 @@ export interface User {
   full_name: string;
   is_active: boolean;
   is_verified: boolean;
+  auth_provider?: string;
   created_at: string;
 }
 

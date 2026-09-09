@@ -18,10 +18,10 @@ export const ActivityPage: React.FC = () => {
   const navigate = useNavigate();
   const { data, updateData } = useOnboarding();
 
-  const [activityLevel, setActivityLevel] = useState<ActivityLevel>(data.activityLevel);
-  const [routines, setRoutines] = useState<string[]>(data.routines);
-  const [frequency, setFrequency] = useState<string>(data.frequency);
-  const [dailySteps, setDailySteps] = useState<number>(data.dailySteps);
+  const [activityLevel, setActivityLevel] = useState<ActivityLevel>(data.activityLevel || 'Moderately Active');
+  const [routines, setRoutines] = useState<string[]>(data.routines || ['Walking', 'Light Exercise']);
+  const [frequency, setFrequency] = useState<string>(data.frequency || '3-4 days/week');
+  const [dailySteps, setDailySteps] = useState<number>(data.dailySteps || 7500);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const activityOptions: {
@@ -32,37 +32,37 @@ export const ActivityPage: React.FC = () => {
     burn: number;
   }[] = [
     {
-      level: 'Sedentary',
+      level: 'Mostly Inactive',
       pal: '1.20',
-      desc: 'Mostly sitting · Little or no structured exercise',
+      desc: '🛋️ Mostly sitting · Little or no structured exercise',
       tdee: 1725,
       burn: 287,
     },
     {
       level: 'Lightly Active',
       pal: '1.375',
-      desc: 'Light daily movement · Exercise 1–3 days/week',
+      desc: '🚶 Light daily movement · Walking / light tasks 1–3 days/week',
       tdee: 1977,
       burn: 539,
     },
     {
       level: 'Moderately Active',
       pal: '1.55',
-      desc: 'Regular movement · Exercise 3–5 days/week',
+      desc: '🏃 Regular movement · Moderate exercise 3–5 days/week',
       tdee: 2150,
       burn: 712,
     },
     {
       level: 'Very Active',
       pal: '1.725',
-      desc: 'Hard exercise · Exercise 6–7 days/week',
+      desc: '🏋️ High activity · Intense exercise 6–7 days/week',
       tdee: 2480,
       burn: 1042,
     },
     {
       level: 'Extremely Active',
       pal: '1.90',
-      desc: 'Highly physical lifestyle · Intense training or manual labor',
+      desc: '🔥 Highly athletic lifestyle · Heavy training or manual labor',
       tdee: 2732,
       burn: 1294,
     },
@@ -103,12 +103,12 @@ export const ActivityPage: React.FC = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    updateData({ activityLevel, routines, frequency, dailySteps }, 4);
+    updateData({ activityLevel, routines, frequency, dailySteps, currentStep: 5 }, 5);
 
     setTimeout(() => {
       setIsSubmitting(false);
-      navigate('/onboarding/review');
-    }, 600);
+      navigate('/onboarding/goals');
+    }, 500);
   };
 
   return (
@@ -117,11 +117,11 @@ export const ActivityPage: React.FC = () => {
       <div className="flex flex-col gap-1">
         <div className="flex items-center gap-2">
           <span className="px-2.5 py-1 rounded-full bg-surface-container-low font-label-sm text-label-sm text-primary font-semibold tracking-wide uppercase">
-            Step 5 of 6
+            Step 4 of 9
           </span>
           <span className="text-outline-variant">•</span>
           <span className="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">
-            Physical Activity Multiplier (PAL) Calibration
+            Daily Movement &amp; Activity
           </span>
         </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">

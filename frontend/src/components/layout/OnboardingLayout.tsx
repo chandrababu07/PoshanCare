@@ -11,9 +11,12 @@ export const OnboardingLayout: React.FC = () => {
     { title: 'Welcome', path: '/onboarding', step: 1 },
     { title: 'Profile', path: '/onboarding/profile', step: 2 },
     { title: 'Metrics', path: '/onboarding/body-metrics', step: 3 },
-    { title: 'Goals', path: '/onboarding/goals', step: 4 },
-    { title: 'Activity', path: '/onboarding/activity', step: 5 },
-    { title: 'Review', path: '/onboarding/review', step: 6 },
+    { title: 'Activity', path: '/onboarding/activity', step: 4 },
+    { title: 'Goals', path: '/onboarding/goals', step: 5 },
+    { title: 'Diet', path: '/onboarding/diet-preferences', step: 6 },
+    { title: 'Meals', path: '/onboarding/meal-habits', step: 7 },
+    { title: 'Health', path: '/onboarding/health-context', step: 8 },
+    { title: 'Review', path: '/onboarding/review', step: 9 },
   ];
 
   const currentStepIndex = steps.findIndex((s) => s.path === location.pathname);
@@ -48,19 +51,19 @@ export const OnboardingLayout: React.FC = () => {
                   PoshanCare
                 </span>
                 <span className="font-label-sm text-label-sm text-on-surface-variant font-medium tracking-wide uppercase">
-                  Clinical Nutrition Intelligence
+                  Personalized Nutrition Intelligence
                 </span>
               </div>
             </Link>
 
-            {/* 6-step progress bar */}
+            {/* Progress bar */}
             <div className="hidden md:flex flex-col items-center gap-1.5 w-72">
               <div className="flex items-center justify-between w-full">
                 <span className="font-label-md text-label-md text-on-surface font-semibold">
-                  Clinical Evaluation
+                  Personalization
                 </span>
-                <span className="font-label-sm text-label-sm text-on-surface-variant">
-                  Step {currentStep} of 6
+                <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
+                  Step {currentStep} of 9
                 </span>
               </div>
               <div className="w-full h-1.5 bg-surface-container-high rounded-full overflow-hidden flex gap-1">
@@ -80,7 +83,7 @@ export const OnboardingLayout: React.FC = () => {
               <div className="hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-primary">
                 <ShieldCheck className="w-4 h-4 text-primary shrink-0" />
                 <span className="font-label-sm text-label-sm font-semibold tracking-normal text-primary">
-                  Clinical Privacy Verified
+                  Privacy Protected
                 </span>
               </div>
               <Link
@@ -105,9 +108,9 @@ export const OnboardingLayout: React.FC = () => {
         <footer className="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.03)] py-4 mt-auto border-t border-surface-container-low">
           <div className="max-w-[1280px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-3">
             <div className="flex items-center gap-2 text-on-surface-variant">
-              <Lock className="w-4.5 h-4.5 text-primary" />
+              <Lock className="w-4 h-4 text-primary shrink-0" />
               <span className="font-label-sm text-label-sm tracking-wide">
-                256-Bit SSL Encrypted • Clinical Privacy Standard (HIPAA/DISHA Compliant)
+                Encrypted &amp; Private • PoshanCare Personalized Nutrition Standard
               </span>
             </div>
 

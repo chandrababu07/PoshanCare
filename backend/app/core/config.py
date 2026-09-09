@@ -1,5 +1,5 @@
 import json
-from typing import Any, Union
+from typing import Any, Optional, Union
 from pydantic import Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -35,6 +35,10 @@ class Settings(BaseSettings):
     COOKIE_SAMESITE: str = "lax"
     RATE_LIMIT_LOGIN_PER_MINUTE: int = 10
     ENABLE_SECURITY_HEADERS: bool = True
+
+    # Google OAuth 2.0 Settings
+    GOOGLE_CLIENT_ID: Optional[str] = None
+    GOOGLE_CLIENT_SECRET: Optional[str] = None
 
     # CORS Whitelist Origins
     CORS_ORIGINS: Union[str, list[str]] = [

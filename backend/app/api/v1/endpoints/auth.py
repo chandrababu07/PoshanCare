@@ -6,13 +6,16 @@ from app.core.config import settings
 from app.core.errors import PoshanCareException
 from app.db.session import get_db
 from app.models.user import User
+from app.core.google_oauth import verify_google_id_token
 from app.schemas.auth import (
     AuthResponse,
+    GoogleAuthPayload,
     UserLogin,
     UserRegister,
     UserResponse,
 )
 from app.services.auth import (
+    authenticate_or_create_google_user,
     authenticate_user,
     create_user_refresh_session,
     register_new_user,
@@ -191,3 +194,42 @@ async def logout(
 async def get_me(current_user: User = Depends(get_current_user)) -> UserResponse:
     """Return sanitized profile for the currently authenticated user."""
     return UserResponse.model_validate(current_user)
+
+
+@router.post(
+    "/google",
+    response_model=AuthResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Authenticate user via Google OAuth 2.0 ID Token",
+)
+async def google_auth(
+    request: Request,
+    response: Response,
+    payload: GoogleAuthPayload,
+    db: AsyncSession = Depends(get_db),
+) -> AuthResponse:
+    """Verify Google ID token, link/create user account, start refresh session, and set HttpOnly auth cookies."""
+    token_claims = verify_google_id_token(payload.id_token)
+
+    google_sub = token_claims.get("sub")
+    email = token_claims.get("email")
+    full_name = token_claims.get("name") or token_claims.get("given_name") or ""
+
+    user = await authenticate_or_create_google_user(
+        db, google_sub=google_sub, email=email, full_name=full_name
+    )
+
+    user_agent = request.headers.get("user-agent")
+    ip_address = request.client.host if request.client else None
+
+    access_token, refresh_token = await create_user_refresh_session(
+        db, user.id, user_agent, ip_address
+    )
+    set_auth_cookies(response, access_token, refresh_token)
+
+    return AuthResponse(
+        status="success",
+        message="Authenticated with Google successfully.",
+        user=UserResponse.model_validate(user),
+    )
+

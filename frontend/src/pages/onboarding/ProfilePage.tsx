@@ -3,8 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import {
   User,
   Cake,
-  Activity,
-  HeartPulse,
   Info,
   ChevronDown,
   ArrowRight,
@@ -22,19 +20,26 @@ export const ProfilePage: React.FC = () => {
   const navigate = useNavigate();
   const { data, updateData } = useOnboarding();
 
-  const [fullName, setFullName] = useState(data.fullName);
-  const [age, setAge] = useState(data.age);
-  const [biologicalSex, setBiologicalSex] = useState<BiologicalSex>(data.biologicalSex);
+  const [fullName, setFullName] = useState(data.fullName || '');
+  const [dateOfBirth, setDateOfBirth] = useState(data.dateOfBirth || '1992-05-15');
+  const [age, setAge] = useState(data.age || 34);
+  const [biologicalSex, setBiologicalSex] = useState<BiologicalSex>(data.biologicalSex || 'female');
+  const [country, setCountry] = useState(data.country || 'India');
+  const [region, setRegion] = useState(data.region || '');
+  const [preferredLanguage, setPreferredLanguage] = useState<'en' | 'te' | 'hi'>(data.preferredLanguage || 'en');
 
   const [showAccordion, setShowAccordion] = useState(false);
   const [nameError, setNameError] = useState(false);
-  const [ageError, setAgeError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const getCohortText = (numAge: number) => {
-    if (numAge < 18) return 'Adolescent (13–18 yrs)';
-    if (numAge >= 19 && numAge <= 50) return 'Adult (19–50 yrs)';
-    return 'Mature Adult (50+ yrs)';
+  const handleDobChange = (dobStr: string) => {
+    setDateOfBirth(dobStr);
+    if (dobStr) {
+      const birthYear = new Date(dobStr).getFullYear();
+      const currentYear = new Date().getFullYear();
+      const calculatedAge = Math.max(1, currentYear - birthYear);
+      setAge(calculatedAge);
+    }
   };
 
   // Recompute live BMR
@@ -68,31 +73,32 @@ export const ProfilePage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    let hasError = false;
-
     if (!fullName.trim()) {
       setNameError(true);
-      hasError = true;
-    } else {
-      setNameError(false);
+      return;
     }
-
-    if (!age || age < 1 || age > 120) {
-      setAgeError(true);
-      hasError = true;
-    } else {
-      setAgeError(false);
-    }
-
-    if (hasError) return;
+    setNameError(false);
+    if (!age || age < 1 || age > 120) return;
 
     setIsSubmitting(true);
-    updateData({ fullName, age, biologicalSex }, 1);
+    updateData(
+      {
+        fullName,
+        dateOfBirth,
+        age,
+        biologicalSex,
+        country,
+        region,
+        preferredLanguage,
+        currentStep: 3,
+      },
+      3
+    );
 
     setTimeout(() => {
       setIsSubmitting(false);
       navigate('/onboarding/body-metrics');
-    }, 600);
+    }, 500);
   };
 
   return (
@@ -103,35 +109,18 @@ export const ProfilePage: React.FC = () => {
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <span className="px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm tracking-wide uppercase font-semibold">
-                Step 2 of 6
+                Step 2 of 9
               </span>
               <span className="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
-                <Check className="w-3.5 h-3.5 text-surface-tint" /> Baseline Profile Initialization
+                <Check className="w-3.5 h-3.5 text-surface-tint" /> Basic Demographics
               </span>
             </div>
             <h1 className="font-display-lg text-display-lg text-primary tracking-tight font-bold mt-1">
-              Tell us about yourself.
+              Basic Information
             </h1>
             <p className="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
-              We use these details to calibrate biological basal metrics and personalize your
-              metabolic nutrition framework.
+              Tell us a little bit about yourself so PoshanCare can calibrate baseline daily energy targets and language preferences.
             </p>
-          </div>
-
-          {/* Inline Clinical Progress Bar */}
-          <div className="p-4 rounded-xl bg-surface-container-low flex flex-col gap-2 shadow-xs border border-surface-container">
-            <div className="flex items-center justify-between font-label-md text-label-md">
-              <span className="text-primary font-semibold flex items-center gap-1.5">
-                <HeartPulse className="w-4 h-4 text-primary" /> Metabolic Intake Calibration
-              </span>
-              <span className="text-primary font-semibold">33% Completed</span>
-            </div>
-            <div className="w-full h-2 bg-surface-container-highest rounded-full overflow-hidden flex">
-              <div className="h-full w-1/3 bg-primary transition-all duration-500 ease-out rounded-full" />
-            </div>
-            <span className="font-label-sm text-label-sm text-on-surface-variant">
-              Next: Stature, Mass &amp; Anthropometry
-            </span>
           </div>
 
           {/* Primary Form */}
@@ -148,9 +137,6 @@ export const ProfilePage: React.FC = () => {
                 >
                   Full Name <span className="text-error font-body-sm">*</span>
                 </label>
-                <span className="font-label-sm text-label-sm text-on-surface-variant">
-                  Legal or preferred clinical record
-                </span>
               </div>
               <div className="relative flex items-center">
                 <User className="absolute left-3.5 text-outline w-5 h-5 pointer-events-none" />
@@ -163,7 +149,7 @@ export const ProfilePage: React.FC = () => {
                     setFullName(e.target.value);
                     if (nameError) setNameError(false);
                   }}
-                  placeholder="e.g., Dr. Ananya Iyer or Priya Patel"
+                  placeholder="Your full name"
                   className="w-full h-12 pl-11 pr-4 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg border border-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container transition-all placeholder:text-outline/70 focus:bg-surface-container-low"
                 />
               </div>
@@ -174,22 +160,29 @@ export const ProfilePage: React.FC = () => {
               )}
             </div>
 
-            {/* Field 2: Age */}
-            <div className="flex flex-col gap-1">
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="ageInput"
-                  className="font-title-md text-title-md text-on-surface font-semibold flex items-center gap-1.5"
-                >
-                  Age <span className="text-error font-body-sm">*</span>
+            {/* Field 2: Date of Birth & Age */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1">
+                <label htmlFor="dobInput" className="font-title-md text-title-md text-on-surface font-semibold">
+                  Date of Birth
                 </label>
-                <span className="font-label-sm text-label-sm text-on-surface-variant">
-                  Used for endocrine decay &amp; enzyme formulas
-                </span>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
-                <div className="sm:col-span-7 relative flex items-center">
+                <div className="relative flex items-center">
                   <Cake className="absolute left-3.5 text-outline w-5 h-5 pointer-events-none" />
+                  <input
+                    id="dobInput"
+                    type="date"
+                    value={dateOfBirth}
+                    onChange={(e) => handleDobChange(e.target.value)}
+                    className="w-full h-12 pl-11 pr-4 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg border border-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label htmlFor="ageInput" className="font-title-md text-title-md text-on-surface font-semibold">
+                  Age (Years) <span className="text-error font-body-sm">*</span>
+                </label>
+                <div className="relative flex items-center">
                   <input
                     id="ageInput"
                     type="number"
@@ -197,33 +190,77 @@ export const ProfilePage: React.FC = () => {
                     max={120}
                     required
                     value={age}
-                    onChange={(e) => {
-                      setAge(parseInt(e.target.value, 10) || 0);
-                      if (ageError) setAgeError(false);
-                    }}
-                    className="w-full h-12 pl-11 pr-16 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg border border-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container transition-all focus:bg-surface-container-low"
+                    onChange={(e) => setAge(parseInt(e.target.value, 10) || 0)}
+                    className="w-full h-12 px-4 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg border border-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container transition-all"
                   />
-                  <span className="absolute right-3.5 px-2 py-0.5 rounded bg-surface-container-high font-label-sm text-label-sm text-on-surface font-semibold uppercase">
-                    Years
-                  </span>
-                </div>
-                <div className="sm:col-span-5 flex items-center gap-2 p-2.5 rounded-lg bg-surface-container-low border border-surface-container">
-                  <Activity className="w-4.5 h-4.5 text-primary shrink-0" />
-                  <div className="flex flex-col">
-                    <span className="font-label-sm text-label-sm text-on-surface font-semibold">
-                      Cohort Band
-                    </span>
-                    <span className="font-body-sm text-body-sm text-on-surface-variant">
-                      {getCohortText(age)}
-                    </span>
-                  </div>
                 </div>
               </div>
-              {ageError && (
-                <p className="font-body-sm text-body-sm text-error flex items-center gap-1 mt-1">
-                  <AlertCircle className="w-4 h-4" /> Please enter a valid age between 1 and 120.
-                </p>
-              )}
+            </div>
+
+            {/* Field 3: Country & Region */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1">
+                <label htmlFor="countryInput" className="font-title-md text-title-md text-on-surface font-semibold">
+                  Country
+                </label>
+                <select
+                  id="countryInput"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
+                  className="w-full h-12 px-4 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg border border-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container transition-all cursor-pointer"
+                >
+                  <option value="India">🇮🇳 India</option>
+                  <option value="United States">🇺🇸 United States</option>
+                  <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                  <option value="United Arab Emirates">🇦🇪 United Arab Emirates</option>
+                  <option value="Australia">🇦🇺 Australia</option>
+                  <option value="Canada">🇨🇦 Canada</option>
+                  <option value="Singapore">🇸🇬 Singapore</option>
+                  <option value="Other">🌐 Other Country</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label htmlFor="regionInput" className="font-title-md text-title-md text-on-surface font-semibold">
+                  State / Region (Optional)
+                </label>
+                <input
+                  id="regionInput"
+                  type="text"
+                  value={region}
+                  onChange={(e) => setRegion(e.target.value)}
+                  placeholder="e.g. Telangana, Maharashtra, Delhi"
+                  className="w-full h-12 px-4 bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg border border-surface-container-high focus:outline-none focus:ring-2 focus:ring-primary-container transition-all"
+                />
+              </div>
+            </div>
+
+            {/* Field 4: Preferred Language */}
+            <div className="flex flex-col gap-2">
+              <label className="font-title-md text-title-md text-on-surface font-semibold">
+                Preferred Language
+              </label>
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { code: 'en', label: 'English', flag: '🇬🇧' },
+                  { code: 'te', label: 'తెలుగు (Telugu)', flag: '🇮🇳' },
+                  { code: 'hi', label: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+                ].map((lang) => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => setPreferredLanguage(lang.code as any)}
+                    className={`p-3 rounded-xl border text-center transition-all cursor-pointer flex flex-col items-center gap-1 ${
+                      preferredLanguage === lang.code
+                        ? 'border-primary bg-primary-container/10 font-bold text-primary shadow-xs'
+                        : 'border-surface-container-high bg-surface-container-low hover:bg-surface-container-lowest text-on-surface'
+                    }`}
+                  >
+                    <span className="text-xl">{lang.flag}</span>
+                    <span className="font-label-md text-label-md">{lang.label}</span>
+                  </button>
+                ))}
+              </div>
             </div>
 
             {/* Field 3: Biological Sex Selection */}

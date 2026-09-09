@@ -1,13 +1,27 @@
 from datetime import datetime
-from typing import List, Optional
+from typing import Any, Dict, List, Optional
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 
+VALID_PROFILE_TYPES = {"child", "teen", "adult", "older_adult", "family"}
+VALID_LANGUAGES = {"en", "te", "hi"}
+VALID_DIET_TYPES = {"vegetarian", "eggetarian", "non_vegetarian", "vegan", "other"}
 VALID_SEXES = {"female", "male", "unspecified"}
 VALID_UNITS = {"metric", "imperial"}
 VALID_COMPOSITION_INTENTS = {"standard", "custom"}
 VALID_LEAN_MASS_FOCUS = {"none", "lean_gain", "sarcopenia_prevent", "recomp"}
-VALID_GOALS = {"muscle", "maintain", "improve", "fat-loss"}
+VALID_GOALS = {
+    "muscle",
+    "maintain",
+    "improve",
+    "fat-loss",
+    "eat_healthier",
+    "build_strength",
+    "fitness",
+    "wellness",
+    "daily_nutrition",
+    "family_nutrition",
+}
 VALID_PACES = {"gradual", "moderate"}
 VALID_ACTIVITY_LEVELS = {
     "Sedentary",
@@ -15,23 +29,37 @@ VALID_ACTIVITY_LEVELS = {
     "Moderately Active",
     "Very Active",
     "Extremely Active",
+    "Mostly Inactive",
 }
 
 
 class UserProfileUpdate(BaseModel):
     """Schema for progressive partial updates (PATCH) of user profile & onboarding data."""
 
-    onboarding_step: Optional[int] = Field(None, ge=0, le=6)
+    onboarding_step: Optional[int] = Field(None, ge=0, le=11)
 
-    # Identity / Demographic
+    # Identity / Demographic & Persona
+    profile_type: Optional[str] = Field(None)
+    date_of_birth: Optional[str] = Field(None)
+    country: Optional[str] = Field(None)
+    region: Optional[str] = Field(None)
+    preferred_language: Optional[str] = Field(None)
     age: Optional[int] = Field(None, ge=1, le=120)
     biological_sex: Optional[str] = Field(None)
 
+    # Food & Meal Preferences
+    diet_type: Optional[str] = Field(None)
+    food_preferences: Optional[List[str]] = Field(None)
+    food_avoidances: Optional[List[str]] = Field(None)
+    meal_frequency: Optional[str] = Field(None)
+    meal_timings: Optional[Dict[str, Any]] = Field(None)
+    health_conditions: Optional[List[str]] = Field(None)
+
     # Body Metrics
     unit_system: Optional[str] = Field(None)
-    height_cm: Optional[float] = Field(None, ge=50.0, le=250.0)
-    weight_kg: Optional[float] = Field(None, ge=20.0, le=300.0)
-    target_mass_kg: Optional[float] = Field(None, ge=20.0, le=300.0)
+    height_cm: Optional[float] = Field(None, ge=30.0, le=250.0)
+    weight_kg: Optional[float] = Field(None, ge=5.0, le=300.0)
+    target_mass_kg: Optional[float] = Field(None, ge=5.0, le=300.0)
     composition_intent: Optional[str] = Field(None)
     lean_mass_focus: Optional[str] = Field(None)
 
@@ -44,6 +72,30 @@ class UserProfileUpdate(BaseModel):
     routines: Optional[List[str]] = Field(None)
     training_frequency: Optional[str] = Field(None)
     daily_steps: Optional[int] = Field(None, ge=0, le=100000)
+
+    @field_validator("profile_type")
+    @classmethod
+    def validate_profile_type(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None and v not in VALID_PROFILE_TYPES:
+            allowed = ", ".join(sorted(VALID_PROFILE_TYPES))
+            raise ValueError(f"Invalid profile type. Allowed values: {allowed}")
+        return v
+
+    @field_validator("preferred_language")
+    @classmethod
+    def validate_language(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None and v not in VALID_LANGUAGES:
+            allowed = ", ".join(sorted(VALID_LANGUAGES))
+            raise ValueError(f"Invalid preferred language. Allowed values: {allowed}")
+        return v
+
+    @field_validator("diet_type")
+    @classmethod
+    def validate_diet(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None and v not in VALID_DIET_TYPES:
+            allowed = ", ".join(sorted(VALID_DIET_TYPES))
+            raise ValueError(f"Invalid diet type. Allowed values: {allowed}")
+        return v
 
     @field_validator("biological_sex")
     @classmethod
@@ -112,9 +164,22 @@ class UserProfileResponse(BaseModel):
     onboarding_step: int
     onboarding_completed: bool
 
-    # Identity
+    # Persona & Demographics
+    profile_type: Optional[str] = "adult"
+    date_of_birth: Optional[str] = None
+    country: Optional[str] = "India"
+    region: Optional[str] = None
+    preferred_language: Optional[str] = "en"
     age: Optional[int] = None
     biological_sex: Optional[str] = "female"
+
+    # Food & Meal Preferences
+    diet_type: Optional[str] = "vegetarian"
+    food_preferences: Optional[List[str]] = None
+    food_avoidances: Optional[List[str]] = None
+    meal_frequency: Optional[str] = None
+    meal_timings: Optional[Dict[str, Any]] = None
+    health_conditions: Optional[List[str]] = None
 
     # Body Metrics (Canonical Metric Units)
     unit_system: Optional[str] = "metric"
@@ -146,3 +211,4 @@ class OnboardingStatusResponse(BaseModel):
     onboarding_step: int
     next_step: str
     is_ready_to_complete: bool
+

@@ -166,7 +166,7 @@ async def test_full_onboarding_completion_success(client: AsyncClient):
     assert complete_res.status_code == 200
     data = complete_res.json()
     assert data["onboarding_completed"] is True
-    assert data["onboarding_step"] == 6
+    assert data["onboarding_step"] == 11
 
     # Verify status endpoint returns completed & /app route
     status_res = await client.get("/api/v1/profile/onboarding/status", cookies=cookies)
