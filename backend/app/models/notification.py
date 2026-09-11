@@ -23,7 +23,7 @@ class HealthNotification(Base):
     # Notification Classification
     notification_type: Mapped[str] = mapped_column(
         String(50), index=True, nullable=False
-    )  # 'hydration' | 'nutrition' | 'activity' | 'goal' | 'meal_plan' | 'consistency' | 'weight' | 'system'
+    )  # 'hydration' | 'nutrition' | 'activity' | 'goal' | 'meal_plan' | 'consistency' | 'weight' | 'weekly_summary' | 'system'
     severity: Mapped[str] = mapped_column(
         String(20), default="info", nullable=False
     )  # 'info' | 'low' | 'medium' | 'high'
@@ -57,3 +57,42 @@ class HealthNotification(Base):
 
     # Relationships
     user: Mapped["User"] = relationship("User", back_populates="notifications")
+
+
+class NotificationPreference(Base):
+    """User notification & reminder preferences settings model."""
+
+    __tablename__ = "notification_preferences"
+
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="CASCADE"),
+        unique=True,
+        index=True,
+        nullable=False,
+    )
+
+    meal_reminders_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    meal_reminder_time: Mapped[str] = mapped_column(String(5), default="12:00", nullable=False)
+    hydration_reminders_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    hydration_reminder_frequency_hours: Mapped[int] = mapped_column(Integer, default=3, nullable=False)
+    activity_reminders_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    weight_reminders_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    goal_updates_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    weekly_summary_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    insights_enabled: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
+
+    # Relationship
+    user: Mapped["User"] = relationship("User")
