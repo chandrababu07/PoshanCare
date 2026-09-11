@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from app.api.v1.endpoints import (
+    account,
     activity,
     analytics,
     auth,
@@ -21,6 +22,7 @@ from app.api.v1.endpoints import (
 api_v1_router = APIRouter(prefix="/v1")
 api_v1_router.include_router(health.router)
 api_v1_router.include_router(auth.router)
+api_v1_router.include_router(account.router)
 api_v1_router.include_router(profile.router)
 api_v1_router.include_router(foods.router)
 api_v1_router.include_router(diary.router)

@@ -7,15 +7,19 @@ from app.models.user import User
 from app.schemas.notification import (
     NotificationGenerateResponse,
     NotificationListResponse,
+    NotificationPreferenceResponse,
+    NotificationPreferenceUpdate,
     NotificationResponse,
     UnreadCountResponse,
 )
 from app.services.notifications import (
     generate_user_notifications,
     get_unread_count,
+    get_user_notification_preferences,
     get_user_notifications,
     mark_all_as_read,
     mark_as_read,
+    update_user_notification_preferences,
 )
 
 router = APIRouter()
@@ -55,12 +59,41 @@ async def fetch_unread_count(
     return UnreadCountResponse(count=count)
 
 
+@router.get("/preferences", response_model=NotificationPreferenceResponse)
+async def get_preferences(
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Returns the notification and reminder preferences for the authenticated user."""
+    prefs = await get_user_notification_preferences(db, user_id=current_user.id)
+    return NotificationPreferenceResponse.model_validate(prefs)
+
+
+@router.put("/preferences", response_model=NotificationPreferenceResponse)
+async def update_preferences(
+    payload: NotificationPreferenceUpdate,
+    current_user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """Updates notification and reminder preferences for the authenticated user."""
+    updated_prefs = await update_user_notification_preferences(
+        db, user_id=current_user.id, update_data=payload.model_dump(exclude_unset=True)
+    )
+    return NotificationPreferenceResponse.model_validate(updated_prefs)
+
+
+from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from app.core.config import settings
+from app.core.rate_limiter import enforce_rate_limit
+
 @router.post("/generate", response_model=NotificationGenerateResponse)
 async def generate_notifications(
+    request: Request,
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
     """Triggers telemetry evaluation and generates any new meaningful health notifications for the user."""
+    enforce_rate_limit(request, limit=settings.RATE_LIMIT_GENERATE_PER_MINUTE, prefix="notif_gen")
     new_notifs = await generate_user_notifications(db, user_id=current_user.id)
     return NotificationGenerateResponse(
         generated_count=len(new_notifs),

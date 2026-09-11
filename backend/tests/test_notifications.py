@@ -414,3 +414,97 @@ async def test_notification_limit_parameter(client: AsyncClient, db_session: Asy
     assert res.status_code == 200
     assert len(res.json()["items"]) == 3
 
+
+@pytest.mark.asyncio
+async def test_notification_preferences_crud_and_isolation(client: AsyncClient, db_session: AsyncSession):
+    """Verify notification preference GET/PUT operations and user isolation."""
+    cookies_a = await register_and_login(client, "pref_a@example.com", "User Pref A")
+    cookies_b = await register_and_login(client, "pref_b@example.com", "User Pref B")
+
+    # Get default preferences for User A
+    res_a = await client.get("/api/v1/notifications/preferences", cookies=cookies_a)
+    assert res_a.status_code == 200
+    prefs_a = res_a.json()
+    assert prefs_a["meal_reminders_enabled"] is True
+
+    # Disable hydration reminders for User A
+    update_res = await client.put(
+        "/api/v1/notifications/preferences",
+        json={"hydration_reminders_enabled": False},
+        cookies=cookies_a,
+    )
+    assert update_res.status_code == 200
+    assert update_res.json()["hydration_reminders_enabled"] is False
+
+    # Verify User B preferences remain default (True) -> User isolation
+    res_b = await client.get("/api/v1/notifications/preferences", cookies=cookies_b)
+    assert res_b.status_code == 200
+    assert res_b.json()["hydration_reminders_enabled"] is True
+
+
+@pytest.mark.asyncio
+async def test_disabled_reminder_preferences_respected(client: AsyncClient, db_session: AsyncSession):
+    """Verify disabled notification preference categories prevent notification generation."""
+    cookies = await register_and_login(client, "disabled_pref@example.com")
+    res_user = await db_session.execute(select(User).where(User.email == "disabled_pref@example.com"))
+    user = res_user.scalar_one()
+
+    # Disable hydration reminders
+    await client.put(
+        "/api/v1/notifications/preferences",
+        json={"hydration_reminders_enabled": False},
+        cookies=cookies,
+    )
+
+    # Log partial hydration (which would normally trigger hydration reminder)
+    wlog = WaterLog(user_id=user.id, date=datetime.now(timezone.utc), amount_ml=500)
+    db_session.add(wlog)
+    await db_session.commit()
+
+    # Generate notifications
+    gen_res = await client.post("/api/v1/notifications/generate", cookies=cookies)
+    assert gen_res.status_code == 200
+    notifs = gen_res.json()["notifications"]
+
+    # Verify 0 hydration notifications are generated
+    assert not any(n["notification_type"] == "hydration" for n in notifs)
+
+
+@pytest.mark.asyncio
+async def test_weekly_summary_generation_real_telemetry(client: AsyncClient, db_session: AsyncSession):
+    """Verify weekly summary notification uses real 7-day telemetry."""
+    cookies = await register_and_login(client, "weekly_sum@example.com")
+    res_user = await db_session.execute(select(User).where(User.email == "weekly_sum@example.com"))
+    user = res_user.scalar_one()
+
+    # Log water for today
+    wlog = WaterLog(user_id=user.id, date=datetime.now(timezone.utc), amount_ml=2000)
+    db_session.add(wlog)
+    await db_session.commit()
+
+    gen_res = await client.post("/api/v1/notifications/generate", cookies=cookies)
+    assert gen_res.status_code == 200
+
+    list_res = await client.get("/api/v1/notifications?notification_type=weekly_summary", cookies=cookies)
+    assert list_res.status_code == 200
+    items = list_res.json()["items"]
+    assert len(items) >= 1
+    summary_item = items[0]
+    assert "Weekly Health Summary" in summary_item["title"]
+    assert "hydration on 1/7 days" in summary_item["message"]
+
+
+@pytest.mark.asyncio
+async def test_no_secrets_in_notifications(client: AsyncClient, db_session: AsyncSession):
+    """Verify notification payloads contain no passwords, hashes, tokens, or security secrets."""
+    cookies = await register_and_login(client, "sec_notif@example.com")
+    gen_res = await client.post("/api/v1/notifications/generate", cookies=cookies)
+    assert gen_res.status_code == 200
+
+    raw_text = gen_res.text.lower()
+    assert "password" not in raw_text
+    assert "password123!" not in raw_text
+    assert "secret" not in raw_text
+    assert "jwt" not in raw_text
+
+
