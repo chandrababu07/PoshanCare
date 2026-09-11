@@ -34,6 +34,8 @@ class Settings(BaseSettings):
     COOKIE_SECURE: bool = False  # False for HTTP localhost development; True in Production HTTPS
     COOKIE_SAMESITE: str = "lax"
     RATE_LIMIT_LOGIN_PER_MINUTE: int = 10
+    RATE_LIMIT_GENERATE_PER_MINUTE: int = 5
+    RATE_LIMIT_ACCOUNT_PER_MINUTE: int = 5
     ENABLE_SECURITY_HEADERS: bool = True
 
     # Google OAuth 2.0 Settings
@@ -81,6 +83,11 @@ class Settings(BaseSettings):
             if not self.DATABASE_URL or "sqlite" in self.DATABASE_URL.lower():
                 raise ValueError(
                     "Production configuration error: DATABASE_URL must be set to a production-grade database (e.g. PostgreSQL) and cannot use SQLite when ENVIRONMENT=production."
+                )
+            origins = self.CORS_ORIGINS if isinstance(self.CORS_ORIGINS, list) else [self.CORS_ORIGINS]
+            if "*" in origins:
+                raise ValueError(
+                    "Production configuration error: Wildcard '*' CORS origin is not permitted when credentials are enabled in production."
                 )
 
 

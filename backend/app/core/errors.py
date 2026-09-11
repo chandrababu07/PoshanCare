@@ -23,6 +23,11 @@ class PoshanCareException(Exception):
         super().__init__(message)
 
 
+def get_req_id(request: Request) -> str:
+    """Helper to safely extract request ID from request state."""
+    return getattr(request.state, "request_id", "unknown")
+
+
 def register_exception_handlers(app: FastAPI) -> None:
     """Register global exception handlers on FastAPI application instance."""
 
@@ -30,17 +35,20 @@ def register_exception_handlers(app: FastAPI) -> None:
     async def custom_exception_handler(
         request: Request, exc: PoshanCareException
     ) -> JSONResponse:
+        req_id = get_req_id(request)
         logger.warning(
-            f"Custom exception [{exc.code}] path={request.url.path}: {exc.message}"
+            f"Custom exception [{exc.code}] req_id={req_id} path={request.url.path}: {exc.message}"
         )
         return JSONResponse(
             status_code=exc.status_code,
+            headers={"X-Request-ID": req_id},
             content={
                 "status": "error",
                 "error": {
                     "code": exc.code,
                     "message": exc.message,
                     "details": exc.details,
+                    "request_id": req_id,
                 },
             },
         )
@@ -49,17 +57,20 @@ def register_exception_handlers(app: FastAPI) -> None:
     async def http_exception_handler(
         request: Request, exc: HTTPException
     ) -> JSONResponse:
+        req_id = get_req_id(request)
         logger.warning(
-            f"HTTP exception [{exc.status_code}] path={request.url.path}: {exc.detail}"
+            f"HTTP exception [{exc.status_code}] req_id={req_id} path={request.url.path}: {exc.detail}"
         )
         return JSONResponse(
             status_code=exc.status_code,
+            headers={"X-Request-ID": req_id},
             content={
                 "status": "error",
                 "error": {
                     "code": f"HTTP_{exc.status_code}",
                     "message": str(exc.detail),
                     "details": None,
+                    "request_id": req_id,
                 },
             },
         )
@@ -68,8 +79,9 @@ def register_exception_handlers(app: FastAPI) -> None:
     async def validation_exception_handler(
         request: Request, exc: RequestValidationError
     ) -> JSONResponse:
+        req_id = get_req_id(request)
         logger.warning(
-            f"Validation error path={request.url.path}: {exc.errors()}"
+            f"Validation error req_id={req_id} path={request.url.path}: {exc.errors()}"
         )
         clean_errors = []
         for err in exc.errors():
@@ -80,13 +92,15 @@ def register_exception_handlers(app: FastAPI) -> None:
             })
 
         return JSONResponse(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
+            headers={"X-Request-ID": req_id},
             content={
                 "status": "error",
                 "error": {
                     "code": "VALIDATION_ERROR",
                     "message": "Invalid request payload or query parameters.",
                     "details": clean_errors,
+                    "request_id": req_id,
                 },
             },
         )
@@ -95,8 +109,9 @@ def register_exception_handlers(app: FastAPI) -> None:
     async def unhandled_exception_handler(
         request: Request, exc: Exception
     ) -> JSONResponse:
+        req_id = get_req_id(request)
         logger.error(
-            f"Unhandled exception path={request.url.path}: {str(exc)}",
+            f"Unhandled exception req_id={req_id} path={request.url.path}: {str(exc)}",
             exc_info=True,
         )
         message = (
@@ -106,12 +121,14 @@ def register_exception_handlers(app: FastAPI) -> None:
         )
         return JSONResponse(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            headers={"X-Request-ID": req_id},
             content={
                 "status": "error",
                 "error": {
                     "code": "INTERNAL_SERVER_ERROR",
                     "message": message,
                     "details": None,
+                    "request_id": req_id,
                 },
             },
         )

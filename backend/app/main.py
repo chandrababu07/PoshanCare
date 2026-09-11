@@ -67,6 +67,24 @@ if settings.CORS_ORIGINS:
     )
 
 
+import uuid
+
+# Configure Request Correlation ID Middleware
+@app.middleware("http")
+async def add_request_id_header(request, call_next):
+    """Attach unique X-Request-ID to request state and response headers."""
+    client_req_id = request.headers.get("x-request-id")
+    if client_req_id and len(client_req_id) <= 64:
+        request_id = client_req_id
+    else:
+        request_id = str(uuid.uuid4())
+
+    request.state.request_id = request_id
+    response = await call_next(request)
+    response.headers["X-Request-ID"] = request_id
+    return response
+
+
 # Configure Security Headers Middleware
 @app.middleware("http")
 async def add_security_headers(request, call_next):
@@ -78,6 +96,14 @@ async def add_security_headers(request, call_next):
         response.headers["X-XSS-Protection"] = "1; mode=block"
         response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
         response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
+        response.headers["Content-Security-Policy"] = (
+            "default-src 'self'; "
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval'; "
+            "style-src 'self' 'unsafe-inline'; "
+            "img-src 'self' data: https:; "
+            "font-src 'self' data:; "
+            "connect-src 'self' http: https:;"
+        )
         response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
     return response
 
