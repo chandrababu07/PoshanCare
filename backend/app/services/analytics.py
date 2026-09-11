@@ -46,7 +46,7 @@ def parse_period(period: str) -> int:
     }
     if p_clean not in mapping:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=f"Invalid period parameter '{period}'. Supported periods: 7d, 14d, 30d, 90d, 6m, 1y.",
         )
     return mapping[p_clean]

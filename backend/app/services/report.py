@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta, timezone
-import random
+import secrets
 from typing import List, Optional
 from fastapi import HTTPException, status
 from sqlalchemy import select
@@ -199,7 +199,7 @@ async def generate_clinical_report_service(
         attach_letterhead=request.attach_letterhead,
     )
 
-    doc_id = f"#PC-{datetime.now(timezone.utc).year}-{current_user.id:04d}-{random.randint(1000, 9999)}"
+    doc_id = f"#PC-{datetime.now(timezone.utc).year}-{current_user.id:04d}-{1000 + secrets.randbelow(9000)}"
 
     report_record = ClinicalReport(
         user_id=current_user.id,
