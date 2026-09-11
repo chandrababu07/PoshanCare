@@ -51,6 +51,7 @@ async def get_nutrition_summary(
 @router.get("/intelligence", response_model=NutritionIntelligenceResponse, status_code=status.HTTP_200_OK)
 async def get_nutrition_intelligence(
     date: Optional[str] = Query(None, description="Target date YYYY-MM-DD (defaults to today)"),
+    period: Optional[str] = Query("7d", description="Aggregation period: today, 7d, 14d, 30d"),
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
@@ -60,7 +61,9 @@ async def get_nutrition_intelligence(
     if not date:
         date = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    return await get_nutrition_intelligence_service(db=db, current_user=current_user, date_str=date)
+    return await get_nutrition_intelligence_service(
+        db=db, current_user=current_user, date_str=date, period_str=period or "7d"
+    )
 
 
 @router.post("/calculate", response_model=NutritionTargetsResponse, status_code=status.HTTP_200_OK)
