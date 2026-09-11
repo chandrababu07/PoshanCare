@@ -44,6 +44,7 @@ class UserProfileUpdate(BaseModel):
     country: Optional[str] = Field(None)
     region: Optional[str] = Field(None)
     preferred_language: Optional[str] = Field(None)
+    timezone: Optional[str] = Field(None)
     age: Optional[int] = Field(None, ge=1, le=120)
     biological_sex: Optional[str] = Field(None)
 
@@ -87,6 +88,16 @@ class UserProfileUpdate(BaseModel):
         if v is not None and v not in VALID_LANGUAGES:
             allowed = ", ".join(sorted(VALID_LANGUAGES))
             raise ValueError(f"Invalid preferred language. Allowed values: {allowed}")
+        return v
+
+    @field_validator("timezone")
+    @classmethod
+    def validate_timezone(cls, v: Optional[str]) -> Optional[str]:
+        if v is not None:
+            v_clean = v.strip()
+            if not v_clean or len(v_clean) > 50:
+                raise ValueError("Invalid timezone string.")
+            return v_clean
         return v
 
     @field_validator("diet_type")
@@ -170,6 +181,7 @@ class UserProfileResponse(BaseModel):
     country: Optional[str] = "India"
     region: Optional[str] = None
     preferred_language: Optional[str] = "en"
+    timezone: Optional[str] = "Asia/Kolkata"
     age: Optional[int] = None
     biological_sex: Optional[str] = "female"
 

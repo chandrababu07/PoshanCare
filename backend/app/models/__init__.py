@@ -13,7 +13,7 @@ from app.models.hydration import WaterLog
 from app.models.activity import ActivityLog
 from app.models.meal_plan import MealPlan, MealPlanItem
 from app.models.goal import HealthGoal
-from app.models.notification import HealthNotification
+from app.models.notification import HealthNotification, NotificationPreference
 
 __all__ = [
     "Base",
@@ -36,4 +36,5 @@ __all__ = [
     "MealPlanItem",
     "HealthGoal",
     "HealthNotification",
+    "NotificationPreference",
 ]

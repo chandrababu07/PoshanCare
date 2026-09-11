@@ -39,6 +39,9 @@ class UserProfile(Base):
     preferred_language: Mapped[Optional[str]] = mapped_column(
         String(20), default="en", nullable=True
     )  # 'en' | 'te' | 'hi'
+    timezone: Mapped[Optional[str]] = mapped_column(
+        String(50), default="Asia/Kolkata", nullable=True
+    )
     age: Mapped[Optional[int]] = mapped_column(Integer, nullable=True)
     biological_sex: Mapped[Optional[str]] = mapped_column(
         String(20), default="female", nullable=True
