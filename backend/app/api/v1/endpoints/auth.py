@@ -66,6 +66,8 @@ def clear_auth_cookies(response: Response) -> None:
     )
 
 
+from app.core.rate_limiter import enforce_rate_limit
+
 @router.post(
     "/register",
     response_model=AuthResponse,
@@ -79,6 +81,7 @@ async def register(
     db: AsyncSession = Depends(get_db),
 ) -> AuthResponse:
     """Register a new PoshanCare user, initialize session, and set HttpOnly auth cookies."""
+    enforce_rate_limit(request, limit=settings.RATE_LIMIT_LOGIN_PER_MINUTE, prefix="register")
     user = await register_new_user(db, user_in)
     user_agent = request.headers.get("user-agent")
     ip_address = request.client.host if request.client else None
@@ -108,6 +111,7 @@ async def login(
     db: AsyncSession = Depends(get_db),
 ) -> AuthResponse:
     """Authenticate user credentials, start a refresh session, and issue HttpOnly auth cookies."""
+    enforce_rate_limit(request, limit=settings.RATE_LIMIT_LOGIN_PER_MINUTE, prefix="login")
     user = await authenticate_user(db, credentials.email, credentials.password)
     if not user:
         raise PoshanCareException(
@@ -209,6 +213,7 @@ async def google_auth(
     db: AsyncSession = Depends(get_db),
 ) -> AuthResponse:
     """Verify Google ID token, link/create user account, start refresh session, and set HttpOnly auth cookies."""
+    enforce_rate_limit(request, limit=settings.RATE_LIMIT_LOGIN_PER_MINUTE, prefix="google_auth")
     token_claims = verify_google_id_token(payload.id_token)
 
     google_sub = token_claims.get("sub")

@@ -29,6 +29,12 @@ async def get_health_status() -> HealthResponse:
 
 
 @router.get(
+    "/ready",
+    response_model=DatabaseHealthResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Get Application Readiness Status",
+)
+@router.get(
     "/db",
     response_model=DatabaseHealthResponse,
     status_code=status.HTTP_200_OK,
@@ -39,7 +45,6 @@ async def get_database_health(
 ) -> DatabaseHealthResponse:
     """Perform a database query check to verify connection and session pool health."""
     try:
-        # Query total count of health records
         result = await db.execute(select(func.count()).select_from(HealthCheckRecord))
         count = result.scalar_one_or_none() or 0
 
@@ -52,9 +57,9 @@ async def get_database_health(
             record_count=count,
             timestamp=datetime.now(timezone.utc),
         )
-    except Exception as err:
+    except Exception:
         raise PoshanCareException(
-            message=f"Database connectivity health check failed: {str(err)}",
+            message="Database connection health check failed.",
             code="DATABASE_UNAVAILABLE",
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
         )
