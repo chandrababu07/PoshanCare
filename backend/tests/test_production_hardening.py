@@ -54,8 +54,8 @@ async def test_validate_production_config_fail_fast():
     with pytest.raises(ValueError, match="cannot use SQLite"):
         settings.validate_production_config()
 
-    # Restore development environment settings
-    settings.ENVIRONMENT = "development"
+    # Restore test environment settings
+    settings.ENVIRONMENT = "test"
     settings.SECRET_KEY = "poshancare_dev_secret_key_change_in_production_min_32_chars"
     settings.DATABASE_URL = "sqlite+aiosqlite:///./poshancare.db"
 
