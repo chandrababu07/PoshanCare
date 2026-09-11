@@ -19,7 +19,7 @@ def parse_date_string(date_str: str) -> datetime:
         return dt.replace(tzinfo=timezone.utc)
     except ValueError:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=f"Invalid date format '{date_str}'. Expected format YYYY-MM-DD.",
         )
 
@@ -75,7 +75,7 @@ async def add_water_log_service(
     """Add a new water intake increment log record."""
     if request.amount_ml <= 0:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="Hydration intake amount must be greater than 0 ml.",
         )
 

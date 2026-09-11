@@ -57,7 +57,7 @@ def parse_date_string(date_str: str) -> datetime:
         return dt.replace(tzinfo=timezone.utc)
     except ValueError:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=f"Invalid date format '{date_str}'. Expected format YYYY-MM-DD.",
         )
 

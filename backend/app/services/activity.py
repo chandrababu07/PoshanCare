@@ -20,7 +20,7 @@ def parse_date_string(date_str: str) -> datetime:
         return dt.replace(tzinfo=timezone.utc)
     except ValueError:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=f"Invalid date format '{date_str}'. Expected format YYYY-MM-DD.",
         )
 
@@ -30,7 +30,7 @@ def parse_period_days(period: str) -> int:
     p_clean = (period or "30d").lower().strip()
     if p_clean not in mapping:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail=f"Invalid period '{period}'. Allowed: 7d, 14d, 30d, 90d, 6m, 1y.",
         )
     return mapping[p_clean]
@@ -87,17 +87,17 @@ async def upsert_activity_log_service(
     """Create or update daily activity log record with validation."""
     if request.steps is not None and request.steps < 0:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="Step count cannot be negative.",
         )
     if request.active_minutes is not None and request.active_minutes < 0:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="Active minutes cannot be negative.",
         )
     if request.exercise_minutes is not None and request.exercise_minutes < 0:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            status_code=status.HTTP_422_UNPROCESSABLE_CONTENT,
             detail="Exercise minutes cannot be negative.",
         )
 
