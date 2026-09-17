@@ -1,3 +1,6 @@
+import os
+os.environ["ENVIRONMENT"] = "test"
+
 import asyncio
 from typing import AsyncGenerator
 import pytest
@@ -7,8 +10,9 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sess
 
 from app.db.base import Base
 from app.db.session import get_db
-from app.main import app
+from app.core.config import settings
 from app.models.health import HealthCheckRecord
+from app.main import app
 
 # In-memory SQLite database engine for testing
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"

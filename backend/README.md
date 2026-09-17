@@ -81,11 +81,39 @@ Interactive OpenAPI documentation is available at:
 
 ---
 
-## 📡 API Endpoints
+## 📡 API Health & Readiness Probes
 
-- `GET /` — Root metadata
-- `GET /api/v1/health` — Application health check
-- `GET /api/v1/health/db` — Database connectivity & readiness check
+- `GET /` — Root service metadata
+- `GET /api/v1/health` — **Liveness Probe**: Process status, environment, version, and server timestamp.
+- `GET /api/v1/ready` / `GET /api/v1/health/db` — **Readiness Probe**: Database connectivity, query latency, and record count checks. Returns `HTTP 200 OK` on health, or sanitized `HTTP 503 Service Unavailable` on database failure.
+
+---
+
+## 🔒 Security Architecture & Hardening
+
+1. **HttpOnly Cookie Authentication**:
+   - `access_token` and `refresh_token` stored in HttpOnly, SameSite=Lax (or Strict), Secure cookies.
+   - Prevents XSS token theft and client script tampering.
+2. **Strict Dynamic Authorization (IDOR Protection)**:
+   - Resource access queries filter dynamically using `current_user.id`.
+   - Access attempts to records owned by other users return `HTTP 403 Forbidden` or `HTTP 404 Not Found`.
+3. **Sliding-Window Rate Limiting**:
+   - High-rate and authentication endpoints (`/auth/login`, `/auth/register`, `/auth/google`, `/notifications/generate`, `/account/export`, `DELETE /account`) enforce IP-based rate limiting to mitigate brute-force and credential stuffing attacks.
+4. **Request Correlation (`X-Request-ID`) & Error Sanitization**:
+   - Middleware attaches UUID `X-Request-ID` to all incoming requests and outgoing responses.
+   - Structured error handlers return sanitized JSON without exposing internal stack traces or database schema details in production.
+5. **Security Headers**:
+   - Applies CSP, HSTS, X-Frame-Options, X-Content-Type-Options, and Referrer-Policy.
+
+---
+
+## 🧪 Security Regression Matrix
+
+Run automated security tests:
+```bash
+pytest tests/test_security_regression.py
+```
+Validates 18 security controls across unauthenticated access rejection, cross-user isolation, IDOR prevention, token validation, and account deletion session revocation.
 
 ---
 
