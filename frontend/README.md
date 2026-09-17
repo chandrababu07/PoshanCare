@@ -63,7 +63,34 @@ frontend/
    npm run lint
    ```
 
+## 🔒 Security & Resilience Architecture
+
+1. **Global Error Boundary (`ErrorBoundary.tsx`)**:
+   - Top-level React error boundary wraps router and context providers.
+   - Prevents unhandled rendering exceptions from crashing the entire app into a blank page, providing a branded fallback screen with safe recovery options.
+
+2. **HttpOnly Cookie Authorization (`credentials: 'include'`)**:
+   - API calls use `credentials: 'include'` to automatically transmit HttpOnly session cookies without exposing tokens to `localStorage` or client JS.
+
+3. **Sanitized Error Handling**:
+   - API service layer parses structured backend error responses (`code`, `message`, `correlation_id`) while masking unhandled server exceptions from end users.
+
+## 🧪 Verification & Type Safety
+
+Run frontend quality checks:
+```bash
+# Run TypeScript compiler type checking
+npm run typecheck
+
+# Run ESLint check
+npm run lint
+
+# Production build validation
+npm run build
+```
+
 ## UI/UX Reference
 
 > **Note**: The `frontend/UI_UX/` directory contains the complete Google Stitch HTML designs (`authentication/`, `landing/`, `main_application/`, `onboarding/`, `shared/`).
 > This directory serves as the **visual source of truth** for PoshanCare and must remain untouched as reference material for UI implementation in Phase 2.
+
