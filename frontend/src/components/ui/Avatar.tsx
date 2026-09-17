@@ -16,11 +16,14 @@ export const Avatar: React.FC<AvatarProps> = ({
   className = '',
 }) => {
   const getInitials = (n: string) => {
-    const parts = n.trim().split(' ');
+    const parts = n.trim().split(/\s+/).filter(Boolean);
     if (parts.length >= 2) {
       return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
     }
-    return n.slice(0, 2).toUpperCase();
+    if (parts.length === 1 && parts[0]) {
+      return parts[0].slice(0, 2).toUpperCase();
+    }
+    return 'U';
   };
 
   const sizeStyles = {

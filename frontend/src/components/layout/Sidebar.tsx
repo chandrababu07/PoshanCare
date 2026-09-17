@@ -11,25 +11,34 @@ import {
   BookOpen,
   FileText,
   Sparkles,
+  Target,
+  Lightbulb,
+  ShieldCheck,
 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Sidebar: React.FC = () => {
   const location = useLocation();
+  const { t } = useTranslation('navigation');
 
   const navItems = [
-    { title: 'Dashboard', path: '/app', icon: LayoutDashboard },
-    { title: 'Food Diary', path: '/app/diary', icon: Calendar },
-    { title: 'Food Database', path: '/app/foods', icon: Utensils },
-    { title: 'Calculator', path: '/app/calculator', icon: Calculator },
-    { title: 'Nutrition Breakdown', path: '/app/nutrition', icon: PieChart },
-    { title: 'Weight Tracking', path: '/app/weight', icon: Scale },
-    { title: 'Activity Telemetry', path: '/app/activity', icon: Activity },
-    { title: 'Custom Recipes', path: '/app/recipes', icon: BookOpen },
-    { title: 'Reports & Analytics', path: '/app/reports', icon: FileText },
+    { key: 'dashboard', path: '/app', icon: LayoutDashboard },
+    { key: 'diary', path: '/app/diary', icon: Calendar },
+    { key: 'goals', path: '/app/goals', icon: Target },
+    { key: 'insights', path: '/app/health-insights', icon: Lightbulb },
+    { key: 'meal_plan', path: '/app/meal-plan', icon: Sparkles },
+    { key: 'foods', path: '/app/foods', icon: Utensils },
+    { key: 'calculator', path: '/app/calculator', icon: Calculator },
+    { key: 'nutrition', path: '/app/nutrition', icon: PieChart },
+    { key: 'weight', path: '/app/weight', icon: Scale },
+    { key: 'activity', path: '/app/activity', icon: Activity },
+    { key: 'recipes', path: '/app/recipes', icon: BookOpen },
+    { key: 'reports', path: '/app/reports', icon: FileText },
+    { key: 'privacy_data', path: '/app/privacy-data', icon: ShieldCheck },
   ];
 
   return (
-    <aside className="w-72 bg-surface-container-lowest border-r border-surface-container-low flex flex-col justify-between h-screen sticky top-0 shrink-0 hidden lg:flex">
+    <aside className="w-72 bg-surface-container-lowest border-r border-surface-container-low flex flex-col h-screen sticky top-0 shrink-0 hidden lg:flex overflow-y-auto">
       <div>
         {/* Brand Header */}
         <div className="p-6 border-b border-surface-container-low flex items-center gap-3">
@@ -38,18 +47,18 @@ export const Sidebar: React.FC = () => {
           </div>
           <div className="flex flex-col">
             <Link to="/app" className="font-headline-sm text-headline-sm text-primary tracking-tight leading-none">
-              PoshanCare
+              {t('brand_title', 'PoshanCare')}
             </Link>
             <span className="font-label-sm text-label-sm text-outline uppercase tracking-wider mt-1">
-              Clinical Intelligence
+              {t('brand_subtitle', 'Clinical Intelligence')}
             </span>
           </div>
         </div>
 
         {/* Navigation Items */}
-        <nav className="p-4 space-y-1">
+        <nav className="p-4 space-y-1" aria-label="Main Navigation">
           <p className="px-3 text-label-sm text-outline uppercase tracking-wider mb-2 font-semibold">
-            Clinical Modules
+            {t('clinical_modules', 'Clinical Modules')}
           </p>
           {navItems.map((item) => {
             const Icon = item.icon;
@@ -65,22 +74,11 @@ export const Sidebar: React.FC = () => {
                 }`}
               >
                 <Icon className={`w-5 h-5 shrink-0 ${isActive ? 'text-primary-fixed' : 'text-outline'}`} />
-                <span>{item.title}</span>
+                <span>{t(item.key)}</span>
               </Link>
             );
           })}
         </nav>
-      </div>
-
-      {/* Footer info badge */}
-      <div className="p-4 border-t border-surface-container-low m-4 bg-surface-container-low rounded-xl">
-        <div className="flex items-center gap-2 text-primary font-label-sm text-label-sm font-semibold">
-          <span className="w-2 h-2 rounded-full bg-primary-fixed-dim animate-pulse" />
-          <span>Clinical Engine Active</span>
-        </div>
-        <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-          ICMR-NIN 2024 Reference Norms
-        </p>
       </div>
     </aside>
   );
