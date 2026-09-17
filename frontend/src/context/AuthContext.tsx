@@ -93,6 +93,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setIsLoading(true);
     try {
       await logoutUser();
+      if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage({ type: 'PURGE_USER_DATA' });
+      }
     } finally {
       setUser(null);
       setIsLoading(false);
