@@ -11,23 +11,23 @@ import {
   Save,
   CheckCircle2,
 } from 'lucide-react';
-import { CustomRecipe, MOCK_RECIPE_BUILDER, MOCK_SAVED_RECIPES, RecipeIngredient } from '../../data/mockRecipes';
+import { CustomRecipe, RecipeIngredient } from '../../data/mockRecipes';
 import { recipeService } from '../../services/recipeService';
 
 export const RecipesPage: React.FC = () => {
-  const [savedRecipes, setSavedRecipes] = useState<CustomRecipe[]>(MOCK_SAVED_RECIPES);
-  const [activeRecipeId, setActiveRecipeId] = useState<string | null>(MOCK_RECIPE_BUILDER.id);
-  const [recipeTitle, setRecipeTitle] = useState(MOCK_RECIPE_BUILDER.title);
-  const [recipeDescription, setRecipeDescription] = useState(MOCK_RECIPE_BUILDER.description);
-  const [servings, setServings] = useState(MOCK_RECIPE_BUILDER.servings);
-  const [ingredients, setIngredients] = useState<RecipeIngredient[]>(MOCK_RECIPE_BUILDER.ingredients);
+  const [savedRecipes, setSavedRecipes] = useState<CustomRecipe[]>([]);
+  const [activeRecipeId, setActiveRecipeId] = useState<string | null>(null);
+  const [recipeTitle, setRecipeTitle] = useState('');
+  const [recipeDescription, setRecipeDescription] = useState('');
+  const [servings, setServings] = useState(2);
+  const [ingredients, setIngredients] = useState<RecipeIngredient[]>([]);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
     recipeService.getRecipes().then((data) => {
-      if (isMounted && data && data.length > 0) {
+      if (isMounted && data) {
         setSavedRecipes(data);
       }
     });
@@ -71,15 +71,20 @@ export const RecipesPage: React.FC = () => {
     setIsSaving(true);
     try {
       const saved = await recipeService.createRecipe({
-        title: recipeTitle,
+        title: recipeTitle || 'Custom Recipe',
         description: recipeDescription,
         servings: safeServings,
         ingredients: ingredients,
       });
-      setActiveRecipeId(saved.id);
-      setSavedRecipes((prev) => [saved, ...prev.filter((r) => r.id !== saved.id)]);
-      setStatusMessage(`Recipe "${saved.title}" saved successfully!`);
-      setTimeout(() => setStatusMessage(null), 4000);
+      if (saved) {
+        setActiveRecipeId(saved.id);
+        setSavedRecipes((prev) => [saved, ...prev.filter((r) => r.id !== saved.id)]);
+        setStatusMessage(`Recipe "${saved.title}" saved successfully!`);
+        setTimeout(() => setStatusMessage(null), 4000);
+      } else {
+        setStatusMessage('Error saving recipe.');
+        setTimeout(() => setStatusMessage(null), 4000);
+      }
     } catch {
       setStatusMessage('Error saving recipe.');
       setTimeout(() => setStatusMessage(null), 4000);
@@ -108,7 +113,7 @@ export const RecipesPage: React.FC = () => {
     setRecipeTitle(recipe.title);
     setRecipeDescription(recipe.description);
     setServings(recipe.servings);
-    setIngredients(recipe.ingredients.length > 0 ? recipe.ingredients : MOCK_RECIPE_BUILDER.ingredients);
+    setIngredients(recipe.ingredients.length > 0 ? recipe.ingredients : []);
   };
 
   return (
@@ -354,42 +359,48 @@ export const RecipesPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {savedRecipes.map((recipe) => (
-            <div
-              key={recipe.id}
-              className="p-5 bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4"
-            >
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <span className="font-label-sm text-label-sm text-secondary uppercase font-semibold">
-                    {recipe.servings} Servings • {recipe.prepTimeMinutes} mins
-                  </span>
-                  <span className="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-primary font-semibold">
-                    {recipe.caloriesPerServing} kcal / serv
-                  </span>
+        {savedRecipes.length === 0 ? (
+          <div className="p-8 rounded-xl bg-surface-container-lowest text-center text-on-surface-variant font-body-md border border-dashed border-surface-container">
+            No saved custom recipes yet. Formulate and save your first recipe using the workbench above.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {savedRecipes.map((recipe) => (
+              <div
+                key={recipe.id}
+                className="p-5 bg-surface-container-lowest rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between space-y-4"
+              >
+                <div className="space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="font-label-sm text-label-sm text-secondary uppercase font-semibold">
+                      {recipe.servings} Servings • {recipe.prepTimeMinutes} mins
+                    </span>
+                    <span className="font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container text-primary font-semibold">
+                      {recipe.caloriesPerServing} kcal / serv
+                    </span>
+                  </div>
+                  <h3 className="font-title-md text-title-md text-on-surface font-semibold">{recipe.title}</h3>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">{recipe.description}</p>
                 </div>
-                <h3 className="font-title-md text-title-md text-on-surface font-semibold">{recipe.title}</h3>
-                <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">{recipe.description}</p>
-              </div>
 
-              <div className="pt-3 border-t border-surface-container-low flex items-center justify-between">
-                <div className="flex items-center gap-x-3 text-body-sm font-body-sm">
-                  <span className="text-primary font-bold">P {recipe.proteinPerServing}g</span>
-                  <span className="text-secondary">C {recipe.carbsPerServing}g</span>
-                  <span className="text-on-secondary-fixed-variant">F {recipe.fatPerServing}g</span>
+                <div className="pt-3 border-t border-surface-container-low flex items-center justify-between">
+                  <div className="flex items-center gap-x-3 text-body-sm font-body-sm">
+                    <span className="text-primary font-bold">P {recipe.proteinPerServing}g</span>
+                    <span className="text-secondary">C {recipe.carbsPerServing}g</span>
+                    <span className="text-on-secondary-fixed-variant">F {recipe.fatPerServing}g</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleLoadRecipe(recipe)}
+                    className="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary text-primary font-label-md text-label-md transition-colors"
+                  >
+                    Edit / Load
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => handleLoadRecipe(recipe)}
-                  className="px-3 py-1.5 rounded-lg bg-surface-container hover:bg-primary-container hover:text-on-primary text-primary font-label-md text-label-md transition-colors"
-                >
-                  Edit / Load
-                </button>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

@@ -1,4 +1,4 @@
-import { CustomRecipe, MOCK_SAVED_RECIPES, RecipeIngredient } from '../data/mockRecipes';
+import { CustomRecipe, RecipeIngredient } from '../data/mockRecipes';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 
@@ -88,14 +88,8 @@ export const recipeService = {
           return data.map(mapBackendToFrontendRecipe);
         }
       }
-      if (import.meta.env.DEV) {
-        return MOCK_SAVED_RECIPES;
-      }
       return [];
     } catch {
-      if (import.meta.env.DEV) {
-        return MOCK_SAVED_RECIPES;
-      }
       return [];
     }
   },
@@ -111,11 +105,11 @@ export const recipeService = {
     prepTimeMinutes?: number;
     imageUrl?: string;
     ingredients: RecipeIngredient[];
-  }): Promise<CustomRecipe> => {
+  }): Promise<CustomRecipe | null> => {
     try {
       const payload = {
         title: recipeData.title,
-        description: recipeData.description,
+        description: recipeData.description || null,
         servings: recipeData.servings,
         portion_weight_grams: recipeData.portionWeightGrams,
         prep_time_minutes: recipeData.prepTimeMinutes || 15,
@@ -143,35 +137,11 @@ export const recipeService = {
         const data = (await response.json()) as BackendRecipeResponse;
         return mapBackendToFrontendRecipe(data);
       }
-    } catch {
-      // Fallback
+      return null;
+    } catch (error) {
+      console.warn('Create recipe API error:', error);
+      return null;
     }
-
-    // Fallback mock recipe object
-    const batchCal = recipeData.ingredients.reduce((sum, i) => sum + i.calories, 0);
-    const batchP = recipeData.ingredients.reduce((sum, i) => sum + i.protein, 0);
-    const batchC = recipeData.ingredients.reduce((sum, i) => sum + i.carbs, 0);
-    const batchF = recipeData.ingredients.reduce((sum, i) => sum + i.fat, 0);
-    const s = Math.max(1, recipeData.servings);
-
-    return {
-      id: `recipe-${Date.now()}`,
-      title: recipeData.title,
-      description: recipeData.description || '',
-      servings: s,
-      portionWeightGrams: recipeData.portionWeightGrams || 185,
-      batchCalories: batchCal,
-      batchProtein: batchP,
-      batchCarbs: batchC,
-      batchFat: batchF,
-      caloriesPerServing: Math.round(batchCal / s),
-      proteinPerServing: parseFloat((batchP / s).toFixed(1)),
-      carbsPerServing: parseFloat((batchC / s).toFixed(1)),
-      fatPerServing: parseFloat((batchF / s).toFixed(1)),
-      prepTimeMinutes: recipeData.prepTimeMinutes || 15,
-      imageUrl: recipeData.imageUrl,
-      ingredients: recipeData.ingredients,
-    };
   },
 
   /**
