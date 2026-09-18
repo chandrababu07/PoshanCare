@@ -58,13 +58,114 @@ export interface IntelligenceDataQuality {
   has_profile: boolean;
 }
 
+// === PHASE 2.13 EXTENDED MODELS ===
+
+export interface DataAvailabilitySummary {
+  period: string;
+  sufficiency_level: 'insufficient_data' | 'limited_data' | 'moderate_data' | 'strong_pattern' | string;
+  logged_days: number;
+  total_meals_logged: number;
+  unique_foods_logged: number;
+  has_water_logs: boolean;
+  has_activity_logs: boolean;
+  active_goals_count: number;
+  explanation: string;
+}
+
+export interface NutrientGapItem {
+  nutrient: string;
+  observed_daily_avg: number;
+  target_value: number;
+  unit: string;
+  status: 'below_target' | 'within_range' | 'above_target' | 'insufficient_data' | string;
+  percentage_of_target?: number;
+  confidence: 'limited_data' | 'moderate_data' | 'strong_pattern' | string;
+  explanation: string;
+  suggested_foods: string[];
+}
+
+export interface NutritionPatternItem {
+  id: string;
+  title: string;
+  observation: string;
+  evidence: string;
+  priority: 'high' | 'medium' | 'low' | string;
+  category: 'nutrient_balance' | 'variety' | 'hydration' | 'timing' | 'growth' | string;
+}
+
+export interface SmartSubstitutionItem {
+  current_food_name: string;
+  suggested_food_name: string;
+  food_id: number;
+  category: string;
+  measurable_reason: string;
+  calories: number;
+  protein_g: number;
+  fiber_g: number;
+}
+
+export interface MealVarietyAnalysis {
+  unique_foods_count: number;
+  food_groups_represented: string[];
+  diversity_score: 'insufficient_data' | 'needs_variety' | 'moderate_variety' | 'diverse_intake' | string;
+  observation: string;
+}
+
+export interface MealTimingAnalysis {
+  has_timing_data: boolean;
+  avg_breakfast_time?: string;
+  avg_lunch_time?: string;
+  avg_dinner_time?: string;
+  eating_window_hours?: number;
+  observation: string;
+}
+
+export interface HydrationActivityContext {
+  has_combined_data: boolean;
+  active_days_count: number;
+  avg_water_on_active_days_ml?: number;
+  avg_water_on_rest_days_ml?: number;
+  observation: string;
+}
+
+export interface GoalAlignmentItem {
+  goal_id: number;
+  goal_type: string;
+  title: string;
+  target_summary: string;
+  current_status: string;
+  supportive_action: string;
+}
+
+export interface NutritionActionItem {
+  id: string;
+  title: string;
+  description: string;
+  priority: 'high' | 'medium' | 'low' | string;
+  category: string;
+  route?: string;
+}
+
 export interface NutritionIntelligenceResponse {
+  // Existing Baseline Fields
   has_sufficient_data: boolean;
   insufficient_data_reason?: string;
   summary?: IntelligenceSummary;
   insights: IntelligenceInsight[];
   recommendations: IntelligenceRecommendation[];
   data_quality: IntelligenceDataQuality;
+
+  // Phase 2.13 Advanced Intelligence Extensions
+  period: string;
+  data_availability?: DataAvailabilitySummary;
+  nutrient_gaps: NutrientGapItem[];
+  patterns: NutritionPatternItem[];
+  substitutions: SmartSubstitutionItem[];
+  variety_analysis?: MealVarietyAnalysis;
+  meal_timing?: MealTimingAnalysis;
+  hydration_activity_context?: HydrationActivityContext;
+  goal_alignment: GoalAlignmentItem[];
+  daily_actions: NutritionActionItem[];
 }
 
 /**
@@ -72,11 +173,17 @@ export interface NutritionIntelligenceResponse {
  * NO mock data or fabricated numbers are returned.
  */
 export async function fetchNutritionIntelligence(
-  dateStr?: string
+  dateStr?: string,
+  periodStr?: string
 ): Promise<NutritionIntelligenceResponse | null> {
   try {
-    const url = dateStr
-      ? `${API_BASE_URL}/nutrition/intelligence?date=${dateStr}`
+    const params = new URLSearchParams();
+    if (dateStr) params.append('date', dateStr);
+    if (periodStr) params.append('period', periodStr);
+
+    const queryString = params.toString();
+    const url = queryString
+      ? `${API_BASE_URL}/nutrition/intelligence?${queryString}`
       : `${API_BASE_URL}/nutrition/intelligence`;
 
     const response = await fetch(url, {

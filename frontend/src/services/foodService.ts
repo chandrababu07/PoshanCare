@@ -1,4 +1,4 @@
-import { FoodItem, MOCK_FOOD_DATABASE } from '../data/mockFoods';
+import { FoodItem } from '../data/mockFoods';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
 
@@ -148,27 +148,11 @@ export async function fetchFoodsFromApi(
       total: data.total,
     };
   } catch (error) {
-    console.warn('Backend Food API unreachable. Falling back to local dataset.', error);
-
-    // Fallback filter over mock data
-    let filtered = [...MOCK_FOOD_DATABASE];
-    if (params.search) {
-      const q = params.search.toLowerCase();
-      filtered = filtered.filter(
-        (f) =>
-          f.name.toLowerCase().includes(q) ||
-          (f.alternateName && f.alternateName.toLowerCase().includes(q)) ||
-          f.category.toLowerCase().includes(q)
-      );
-    }
-    if (params.category && params.category !== 'All') {
-      filtered = filtered.filter((f) => f.category === params.category);
-    }
-
+    console.warn('Backend Food API unreachable:', error);
     return {
-      items: filtered,
+      items: [],
       rawItems: [],
-      total: filtered.length,
+      total: 0,
     };
   }
 }
