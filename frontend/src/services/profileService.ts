@@ -12,6 +12,7 @@ export interface BackendProfileResponse {
   country?: string | null;
   region?: string | null;
   preferred_language?: 'en' | 'te' | 'hi' | null;
+  timezone?: string | null;
   age: number | null;
   biological_sex: 'female' | 'male' | 'unspecified' | null;
   diet_type?: 'vegetarian' | 'eggetarian' | 'non_vegetarian' | 'vegan' | 'other' | null;

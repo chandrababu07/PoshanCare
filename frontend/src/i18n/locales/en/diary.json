@@ -1,0 +1,17 @@
+{
+  "title": "Food Diary",
+  "subtitle": "Track your meals and nutritional adherence across the day",
+  "breakfast": "Breakfast",
+  "lunch": "Lunch",
+  "snack": "Evening Snack",
+  "dinner": "Dinner",
+  "add_food": "Add Food",
+  "meal_logged_one": "{{count}} meal logged",
+  "meal_logged_other": "{{count}} meals logged",
+  "no_entries": "No food entries logged for this meal slot yet.",
+  "total_day_energy": "Total Energy",
+  "water_title": "Daily Hydration Tracking",
+  "water_subtitle": "Target: 2,500 ml",
+  "add_glass": "+250 ml",
+  "add_bottle": "+500 ml"
+}
