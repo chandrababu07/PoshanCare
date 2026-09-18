@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, timezone
 import pytest
 from httpx import AsyncClient
 
@@ -50,9 +51,13 @@ async def test_analytics_with_data(client: AsyncClient):
     """User with weight logs and diary telemetry receives complete calculated analytics."""
     cookies = await get_auth_cookies(client, "telemetry_user@poshancare.in")
 
+    now = datetime.now(timezone.utc)
+    date_start = (now - timedelta(days=10)).strftime("%Y-%m-%d")
+    date_current = (now - timedelta(days=2)).strftime("%Y-%m-%d")
+
     # 1. Log weight
-    await client.post("/api/v1/weight", json={"date": "2026-09-01", "weight_kg": 70.0}, cookies=cookies)
-    await client.post("/api/v1/weight", json={"date": "2026-09-07", "weight_kg": 70.8}, cookies=cookies)
+    await client.post("/api/v1/weight", json={"date": date_start, "weight_kg": 70.0}, cookies=cookies)
+    await client.post("/api/v1/weight", json={"date": date_current, "weight_kg": 70.8}, cookies=cookies)
 
     # 2. Fetch dashboard analytics
     res = await client.get("/api/v1/analytics/dashboard?period=14d", cookies=cookies)

@@ -122,7 +122,7 @@ async def root():
         content={
             "app": settings.PROJECT_NAME,
             "status": "online",
-            "version": "0.1.0",
+            "version": "0.9.0",
             "docs": "/docs" if settings.DEBUG else "disabled",
             "api_v1": "/api/v1/health",
         }
