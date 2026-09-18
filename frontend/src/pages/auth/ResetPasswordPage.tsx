@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import {
   Lock,
   Eye,
@@ -16,8 +16,12 @@ import {
   Send,
   UserCheck,
 } from 'lucide-react';
+import { resetPassword } from '../../services/authService';
 
 export const ResetPasswordPage: React.FC = () => {
+  const [searchParams] = useSearchParams();
+  const token = searchParams.get('token') || '';
+
   const [simState, setSimState] = useState<'form' | 'success' | 'expired'>('form');
 
   // Password fields state
@@ -26,6 +30,7 @@ export const ResetPasswordPage: React.FC = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
 
   // Validation rules calculation
   const ruleLen = newPassword.length >= 8;
@@ -67,16 +72,37 @@ export const ResetPasswordPage: React.FC = () => {
 
   const strengthBadge = getStrengthBadge();
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!ruleLen || !ruleUpper || !ruleSymbol) return;
     if (newPassword !== confirmPassword) return;
 
+    if (!token) {
+      setSubmitError('Password reset token is missing from the URL. Please request a new link.');
+      setSimState('expired');
+      return;
+    }
+
+    setSubmitError('');
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+
+    try {
+      await resetPassword(token, newPassword);
       setSimState('success');
-    }, 1100);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Unable to reset password.';
+      if (
+        msg.toLowerCase().includes('expired') ||
+        msg.toLowerCase().includes('invalid') ||
+        msg.toLowerCase().includes('not found')
+      ) {
+        setSimState('expired');
+      } else {
+        setSubmitError(msg);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -368,6 +394,13 @@ export const ResetPasswordPage: React.FC = () => {
                     PoshanCare clinical dashboard sessions.
                   </p>
                 </div>
+
+                {submitError && (
+                  <div className="rounded-xl bg-error-container/20 border border-error-container/30 p-3.5 flex items-center gap-2 text-error text-body-sm">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{submitError}</span>
+                  </div>
+                )}
 
                 {/* Submit Action Button */}
                 <button

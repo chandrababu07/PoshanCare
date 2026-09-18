@@ -19,6 +19,8 @@ import {
   Info,
 } from 'lucide-react';
 
+import { requestForgotPassword } from '../../services/authService';
+
 export const ForgotPasswordPage: React.FC = () => {
   const [email, setEmail] = useState('priya.patel@example.com');
   const [simState, setSimState] = useState<'form' | 'success' | 'error'>('form');
@@ -54,7 +56,7 @@ export const ForgotPasswordPage: React.FC = () => {
     return () => clearInterval(interval);
   }, [simState, cooldownSeconds]);
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!email.trim() || !email.includes('@') || !email.includes('.')) {
       setEmailError('Please enter a valid clinical account email address.');
@@ -63,18 +65,34 @@ export const ForgotPasswordPage: React.FC = () => {
     setEmailError('');
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await requestForgotPassword(email.trim());
       setSimState('success');
       setResendSeconds(60);
       setResendActive(true);
-    }, 950);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Failed to request password reset.';
+      if (msg.toLowerCase().includes('rate limit') || msg.toLowerCase().includes('too many')) {
+        setSimState('error');
+        setCooldownSeconds(299);
+      } else {
+        setEmailError(msg);
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
-  const triggerResend = () => {
+  const triggerResend = async () => {
     if (resendActive && resendSeconds > 0) return;
-    setResendSeconds(60);
-    setResendActive(true);
+    try {
+      await requestForgotPassword(email.trim());
+      setResendSeconds(60);
+      setResendActive(true);
+    } catch {
+      setResendSeconds(60);
+      setResendActive(true);
+    }
   };
 
   const formatTimer = (totalSeconds: number) => {

@@ -9,7 +9,10 @@ from app.models.user import User
 from app.core.google_oauth import verify_google_id_token
 from app.schemas.auth import (
     AuthResponse,
+    ForgotPasswordRequest,
     GoogleAuthPayload,
+    MessageResponse,
+    ResetPasswordRequest,
     UserLogin,
     UserRegister,
     UserResponse,
@@ -19,6 +22,8 @@ from app.services.auth import (
     authenticate_user,
     create_user_refresh_session,
     register_new_user,
+    request_password_reset,
+    reset_password_with_token,
     revoke_refresh_token_session,
     rotate_refresh_token_session,
 )
@@ -237,4 +242,59 @@ async def google_auth(
         message="Authenticated with Google successfully.",
         user=UserResponse.model_validate(user),
     )
+
+
+@router.post(
+    "/forgot-password",
+    response_model=MessageResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Request password reset instructions",
+)
+async def forgot_password(
+    request: Request,
+    payload: ForgotPasswordRequest,
+    db: AsyncSession = Depends(get_db),
+) -> MessageResponse:
+    """Request a secure password reset link.
+
+    Applies rate limiting and always returns a uniform public response to prevent account enumeration.
+    """
+    enforce_rate_limit(
+        request,
+        limit=settings.RATE_LIMIT_PASSWORD_RESET_PER_MINUTE,
+        prefix="forgot_password",
+    )
+    origin = request.headers.get("origin")
+    await request_password_reset(db, payload.email, base_url=origin)
+
+    return MessageResponse(
+        status="success",
+        message="If an account exists for that email, password reset instructions have been sent.",
+    )
+
+
+@router.post(
+    "/reset-password",
+    response_model=MessageResponse,
+    status_code=status.HTTP_200_OK,
+    summary="Reset password using valid token",
+)
+async def reset_password(
+    request: Request,
+    payload: ResetPasswordRequest,
+    db: AsyncSession = Depends(get_db),
+) -> MessageResponse:
+    """Validate single-use reset token and atomically update password while revoking active sessions."""
+    enforce_rate_limit(
+        request,
+        limit=settings.RATE_LIMIT_PASSWORD_RESET_PER_MINUTE,
+        prefix="reset_password",
+    )
+    await reset_password_with_token(db, payload.token, payload.new_password)
+
+    return MessageResponse(
+        status="success",
+        message="Password has been reset successfully. Please sign in with your new password.",
+    )
+
 

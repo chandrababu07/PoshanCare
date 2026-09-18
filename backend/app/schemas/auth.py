@@ -84,3 +84,61 @@ class AuthResponse(BaseModel):
     status: str = Field(default="success")
     message: str = Field(..., json_schema_extra={"example": "Authentication successful."})
     user: UserResponse
+
+
+class ForgotPasswordRequest(BaseModel):
+    """Payload for requesting a password reset email."""
+
+    email: EmailStr = Field(..., json_schema_extra={"example": "user@example.com"})
+
+    @field_validator("email", mode="before")
+    @classmethod
+    def strip_email(cls, value: str) -> str:
+        if isinstance(value, str):
+            return value.strip().lower()
+        return value
+
+
+class ResetPasswordRequest(BaseModel):
+    """Payload for completing password reset using a secure token."""
+
+    token: str = Field(
+        ...,
+        min_length=16,
+        max_length=256,
+        json_schema_extra={"example": "c7kY6Q9x_..."},
+    )
+    new_password: str = Field(
+        ...,
+        min_length=8,
+        max_length=128,
+        json_schema_extra={"example": "NewSecurePass123!"},
+    )
+
+    @field_validator("token", mode="before")
+    @classmethod
+    def strip_token(cls, value: str) -> str:
+        if isinstance(value, str):
+            return value.strip()
+        return value
+
+    @field_validator("new_password")
+    @classmethod
+    def validate_password_strength(cls, value: str) -> str:
+        if len(value) < 8:
+            raise ValueError("Password must be at least 8 characters long.")
+        if not any(c.isupper() for c in value):
+            raise ValueError("Password must contain at least one uppercase letter.")
+        if not any(c.islower() for c in value):
+            raise ValueError("Password must contain at least one lowercase letter.")
+        if not any(c.isdigit() or not c.isalnum() for c in value):
+            raise ValueError("Password must contain at least one number or special character.")
+        return value
+
+
+class MessageResponse(BaseModel):
+    """Generic status and message response."""
+
+    status: str = Field(default="success")
+    message: str = Field(...)
+

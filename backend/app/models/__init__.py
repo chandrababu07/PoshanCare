@@ -14,6 +14,7 @@ from app.models.activity import ActivityLog
 from app.models.meal_plan import MealPlan, MealPlanItem
 from app.models.goal import HealthGoal
 from app.models.notification import HealthNotification, NotificationPreference
+from app.models.password_reset import PasswordResetToken
 
 __all__ = [
     "Base",
@@ -37,4 +38,5 @@ __all__ = [
     "HealthGoal",
     "HealthNotification",
     "NotificationPreference",
+    "PasswordResetToken",
 ]

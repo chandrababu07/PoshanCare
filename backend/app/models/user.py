@@ -15,6 +15,7 @@ if TYPE_CHECKING:
     from app.models.activity import ActivityLog
     from app.models.goal import HealthGoal
     from app.models.notification import HealthNotification
+    from app.models.password_reset import PasswordResetToken
 
 
 class User(Base):
@@ -78,6 +79,9 @@ class User(Base):
     )
     notifications: Mapped[List["HealthNotification"]] = relationship(
         "HealthNotification", back_populates="user", cascade="all, delete-orphan"
+    )
+    password_reset_tokens: Mapped[List["PasswordResetToken"]] = relationship(
+        "PasswordResetToken", back_populates="user", cascade="all, delete-orphan"
     )
 
 

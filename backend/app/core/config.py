@@ -18,10 +18,12 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "PoshanCare API"
     ENVIRONMENT: str = "development"
     DEBUG: bool = True
+    VERSION: str = "0.9.0"
 
-    # Server Settings
+    # Server & Client Settings
     HOST: str = "127.0.0.1"
     PORT: int = 8000
+    FRONTEND_URL: str = "http://localhost:5173"
 
     # Database Configuration
     DATABASE_URL: str = "sqlite+aiosqlite:///./poshancare.db"
@@ -36,7 +38,18 @@ class Settings(BaseSettings):
     RATE_LIMIT_LOGIN_PER_MINUTE: int = 10
     RATE_LIMIT_GENERATE_PER_MINUTE: int = 5
     RATE_LIMIT_ACCOUNT_PER_MINUTE: int = 5
+    RATE_LIMIT_PASSWORD_RESET_PER_MINUTE: int = 5
     ENABLE_SECURITY_HEADERS: bool = True
+
+    # Password Reset & Email Settings
+    PASSWORD_RESET_TOKEN_EXPIRE_MINUTES: int = 30
+    SMTP_HOST: Optional[str] = None
+    SMTP_PORT: int = 587
+    SMTP_USER: Optional[str] = None
+    SMTP_PASSWORD: Optional[str] = None
+    SMTP_FROM_EMAIL: str = "noreply@poshancare.in"
+    SMTP_FROM_NAME: str = "PoshanCare Security"
+    SMTP_TLS: bool = True
 
     # Google OAuth 2.0 Settings
     GOOGLE_CLIENT_ID: Optional[str] = None

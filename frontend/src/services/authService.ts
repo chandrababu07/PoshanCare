@@ -131,3 +131,53 @@ export async function logoutUser(): Promise<void> {
     console.warn('Logout API warning:', error);
   }
 }
+
+/**
+ * Request password reset instructions email
+ */
+export async function requestForgotPassword(
+  email: string
+): Promise<{ status: string; message: string }> {
+  const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    const errorMsg = data?.error?.message || 'Unable to request password reset.';
+    throw new Error(errorMsg);
+  }
+
+  return data;
+}
+
+/**
+ * Reset user password with token
+ */
+export async function resetPassword(
+  token: string,
+  newPassword: string
+): Promise<{ status: string; message: string }> {
+  const response = await fetch(`${API_BASE_URL}/auth/reset-password`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ token, new_password: newPassword }),
+  });
+
+  const data = await response.json();
+  if (!response.ok) {
+    const errorMsg = data?.error?.message || 'Unable to reset password.';
+    throw new Error(errorMsg);
+  }
+
+  return data;
+}
+

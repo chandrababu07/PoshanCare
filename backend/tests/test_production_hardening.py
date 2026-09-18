@@ -33,7 +33,7 @@ async def test_root_metadata_endpoint(client: AsyncClient):
     data = response.json()
     assert data["app"] == settings.PROJECT_NAME
     assert data["status"] == "online"
-    assert data["version"] == "0.1.0"
+    assert data["version"] == getattr(settings, "VERSION", "0.9.0")
 
 
 @pytest.mark.asyncio
