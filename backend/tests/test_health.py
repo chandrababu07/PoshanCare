@@ -1,5 +1,6 @@
 import pytest
 from httpx import AsyncClient
+from app.core.config import settings
 
 
 @pytest.mark.asyncio
@@ -20,7 +21,8 @@ async def test_health_endpoint(client: AsyncClient):
     assert response.status_code == 200
     data = response.json()
     assert data["status"] == "healthy"
-    assert data["version"] == "0.1.0"
+    assert data["version"] == settings.VERSION
+    assert data["version"] == "0.9.0"
     assert "environment" in data
     assert "timestamp" in data
 

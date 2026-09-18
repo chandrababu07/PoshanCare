@@ -50,7 +50,7 @@ async def lifespan(app: FastAPI):
 app = FastAPI(
     title=settings.PROJECT_NAME,
     description="PoshanCare Modern Clinical Nutrition Intelligence API",
-    version="0.1.0",
+    version=settings.VERSION,
     docs_url="/docs" if settings.DEBUG else None,
     redoc_url="/redoc" if settings.DEBUG else None,
     lifespan=lifespan,
@@ -122,7 +122,7 @@ async def root():
         content={
             "app": settings.PROJECT_NAME,
             "status": "online",
-            "version": "0.9.0",
+            "version": settings.VERSION,
             "docs": "/docs" if settings.DEBUG else "disabled",
             "api_v1": "/api/v1/health",
         }

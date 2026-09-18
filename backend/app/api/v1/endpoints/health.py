@@ -23,7 +23,7 @@ async def get_health_status() -> HealthResponse:
     return HealthResponse(
         status="healthy",
         environment=settings.ENVIRONMENT,
-        version="0.1.0",
+        version=settings.VERSION,
         timestamp=datetime.now(timezone.utc),
     )
 

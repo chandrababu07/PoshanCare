@@ -59,3 +59,15 @@ async def test_validate_production_config_fail_fast():
     settings.SECRET_KEY = "poshancare_dev_secret_key_change_in_production_min_32_chars"
     settings.DATABASE_URL = "sqlite+aiosqlite:///./poshancare.db"
 
+
+@pytest.mark.asyncio
+async def test_health_endpoint_version_consistency(client: AsyncClient):
+    """Verify that /api/v1/health authoritative version strictly matches settings.VERSION."""
+    response = await client.get("/api/v1/health")
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "healthy"
+    assert data["version"] == settings.VERSION
+    assert data["version"] == "0.9.0"
+
+
