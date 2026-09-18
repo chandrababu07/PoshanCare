@@ -10,7 +10,7 @@ import {
   CheckCircle2,
   X,
 } from 'lucide-react';
-import { FoodItem, MOCK_FOOD_DATABASE } from '../../data/mockFoods';
+import { FoodItem } from '../../data/mockFoods';
 import {
   createCustomFoodInApi,
   fetchCategoriesFromApi,
@@ -22,6 +22,7 @@ import {
   CreateCustomFoodPayload,
 } from '../../services/foodService';
 import { addDiaryEntryToApi } from '../../services/diaryService';
+import { parseApiError } from '../../utils/apiErrors';
 
 export const FoodsPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -32,7 +33,7 @@ export const FoodsPage: React.FC = () => {
   const [categories, setCategories] = useState<string[]>(['All']);
   const [regions, setRegions] = useState<string[]>(['All']);
 
-  const [foods, setFoods] = useState<FoodItem[]>(MOCK_FOOD_DATABASE);
+  const [foods, setFoods] = useState<FoodItem[]>([]);
   const [selectedFood, setSelectedFood] = useState<FoodItem | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -165,10 +166,12 @@ export const FoodsPage: React.FC = () => {
           setLogSuccessMessage(null);
         }, 1200);
       } else {
-        setLogErrorMessage('Failed to log food entry. Please check authentication.');
+        const err = parseApiError(new Error('Failed to log food entry'));
+        setLogErrorMessage(err.message);
       }
-    } catch {
-      setLogErrorMessage('Error creating diary entry.');
+    } catch (e: unknown) {
+      const err = parseApiError(e);
+      setLogErrorMessage(err.message);
     } finally {
       setIsSubmittingLog(false);
     }
@@ -246,8 +249,8 @@ export const FoodsPage: React.FC = () => {
         });
       }
     } catch (err: unknown) {
-      const errorMsg = err instanceof Error ? err.message : 'Failed to create custom food.';
-      setCustomFormError(errorMsg);
+      const parsed = parseApiError(err);
+      setCustomFormError(parsed.message);
     } finally {
       setIsSubmittingCustom(false);
     }
