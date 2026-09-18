@@ -33,6 +33,9 @@ import {
   fetchRecentFoodsFromApi,
 } from '../../services/foodService';
 import { fetchUserProfile, BackendProfileResponse } from '../../services/profileService';
+import { parseApiError } from '../../utils/apiErrors';
+import { useTranslation } from 'react-i18next';
+import { formatDate } from '../../utils/formatters';
 
 function formatDateToYYYYMMDD(d: Date): string {
   const year = d.getFullYear();
@@ -41,16 +44,8 @@ function formatDateToYYYYMMDD(d: Date): string {
   return `${year}-${month}-${day}`;
 }
 
-function formatDateToDisplay(d: Date): string {
-  return d.toLocaleDateString('en-GB', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-}
-
 export const DiaryPage: React.FC = () => {
+  const { i18n } = useTranslation();
   const [currentDateObj, setCurrentDateObj] = useState<Date>(new Date());
   const [meals, setMeals] = useState<MealSection[]>([]);
   const [profile, setProfile] = useState<BackendProfileResponse | null>(null);
@@ -80,7 +75,12 @@ export const DiaryPage: React.FC = () => {
   const [logErrorMsg, setLogErrorMsg] = useState<string | null>(null);
 
   const dateParamStr = formatDateToYYYYMMDD(currentDateObj);
-  const dateDisplayStr = formatDateToDisplay(currentDateObj);
+  const dateDisplayStr = formatDate(currentDateObj, i18n.language, {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
 
   // Load User Profile for Persona Adaptation
   useEffect(() => {
@@ -228,10 +228,12 @@ export const DiaryPage: React.FC = () => {
           setLogSuccessMsg(null);
         }, 1000);
       } else {
-        setLogErrorMsg('Failed to log food item. Please check login session.');
+        const err = parseApiError(new Error('Failed to log food item'));
+        setLogErrorMsg(err.message);
       }
-    } catch {
-      setLogErrorMsg('Error adding diary entry.');
+    } catch (e: unknown) {
+      const err = parseApiError(e);
+      setLogErrorMsg(err.message);
     } finally {
       setIsSubmittingLog(false);
     }

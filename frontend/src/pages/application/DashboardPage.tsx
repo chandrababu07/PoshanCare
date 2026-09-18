@@ -27,6 +27,8 @@ import {
   RefreshCw,
   Eye,
   BookOpen,
+  Target,
+  Lightbulb,
 } from 'lucide-react';
 import { getCurrentUser } from '../../services/authService';
 import { analyticsService, DashboardAnalyticsResponse } from '../../services/analyticsService';
@@ -37,10 +39,17 @@ import { fetchNutritionIntelligence, NutritionIntelligenceResponse } from '../..
 import { fetchDailyHydration, addWaterLog, HydrationDailySummary } from '../../services/hydrationService';
 import { fetchDailyActivity, ActivityDailySummary } from '../../services/activityService';
 import { fetchHealthOverview, HealthOverviewResponse } from '../../services/healthOverviewService';
+import { mealPlanService, MealPlanResponse, RecommendationsResponse } from '../../services/mealPlanService';
+import { goalsService, GoalDashboardResponse } from '../../services/goalsService';
+import { healthInsightsService, HealthInsightsResponse } from '../../services/healthInsightsService';
+import { parseApiError } from '../../utils/apiErrors';
+import { useTranslation } from 'react-i18next';
+import { formatDate } from '../../utils/formatters';
 
 const maxOne = (val: number) => Math.max(1, val);
 
 export const DashboardPage: React.FC = () => {
+  const { t, i18n } = useTranslation(['dashboard', 'common']);
   const [selectedPeriod, setSelectedPeriod] = useState<string>('7d');
   const [analytics, setAnalytics] = useState<DashboardAnalyticsResponse | null>(null);
   const [loadingAnalytics, setLoadingAnalytics] = useState<boolean>(true);
@@ -66,6 +75,16 @@ export const DashboardPage: React.FC = () => {
   const [dashboardMeals, setDashboardMeals] = useState<MealSection[]>([]);
   const [todayDiary, setTodayDiary] = useState<BackendDailyDiaryResponse | null>(null);
 
+  const [todayMealPlan, setTodayMealPlan] = useState<MealPlanResponse | null>(null);
+  const [recommendations, setRecommendations] = useState<RecommendationsResponse | null>(null);
+
+  const [goalsDashboard, setGoalsDashboard] = useState<GoalDashboardResponse | null>(null);
+  const [loadingGoals, setLoadingGoals] = useState<boolean>(true);
+
+  const [healthInsights, setHealthInsights] = useState<HealthInsightsResponse | null>(null);
+  const [, setLoadingInsights] = useState<boolean>(true);
+  const [toastMessage, setToastMessage] = useState<{ text: string; isError?: boolean } | null>(null);
+
   // Simple Mode Accessibility Toggle
   const [simpleMode, setSimpleMode] = useState<boolean>(() => {
     return localStorage.getItem('poshancare_simple_mode') === 'true';
@@ -81,25 +100,25 @@ export const DashboardPage: React.FC = () => {
   // Time-based greeting helper
   const getGreetingTime = () => {
     const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
-    return 'Good evening';
+    if (hour < 12) return t('greeting_morning', 'Good morning');
+    if (hour < 17) return t('greeting_afternoon', 'Good afternoon');
+    return t('greeting_evening', 'Good evening');
   };
 
   // Persona Badge text
   const getPersonaLabel = () => {
-    if (!profile?.profile_type) return 'Adult';
+    if (!profile?.profile_type) return t('persona_adult', 'Adult Profile');
     switch (profile.profile_type) {
       case 'child':
-        return 'Child Profile';
+        return t('persona_child', 'Child Profile');
       case 'teen':
-        return 'Teen Profile';
+        return t('persona_teen', 'Teen Profile');
       case 'older_adult':
-        return 'Senior / Elder Profile';
+        return t('persona_older_adult', 'Senior / Elder Profile');
       case 'family':
-        return 'Family Household';
+        return t('persona_family', 'Family Household');
       default:
-        return 'Adult Profile';
+        return t('persona_adult', 'Adult Profile');
     }
   };
 
@@ -116,12 +135,16 @@ export const DashboardPage: React.FC = () => {
     setAnalyticsError(false);
 
     const now = new Date();
-    const dateStr = now.toLocaleDateString('en-GB', {
-      weekday: 'long',
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    });
+    const dateStr = formatDate(
+      now,
+      i18n.language,
+      {
+        weekday: 'long',
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }
+    );
     const yyyymmdd = now.toISOString().split('T')[0];
 
     setFormattedDateStr(dateStr);
@@ -180,33 +203,47 @@ export const DashboardPage: React.FC = () => {
       setDashboardMeals([]);
     }
 
-    // 5. Load Nutrition Intelligence
+    // 5. Load Nutrition Intelligence & Meal Plan
     setLoadingIntelligence(true);
+    setLoadingGoals(true);
     try {
-      const intelData = await fetchNutritionIntelligence(yyyymmdd);
+      const [intelData, planData, recsData, goalsDashRes] = await Promise.all([
+        fetchNutritionIntelligence(yyyymmdd),
+        mealPlanService.getTodayMealPlan(yyyymmdd),
+        mealPlanService.getRecommendations(),
+        goalsService.getGoalsDashboard(),
+      ]);
       if (intelData) setIntelligence(intelData);
+      if (planData) setTodayMealPlan(planData);
+      if (recsData) setRecommendations(recsData);
+      if (goalsDashRes) setGoalsDashboard(goalsDashRes);
     } catch (e) {
-      console.warn('Intelligence load error:', e);
+      console.warn('Intelligence / MealPlan / Goals load error:', e);
     } finally {
       setLoadingIntelligence(false);
+      setLoadingGoals(false);
     }
 
-    // 6. Load Longitudinal Analytics & Health Overview
+    // 6. Load Longitudinal Analytics, Health Overview & Health Insights
     setLoadingHealthOverview(true);
+    setLoadingInsights(true);
     try {
-      const [analyticsData, overviewData] = await Promise.all([
+      const [analyticsData, overviewData, insightsData] = await Promise.all([
         analyticsService.getDashboardAnalytics(selectedPeriod),
         fetchHealthOverview(selectedPeriod),
+        healthInsightsService.getHealthInsights(selectedPeriod),
       ]);
 
       if (analyticsData) setAnalytics(analyticsData);
       if (overviewData) setHealthOverview(overviewData);
+      if (insightsData) setHealthInsights(insightsData);
       if (!analyticsData && !overviewData) setAnalyticsError(true);
     } catch {
       setAnalyticsError(true);
     } finally {
       setLoadingAnalytics(false);
       setLoadingHealthOverview(false);
+      setLoadingInsights(false);
     }
   };
 
@@ -215,18 +252,46 @@ export const DashboardPage: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPeriod]);
 
+  useEffect(() => {
+    const now = new Date();
+    setFormattedDateStr(
+      formatDate(
+        now,
+        i18n.language,
+        {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        }
+      )
+    );
+  }, [i18n.language]);
+
   const handleAddWater = async (amount: number) => {
     if (!todayDateKey) return;
-    const res = await addWaterLog({ date: todayDateKey, amount_ml: amount });
-    if (res) {
-      const [hyd, intelData, overviewData] = await Promise.all([
-        fetchDailyHydration(todayDateKey),
-        fetchNutritionIntelligence(todayDateKey),
-        fetchHealthOverview(selectedPeriod),
-      ]);
-      if (hyd) setHydrationSummary(hyd);
-      if (intelData) setIntelligence(intelData);
-      if (overviewData) setHealthOverview(overviewData);
+    try {
+      const res = await addWaterLog({ date: todayDateKey, amount_ml: amount });
+      if (res) {
+        setToastMessage({ text: `Logged +${amount} ml hydration!` });
+        setTimeout(() => setToastMessage(null), 3000);
+        const [hyd, intelData, overviewData] = await Promise.all([
+          fetchDailyHydration(todayDateKey),
+          fetchNutritionIntelligence(todayDateKey),
+          fetchHealthOverview(selectedPeriod),
+        ]);
+        if (hyd) setHydrationSummary(hyd);
+        if (intelData) setIntelligence(intelData);
+        if (overviewData) setHealthOverview(overviewData);
+      } else {
+        const err = parseApiError(new Error('Failed to log hydration'));
+        setToastMessage({ text: err.message, isError: true });
+        setTimeout(() => setToastMessage(null), 4500);
+      }
+    } catch (e: unknown) {
+      const err = parseApiError(e);
+      setToastMessage({ text: err.message, isError: true });
+      setTimeout(() => setToastMessage(null), 4500);
     }
   };
 
@@ -287,6 +352,26 @@ export const DashboardPage: React.FC = () => {
 
   return (
     <div className={`space-y-8 ${simpleMode ? 'text-lg space-y-10 font-sans' : ''}`}>
+      {/* Toast Notification */}
+      {toastMessage && (
+        <div
+          role={toastMessage.isError ? 'alert' : 'status'}
+          aria-live="polite"
+          className={`fixed bottom-6 right-6 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg ${
+            toastMessage.isError
+              ? 'bg-rose-600 text-white'
+              : 'bg-emerald-600 text-white'
+          }`}
+        >
+          {toastMessage.isError ? (
+            <AlertCircle className="w-5 h-5 shrink-0" />
+          ) : (
+            <CheckCircle2 className="w-5 h-5 shrink-0" />
+          )}
+          <span className="text-sm font-medium">{toastMessage.text}</span>
+        </div>
+      )}
+
       {/* Non-blocking API Error Banner */}
       {analyticsError && (
         <div className="p-4 rounded-2xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-amber-900 dark:text-amber-200 flex items-center justify-between gap-4">
@@ -666,6 +751,131 @@ export const DashboardPage: React.FC = () => {
             )}
           </div>
 
+          {/* SMART MEAL PLAN & RECOMMENDATIONS WIDGET */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Sparkles className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Today's Smart Meal Plan</h2>
+              </div>
+              <Link
+                to="/app/meal-plan"
+                className="px-4 py-2 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 text-xs font-semibold hover:underline flex items-center gap-1 min-h-[44px]"
+              >
+                <span>View Full Plan</span>
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {todayMealPlan && todayMealPlan.meals.some((m) => m.items.length > 0) ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {todayMealPlan.meals.map((mealGroup) => (
+                  <div
+                    key={mealGroup.meal_type}
+                    className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col justify-between gap-2"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-900 dark:text-white capitalize">
+                        {mealGroup.meal_type}
+                      </span>
+                      <span className="text-[11px] font-semibold text-slate-500">
+                        {mealGroup.total_calories} kcal
+                      </span>
+                    </div>
+                    {mealGroup.items.length === 0 ? (
+                      <span className="text-xs text-slate-400 italic">No items planned</span>
+                    ) : (
+                      <div className="space-y-1">
+                        {mealGroup.items.slice(0, 2).map((item) => (
+                          <div key={item.id} className="text-xs text-slate-700 dark:text-slate-300 truncate">
+                            • {item.food_name}
+                          </div>
+                        ))}
+                        {mealGroup.items.length > 2 && (
+                          <div className="text-[10px] text-slate-500 font-semibold">
+                            +{mealGroup.items.length - 2} more items
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="p-6 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-300 dark:border-slate-700 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
+                    <Sparkles className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm">No meal plan active for today</h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
+                      {recommendations?.recommendations && recommendations.recommendations.length > 0
+                        ? `Top Recommendation: ${recommendations.recommendations[0].food_name} (${Math.round(recommendations.recommendations[0].confidence_score)}% RDA Match)`
+                        : 'Generate intelligent meal suggestions based on your RDA targets & dietary type.'}
+                    </p>
+                  </div>
+                </div>
+                <Link
+                  to="/app/meal-plan"
+                  className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition-all flex items-center gap-2 shadow-xs shrink-0 min-h-[44px]"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>Open Meal Planner</span>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* HEALTH INSIGHTS & ACTION CENTER WIDGET */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Lightbulb className="w-5 h-5 text-amber-500" />
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white">Health Insights &amp; Action Center</h2>
+              </div>
+              <Link
+                to="/app/health-insights"
+                className="px-4 py-2 rounded-xl bg-amber-50 dark:bg-amber-950/40 text-amber-600 dark:text-amber-400 text-xs font-semibold hover:underline flex items-center gap-1 min-h-[44px]"
+              >
+                <span>View All Insights</span>
+                <ChevronRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            {healthInsights && healthInsights.actions.length > 0 && (
+              <div className="p-4 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="px-2 py-0.5 rounded-full bg-amber-200 dark:bg-amber-900 text-amber-900 dark:text-amber-100 text-[10px] font-bold uppercase">
+                      Top Action
+                    </span>
+                    <span className="text-xs font-bold text-slate-900 dark:text-white">{healthInsights.actions[0].title}</span>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300">{healthInsights.actions[0].description}</p>
+                </div>
+                <Link
+                  to={healthInsights.actions[0].route}
+                  className="px-4 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold shrink-0 cursor-pointer"
+                >
+                  Execute Action
+                </Link>
+              </div>
+            )}
+
+            {healthInsights && healthInsights.insights.length > 0 && (
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-800 flex items-start gap-3">
+                <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                <div>
+                  <div className="text-xs font-bold text-slate-900 dark:text-white mb-0.5">
+                    {healthInsights.insights[0].title}
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-400">{healthInsights.insights[0].message}</p>
+                </div>
+              </div>
+            )}
+          </div>
+
           {/* 4. WEIGHT & PROGRESS */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-6">
             <div className="flex items-center justify-between">
@@ -848,6 +1058,67 @@ export const DashboardPage: React.FC = () => {
 
         {/* Right Column (4 cols) */}
         <div className="lg:col-span-4 flex flex-col gap-6">
+          {/* HEALTH GOALS & ADAPTIVE COACHING WIDGET */}
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Target className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <h2 className="text-base font-bold text-slate-900 dark:text-white">Goals &amp; Coaching</h2>
+              </div>
+              <Link
+                to="/app/goals"
+                className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 dark:text-emerald-400 flex items-center gap-1"
+              >
+                <span>Manage</span>
+                <ChevronRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            {loadingGoals ? (
+              <div className="text-xs text-slate-400 p-2">Loading goals &amp; coaching...</div>
+            ) : !goalsDashboard || goalsDashboard.active_goals.length === 0 ? (
+              <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-300 dark:border-slate-700 flex flex-col items-center gap-2 text-center">
+                <Target className="w-6 h-6 text-slate-400" />
+                <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">No active health goals set</span>
+                <Link
+                  to="/app/goals"
+                  className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition-all min-h-[44px] flex items-center gap-1 cursor-pointer"
+                >
+                  <PlusCircle className="w-3.5 h-3.5" />
+                  <span>+ Set Health Goal</span>
+                </Link>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-3">
+                {goalsDashboard.active_goals.slice(0, 2).map((gProg) => (
+                  <div key={gProg.goal.id} className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800 flex flex-col gap-1.5">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="font-bold text-slate-900 dark:text-white capitalize">{gProg.goal.title || gProg.goal.goal_type.replace('_', ' ')}</span>
+                      <span className="font-bold text-emerald-600 dark:text-emerald-400">{Math.round(gProg.progress_percentage ?? 0)}%</span>
+                    </div>
+                    <div className="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+                      <div className="bg-emerald-600 h-full rounded-full transition-all" style={{ width: `${Math.min(100, gProg.progress_percentage ?? 0)}%` }} />
+                    </div>
+                    <div className="flex justify-between text-[11px] text-slate-500">
+                      <span>Current: {gProg.current_value ?? '—'} {gProg.unit}</span>
+                      <span>Target: {gProg.target_value} {gProg.unit}</span>
+                    </div>
+                  </div>
+                ))}
+
+                {goalsDashboard.coaching_insights && goalsDashboard.coaching_insights.length > 0 && (
+                  <div className="p-3 rounded-2xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 flex items-start gap-2.5 text-xs text-emerald-900 dark:text-emerald-200">
+                    <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="font-bold">{goalsDashboard.coaching_insights[0].title}</span>
+                      <p className="text-[11px] leading-relaxed text-emerald-800 dark:text-emerald-300">{goalsDashboard.coaching_insights[0].message}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
           {/* 5. CONSISTENCY & HABITS */}
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col gap-4">
             <div className="flex items-center justify-between">
